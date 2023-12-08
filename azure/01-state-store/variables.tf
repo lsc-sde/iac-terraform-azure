@@ -15,8 +15,19 @@ variable "tags" {
     default = {
         "Environment" = "Dev",
         "Purpose" = "Terraform State"
-        "Product" = "North West SDE",
+        "Product" = "LSC SDE",
         "ManagedBy" = "Research Software Design Authority",
-        "Repository" = "https://github.com/nwsde/nwsde-k8s-iac.git"
+        "Repository" = "https://github.com/lsc-sde/k8s-iac.git"
     }
+}
+
+variable "subnet_id" {
+  type = string
+  description = "Id of the subnet where the cluster is to be installed"
+}
+
+variable "ip_rules" {
+  type = list(string)
+  description = "List of allowed IP addresses"
+  default = [ "208.127.197.187" ]
 }

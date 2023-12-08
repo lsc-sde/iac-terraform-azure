@@ -47,13 +47,12 @@ variable default_node_pool_max_node_count {
 variable default_node_pool_vm_size {
     type = string
     description = "The sku for the VM size of the default node group"
-    default = "standard_d2ads_v5"
+    default = "Standard_B4ms"
 }
 
 variable default_node_pool_vnet_subnet_id {
     type = string
     description = "The subnet id for the default node group"
-    default = "standard_d2ads_v5"
 }
 
 variable "cluster_admin_ids" {
@@ -86,4 +85,55 @@ variable "kms_key_name" {
 variable "key_vault_id" {
     type = string
     description = "Id of the key vault used for KMS"
+}
+
+variable "network_resource_group" {
+  type = string
+  description = "Resource Group where the private link DNS Zone is installed"
+}
+
+variable "kubernetes_version" {
+  type = string
+  description = "Version of kubernetes to provision on the cluster"
+  default = "1.26.0"
+}
+
+variable "default_node_pool_max_pods" {
+    type = number
+    description = "Maximum pods allowed on the default node pool"
+    default = 110
+}
+
+variable "proxy_address" {
+  type = string
+  description = "Address of the proxy server"
+  default = "http://lthswproxy01.xlthtr.nhs.uk:800/"
+}
+
+variable "proxy_exceptions" {
+    type = list(string)
+    description = "Addresses excluded from the proxy server"
+    default = [
+      "localhost",
+      "127.0.0.1",
+      "ai.xlthtr.nhs.uk",
+      "172.18.16.0/24",
+      "172.18.17.0/24",
+      "10.0.0.0/16",
+      "10.244.0.0/16",
+      "168.63.129.16",
+      "169.254.169.254",
+      "dns-lander-dev.privatelink.uksouth.azmk8s.io",
+      "konnectivity"
+    ]
+}
+
+variable "container_registry_id" {
+    type = string
+    description = "Id of the container registry used by k8s" 
+}
+
+variable "azmk8s_zone_id" {
+  type = string
+  description = "id for the private zone for k8s"
 }

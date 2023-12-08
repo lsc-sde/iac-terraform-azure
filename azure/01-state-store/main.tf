@@ -10,4 +10,6 @@ module "storage" {
   location = var.location
   tags = var.tags
   resource_group_name = module.resource_group.name
+  subnet_id = var.subnet_id
+  ip_rules = var.ip_rules
 }

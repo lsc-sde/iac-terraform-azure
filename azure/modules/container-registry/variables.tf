@@ -14,6 +14,12 @@ variable "name" {
     default = ""
 }
 
+variable "identity_name" {
+    type = string
+    description = "Name of the managed identity for the cluster"
+    default = ""
+}
+
 variable "prefix" {
     type = string
     description = "Naming Prefix"
