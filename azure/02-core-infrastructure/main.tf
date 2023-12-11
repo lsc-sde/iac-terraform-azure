@@ -17,22 +17,25 @@ module "network_overlay" {
   source = "../modules/network-overlay"
 
   virtual_network_id = var.virtual_network_id
-  resource_group_name = var.resource_group_name
+  resource_group_name = module.resource_group.name
 }
 
 module "key_vault" {
   source = "../modules/keyvault"
   location = var.location
   tags = var.tags
-  resource_group_name = var.resource_group_name
+  resource_group_name = module.resource_group.name
   prefix = var.prefix
+  allowed_ips = var.keyvault_allowed_ips
+  k8s_admin_group = var.k8s_admin_group
+  public_network_access_enabled = var.keyvault_public_network_access_enabled
 }
 
 module "diagnostics_workspace" {
   source = "../modules/diagnostics-workspace"
   location = var.location
   tags = var.tags
-  resource_group_name = var.resource_group_name
+  resource_group_name = module.resource_group.name
   prefix = var.prefix
 }
 
@@ -40,11 +43,10 @@ module "storage_account" {
   source = "../modules/storage-account"
   location = var.location
   tags = var.tags
-  resource_group_name = var.resource_group_name
+  resource_group_name = module.resource_group.name
   prefix = var.prefix
   ip_rules = var.ip_rules
   subnet_id = var.subnet_id
-  network_resource_group = var.network_resource_group
   azurefile_privatezone_id = module.network_overlay.azurefile_id
 }
 
@@ -56,12 +58,13 @@ module "kubernetes_cluster" {
   resource_group_name = module.resource_group.name
   prefix = var.prefix
   key_vault_id = module.key_vault.id
-  log_analytics_workspace_id = module.diagnostics_workspace.workspace_id
+  log_analytics_workspace_id = module.diagnostics_workspace.id
   cluster_admin_ids = var.cluster_admin_ids
   default_node_pool_vnet_subnet_id = var.subnet_id
   container_registry_id = module.container_registry.id
-  network_resource_group = var.network_resource_group
   azmk8s_zone_id = module.network_overlay.azmk8s_id
+  resource_group_id = module.resource_group.id
+  default_node_pool_vnet_id = var.virtual_network_id
 }
 
 module "storage_account_secret" {

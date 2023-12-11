@@ -6,7 +6,7 @@ terraform {
     }
     random = {
       source = "hashicorp/random"
-      version = "3.1.2"
+      version = "3.6.0"
     }
   }
 
@@ -23,13 +23,13 @@ terraform {
 }
 
 provider "azuread" {
-  tenant_id = "f12f0279-8a84-4068-8322-7a6fb0f839b8"
+  // tenant_id = ""
 }
 
 provider "azurerm" {
   features {}
-  tenant_id            = "f12f0279-8a84-4068-8322-7a6fb0f839b8"
-  subscription_id      = "4e36d23a-0f01-44f6-b3b1-54e033f2b1f1"
+  // tenant_id            = ""
+  // subscription_id      = ""
   skip_provider_registration = true
 }
 

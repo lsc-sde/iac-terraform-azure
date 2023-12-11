@@ -15,7 +15,7 @@ resource "azurerm_key_vault_key" "cluster" {
 }
 
 resource "azurerm_user_assigned_identity" "cluster" {
-  name                = local.identity_name
+  name                = local.cluster_identity_name
   resource_group_name = var.resource_group_name
   location            = var.location
 
@@ -28,8 +28,36 @@ resource "azurerm_user_assigned_identity" "cluster" {
   })
 }
 
+resource "azurerm_role_assignment" "cluster" {
+  name = "a11590e0-f117-4028-8430-a52663a53118"
+  scope = var.azmk8s_zone_id
+  principal_id =  azurerm_user_assigned_identity.cluster.principal_id
+  role_definition_name = "Contributor"
+}
+
+resource "azurerm_role_assignment" "cluster_managed_identity_operator" {
+  name = "a3411728-c492-447b-97d5-25549a2e11c9"
+  scope = var.resource_group_id
+  principal_id =  azurerm_user_assigned_identity.cluster.principal_id
+  role_definition_name = "Managed Identity Operator"
+}
+
+resource "azurerm_role_assignment" "cluster_network" {
+  name = "7d23c9c8-be44-4c9b-bea8-60a2c4f7a59a"
+  scope = var.default_node_pool_vnet_id
+  principal_id =  azurerm_user_assigned_identity.cluster.principal_id
+  role_definition_name = "Network Contributor"
+}
+
+resource "azurerm_role_assignment" "cluster_keyvault" {
+  name = "0cb5292e-3e8a-4435-8717-43c841c28a58"
+  scope = var.key_vault_id
+  principal_id =  azurerm_user_assigned_identity.cluster.principal_id
+  role_definition_name = "Key Vault Contributor"
+}
+
 resource "azurerm_user_assigned_identity" "kubelets" {
-  name                = local.identity_name
+  name                = local.kubelet_identity_name
   resource_group_name = var.resource_group_name
   location            = var.location
 
@@ -40,6 +68,34 @@ resource "azurerm_user_assigned_identity" "kubelets" {
     "TF.Resource" = "kubelets"
     "TF.Module" = "kubernetes-cluster-kubenet",
   })
+}
+
+resource "azurerm_role_assignment" "kubelets" {
+  name = "4e48e760-4c83-42b5-bd0e-21f724c6ca27"
+  scope = var.azmk8s_zone_id
+  principal_id =  azurerm_user_assigned_identity.kubelets.principal_id
+  role_definition_name = "Contributor"
+}
+
+resource "azurerm_role_assignment" "kubelets_managed_identity_operator" {
+  name = "81025c61-5a56-42bd-ab77-73901477c73c"
+  scope = var.resource_group_id
+  principal_id =  azurerm_user_assigned_identity.kubelets.principal_id
+  role_definition_name = "Managed Identity Operator"
+}
+
+resource "azurerm_role_assignment" "kubelets_network" {
+  name = "939a823f-22d2-41dd-8a11-a6d3fe4e338f"
+  scope = var.default_node_pool_vnet_id
+  principal_id =  azurerm_user_assigned_identity.kubelets.principal_id
+  role_definition_name = "Network Contributor"
+}
+
+resource "azurerm_role_assignment" "kubelets_keyvault" {
+  name = "c5d56270-6718-4c33-9454-86fc771fecfa"
+  scope = var.key_vault_id
+  principal_id =  azurerm_user_assigned_identity.kubelets.principal_id
+  role_definition_name = "Key Vault Contributor"
 }
 
 resource "azurerm_kubernetes_cluster" "cluster" {
@@ -76,6 +132,8 @@ resource "azurerm_kubernetes_cluster" "cluster" {
 
   kubelet_identity {
     user_assigned_identity_id = azurerm_user_assigned_identity.kubelets.id
+    client_id = azurerm_user_assigned_identity.kubelets.client_id
+    object_id = azurerm_user_assigned_identity.kubelets.principal_id
   }
 
   tags = merge(var.tags, {
@@ -87,17 +145,20 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   
   network_profile {
     network_plugin = "kubenet" 
-    network_policy = "azure"
+    network_policy = "calico"
     pod_cidr = var.pod_cidr
     load_balancer_sku = "standard"
   }
 
-  http_proxy_config {
-    http_proxy = var.proxy_address
-    https_proxy = var.proxy_address
-    no_proxy = var.proxy_exceptions
+  dynamic "http_proxy_config" {
+    for_each = local.proxy_details
+    content {  
+      http_proxy = var.proxy_address
+      https_proxy = var.proxy_address
+      no_proxy = var.proxy_exceptions
+    }
   }
-
+  
   azure_active_directory_role_based_access_control {
       managed = true
       azure_rbac_enabled = true
@@ -119,6 +180,15 @@ resource "azurerm_kubernetes_cluster" "cluster" {
     key_vault_network_access = "Private"
     key_vault_key_id = azurerm_key_vault_key.cluster.id
   }
+
+  depends_on = [ 
+    azurerm_role_assignment.cluster,
+    azurerm_user_assigned_identity.kubelets,
+    azurerm_role_assignment.cluster_managed_identity_operator,
+    azurerm_role_assignment.kubelets_managed_identity_operator,
+    azurerm_role_assignment.cluster_network,
+    azurerm_role_assignment.kubelets_network
+   ]
 }
 
 resource "azurerm_role_assignment" "acr_pull" {

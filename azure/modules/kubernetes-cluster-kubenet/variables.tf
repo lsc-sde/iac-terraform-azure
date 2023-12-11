@@ -14,7 +14,13 @@ variable "name" {
     default = ""
 }
 
-variable "identity_name" {
+variable "cluster_identity_name" {
+    type = string
+    description = "Name of the managed identity for the cluster"
+    default = ""
+}
+
+variable "kubelet_identity_name" {
     type = string
     description = "Name of the managed identity for the cluster"
     default = ""
@@ -55,6 +61,11 @@ variable default_node_pool_vnet_subnet_id {
     description = "The subnet id for the default node group"
 }
 
+variable default_node_pool_vnet_id {
+    type = string
+    description = "The id for the default node group"
+}
+
 variable "cluster_admin_ids" {
     type = list(string)
     description = "A list of groups with admin access over the cluster"
@@ -87,15 +98,10 @@ variable "key_vault_id" {
     description = "Id of the key vault used for KMS"
 }
 
-variable "network_resource_group" {
-  type = string
-  description = "Resource Group where the private link DNS Zone is installed"
-}
-
 variable "kubernetes_version" {
   type = string
   description = "Version of kubernetes to provision on the cluster"
-  default = "1.26.0"
+  default = "1.28.0"
 }
 
 variable "default_node_pool_max_pods" {
@@ -107,7 +113,7 @@ variable "default_node_pool_max_pods" {
 variable "proxy_address" {
   type = string
   description = "Address of the proxy server"
-  default = "http://lthswproxy01.xlthtr.nhs.uk:800/"
+  default = ""
 }
 
 variable "proxy_exceptions" {
@@ -136,4 +142,9 @@ variable "container_registry_id" {
 variable "azmk8s_zone_id" {
   type = string
   description = "id for the private zone for k8s"
+}
+
+variable "resource_group_id" {
+  type = string
+  default = "ID of the resource group"
 }

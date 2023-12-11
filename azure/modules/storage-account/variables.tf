@@ -35,11 +35,6 @@ variable "ip_rules" {
   description = "List of allowed IP addresses"
 }
 
-variable "network_resource_group" {
-  type = string
-  description = "Resource Group where the private link DNS Zone is installed"
-}
-
 variable "azurefile_privatezone_id" {
   type = string
   description = "id for the azure file private zone"

@@ -30,3 +30,18 @@ variable tags {
     type = map(string)
     description = "List of tags to generate"
 }
+
+variable "allowed_ips" {
+  type = list(string)
+  description = "List of IP's that can talk to key vault"
+}
+
+variable "k8s_admin_group" {
+  type = string
+  description = "Group"
+}
+
+variable "public_network_access_enabled" {
+  type = bool
+  description = "Allow public access to the key vault"
+}

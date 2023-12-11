@@ -1,5 +1,13 @@
+resource "random_string" "name" {
+  length = 22 - length(local.name)
+  upper = false
+  special = false
+  lower = true
+  numeric = true
+}
+
 resource "azurerm_storage_account" "main" {
-    name = local.name
+    name = "${local.name}${random_string.name.result}"
     resource_group_name = var.resource_group_name
     location = var.location
 
@@ -22,6 +30,8 @@ resource "azurerm_storage_account" "main" {
             var.subnet_id
         ]
     }
+
+    
 }
 
 resource "azurerm_private_endpoint" "main" {

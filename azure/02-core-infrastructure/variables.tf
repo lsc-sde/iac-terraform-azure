@@ -59,16 +59,36 @@ variable "prefect_hostname" {
 variable "prefect_postgresql_password" {
   type = string
   description = "Password for the prefect postgresql server"
-}
-
-variable "network_resource_group" {
-  type = string
-  description = "Resource Group where the private link DNS Zone is installed"
-  default = "rg-lsc-uks-tre-network"
+  default = "LetMePass@135"
 }
 
 variable "virtual_network_id" {
   type = string
   description = "The id of the virtual network we're linking to"
-  default = "/subscriptions/4e36d23a-0f01-44f6-b3b1-54e033f2b1f1/resourceGroups/rg-lsc-uks-tre-network/providers/Microsoft.Network/virtualNetworks/vnet-lsc-uks-tre-spoke"
+}
+
+variable "keyvault_allowed_ips" {
+  type = list(string)
+  description = "List"
+  default = [ ]
+}
+
+
+variable "k8s_admin_group" {
+  type = string
+  description = "Group"
+  default = "b12c915b-3f10-4e5e-baf4-91db4b7109b9" 
+}
+
+variable "keyvault_public_network_access_enabled" {
+  type = bool
+  description = "Allow public access to the key vault"
+  default = true
+}
+
+
+variable "proxy_address" {
+  type = string
+  description = "Address of the proxy server"
+  default = "" //"http://lthswproxy01.xlthtr.nhs.uk:800/"
 }

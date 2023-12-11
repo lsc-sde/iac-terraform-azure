@@ -19,6 +19,6 @@ resource "azurerm_private_dns_zone" "azmk8s" {
 resource "azurerm_private_dns_zone_virtual_network_link" "azmk8s" {
   name = "azmk8s"
   resource_group_name = var.resource_group_name
-  private_dns_zone_name = azurerm_private_dns_zone.azurefile.name
+  private_dns_zone_name = azurerm_private_dns_zone.azmk8s.name
   virtual_network_id = var.virtual_network_id
 }
