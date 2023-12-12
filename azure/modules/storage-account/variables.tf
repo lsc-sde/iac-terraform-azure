@@ -38,4 +38,5 @@ variable "ip_rules" {
 variable "azurefile_privatezone_id" {
   type = string
   description = "id for the azure file private zone"
+  default = ""
 }

@@ -54,6 +54,8 @@ resource "azurerm_private_endpoint" "main" {
 }
 
 resource "azurerm_private_dns_a_record" "main" {
+  count = var.var.azurefile_privatezone_id != "" ? 1 : 0
+  
   name                = "dns-a-${local.name}"
   zone_name           = var.azurefile_privatezone_id
   resource_group_name = var.resource_group_name

@@ -4,11 +4,6 @@ variable "location" {
   default = "uksouth"
 }
 
-variable "resource_group_name" {
-  type = string
-  description = "resource group to deploy"
-}
-
 variable "prefix" {
   type = string
   description = ""
