@@ -40,3 +40,9 @@ variable "tags" {
         "Repository" = "https://github.com/lsc-sde/k8s-iac.git"
     }
 }
+
+variable "vpn_client_prefix" {
+  type = string
+  description = "CIDR of the VPN client space to assign"
+  default = "10.0.242.0/24"
+}

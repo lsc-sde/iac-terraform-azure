@@ -31,13 +31,23 @@ module "spoke_vnet" {
   tags = merge(var.tags, { "Purpose" = "Test Spoke Network"})
 }
 
+module "hub_vpn" {
+  source = "../modules/vpn-gateway"
+  resource_group_name = module.hub_resource_group.name
+  gateway_subnet_prefix = local.vpn_subnet
+  location = var.location
+  tags = var.tags
+  vpn_client_prefix = var.vpn_client_prefix 
+  virtual_network_name = module.hub_vnet.name
+}
+
 module "hub_subnet" {
   source = "../modules/subnet"
 
   resource_group_name = module.hub_resource_group.name
   virtual_network_name = module.hub_vnet.name
   prefix = "${var.prefix}-hub-network"
-  address_space = var.hub_address_space
+  address_space = local.hub_subnet
   location = var.location
   tags = var.tags
 }
