@@ -37,6 +37,15 @@ variable "vpn_client_prefix" {
 
 variable "virtual_network_name" {
   type = string
-  description = "Name of the virtual"
+  description = "Name of the virtual network"
 }
 
+variable "tenant_name" {
+  type = string
+  description = "The name of the tenant Entra Id Tenant"
+}
+
+variable "spoke_address_space" {
+  type = string
+  description = "Address space for the spoke network"
+}

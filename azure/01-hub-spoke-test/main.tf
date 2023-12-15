@@ -31,16 +31,6 @@ module "spoke_vnet" {
   tags = merge(var.tags, { "Purpose" = "Test Spoke Network"})
 }
 
-module "hub_vpn" {
-  source = "../modules/vpn-gateway"
-  resource_group_name = module.hub_resource_group.name
-  gateway_subnet_prefix = local.vpn_subnet
-  location = var.location
-  tags = var.tags
-  vpn_client_prefix = var.vpn_client_prefix 
-  virtual_network_name = module.hub_vnet.name
-}
-
 module "hub_subnet" {
   source = "../modules/subnet"
 
@@ -80,5 +70,22 @@ module "peering" {
   depends_on = [ 
     module.hub_subnet,
     module.spoke_subnet
+  ]
+}
+
+module "hub_vpn" {
+  source = "../modules/vpn-gateway"
+  resource_group_name = module.hub_resource_group.name
+  gateway_subnet_prefix = local.vpn_subnet
+  location = var.location
+  tags = var.tags
+  vpn_client_prefix = var.vpn_client_prefix 
+  virtual_network_name = module.hub_vnet.name
+  prefix = var.prefix
+  tenant_name = var.tenant_name
+  spoke_address_space = var.spoke_address_space
+
+  depends_on = [ 
+    module.peering
   ]
 }

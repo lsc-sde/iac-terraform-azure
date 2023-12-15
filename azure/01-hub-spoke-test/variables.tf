@@ -46,3 +46,9 @@ variable "vpn_client_prefix" {
   description = "CIDR of the VPN client space to assign"
   default = "10.0.242.0/24"
 }
+
+variable "tenant_name" {
+  type = string
+  description = "The name of the tenant Entra Id Tenant"
+  default = "LANDERTRE.onmicrosoft.com"
+}
