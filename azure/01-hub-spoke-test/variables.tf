@@ -52,3 +52,11 @@ variable "tenant_name" {
   description = "The name of the tenant Entra Id Tenant"
   default = "LANDERTRE.onmicrosoft.com"
 }
+
+
+
+variable "admin_password" {
+  type = string
+  sensitive = true
+  default = "BadgerMushroom@1556"
+}

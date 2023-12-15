@@ -102,7 +102,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   name                = local.name
   location            = var.location
   resource_group_name = var.resource_group_name
-  dns_prefix          = local.name
+  dns_prefix_private_cluster = local.name
   private_cluster_enabled             = true
   private_cluster_public_fqdn_enabled = false
   private_dns_zone_id = var.azmk8s_zone_id 
@@ -121,6 +121,9 @@ resource "azurerm_kubernetes_cluster" "cluster" {
     ultra_ssd_enabled = true
     zones = [ "1" ]
     temporary_name_for_rotation = "temppool"
+    upgrade_settings {
+      max_surge = "10%"
+    }
   }
 
   identity {

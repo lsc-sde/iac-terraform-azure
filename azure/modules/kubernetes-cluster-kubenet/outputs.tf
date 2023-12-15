@@ -2,6 +2,10 @@ output "id" {
     value = azurerm_kubernetes_cluster.cluster.id
 }
 
+output "name" {
+    value = azurerm_kubernetes_cluster.cluster.name
+}
+
 output "host" {
     value = azurerm_kubernetes_cluster.cluster.kube_admin_config.0.host
 }

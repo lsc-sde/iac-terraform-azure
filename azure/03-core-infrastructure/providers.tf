@@ -38,18 +38,20 @@ provider "random" {
 }
 
 provider "kubernetes" {
-  host                   = module.kubernetes_cluster.host
+  host                   = one(data.azurerm_private_dns_a_record.k8s.records)
   client_certificate     = base64decode(module.kubernetes_cluster.client_certificate)
   client_key             = base64decode(module.kubernetes_cluster.client_key)
   cluster_ca_certificate = base64decode(module.kubernetes_cluster.cluster_ca_certificate)
+  tls_server_name = data.azurerm_private_dns_a_record.k8s.fqdn
 }
 
 provider "helm" {
   kubernetes {
     config_path = "~/.kube/config"
-    host                   = module.kubernetes_cluster.host
+    host                   = one(data.azurerm_private_dns_a_record.k8s.records)
     client_certificate     = base64decode(module.kubernetes_cluster.client_certificate)
     client_key             = base64decode(module.kubernetes_cluster.client_key)
     cluster_ca_certificate = base64decode(module.kubernetes_cluster.cluster_ca_certificate)
+    tls_server_name = data.azurerm_private_dns_a_record.k8s.fqdn
   }
 }

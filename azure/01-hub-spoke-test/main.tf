@@ -89,3 +89,15 @@ module "hub_vpn" {
     module.peering
   ]
 }
+
+
+module "dns_appliance" {
+  source = "../modules/vm-appliance-dns"
+  resource_group_name = module.hub_resource_group.name
+  tags = var.tags
+  location = var.location
+  purpose = "Test DNS Appliance"
+  subnet_id = module.hub_subnet.id
+  admin_password = var.admin_password
+  prefix = "${var.prefix}-dns"
+}

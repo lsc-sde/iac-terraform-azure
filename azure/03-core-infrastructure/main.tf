@@ -13,11 +13,14 @@ module "container_registry" {
   prefix = var.prefix
 }
 
-module "network_overlay" {
-  source = "../modules/network-overlay"
+module "private_dns_zone" {
+  source = "../modules/private-dns-zone"
 
   virtual_network_id = var.virtual_network_id
   resource_group_name = module.resource_group.name
+  enable_hub_dns = var.enable_hub_dns
+  hub_virtual_network_id = var.hub_virtual_network_id
+  tags = var.tags
 }
 
 module "key_vault" {
@@ -47,7 +50,9 @@ module "storage_account" {
   prefix = var.prefix
   ip_rules = var.ip_rules
   subnet_id = var.subnet_id
-  azurefile_privatezone_id = module.network_overlay.azurefile_id
+  azurefile_privatezone_enabled = true
+  azurefile_privatezone_name = module.private_dns_zone.name
+  azurefile_privatezone_resource_group_name = module.resource_group.name
 }
 
 
@@ -62,7 +67,7 @@ module "kubernetes_cluster" {
   cluster_admin_ids = var.cluster_admin_ids
   default_node_pool_vnet_subnet_id = var.subnet_id
   container_registry_id = module.container_registry.id
-  azmk8s_zone_id = module.network_overlay.azmk8s_id
+  azmk8s_zone_id = module.private_dns_zone.id
   resource_group_id = module.resource_group.id
   default_node_pool_vnet_id = var.virtual_network_id
 }

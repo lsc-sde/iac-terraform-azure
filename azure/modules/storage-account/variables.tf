@@ -35,8 +35,20 @@ variable "ip_rules" {
   description = "List of allowed IP addresses"
 }
 
-variable "azurefile_privatezone_id" {
+variable "azurefile_privatezone_name" {
   type = string
   description = "id for the azure file private zone"
   default = ""
+}
+
+variable "azurefile_privatezone_resource_group_name" {
+  type = string
+  description = "resource group for the azure file private zone"
+  default = ""
+}
+
+variable "azurefile_privatezone_enabled" {
+    type = bool
+    description = "Whether to create the private zone records"
+    default = false
 }

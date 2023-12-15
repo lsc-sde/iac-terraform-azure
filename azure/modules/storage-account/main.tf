@@ -54,11 +54,11 @@ resource "azurerm_private_endpoint" "main" {
 }
 
 resource "azurerm_private_dns_a_record" "main" {
-  count = var.var.azurefile_privatezone_id != "" ? 1 : 0
+  count = var.azurefile_privatezone_enabled ? 1 : 0
   
   name                = "dns-a-${local.name}"
-  zone_name           = var.azurefile_privatezone_id
-  resource_group_name = var.resource_group_name
+  zone_name           = var.azurefile_privatezone_name
+  resource_group_name = var.azurefile_privatezone_resource_group_name
   ttl                 = 300
   records             = [
     azurerm_private_endpoint.main.private_service_connection.0.private_ip_address

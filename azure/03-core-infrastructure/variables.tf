@@ -6,7 +6,8 @@ variable "location" {
 
 variable "prefix" {
   type = string
-  description = ""
+  description = "Naming prefix"
+  default = "lscsandboxsde"
 }
 
 variable "tags" {
@@ -24,12 +25,15 @@ variable "tags" {
 variable "cluster_admin_ids" {
     type = list(string)
     description = "A list of groups with admin access over the cluster"
-    default = []
+    default = [
+      "1fff09c5-0c5d-42e7-b3b6-e60f5b445de6"
+    ]
 }
 
 variable "subnet_id" {
   type = string
   description = "Id of the subnet where the cluster is to be installed"
+  default = "/subscriptions/5bb2478d-e497-4ca1-964e-4aaa9f754a5d/resourceGroups/test-network-spoke-network-rg/providers/Microsoft.Network/virtualNetworks/test-network-spoke-network-vnet/subnets/test-network-spoke-network-subnet"
 }
 
 variable "ip_rules" {
@@ -60,6 +64,13 @@ variable "prefect_postgresql_password" {
 variable "virtual_network_id" {
   type = string
   description = "The id of the virtual network we're linking to"
+  default = "/subscriptions/5bb2478d-e497-4ca1-964e-4aaa9f754a5d/resourceGroups/test-network-spoke-network-rg/providers/Microsoft.Network/virtualNetworks/test-network-spoke-network-vnet"
+}
+
+variable "hub_virtual_network_id" {
+  type = string
+  description = "The id of the hub virtual network we're linking to"
+  default = "/subscriptions/5bb2478d-e497-4ca1-964e-4aaa9f754a5d/resourceGroups/test-network-hub-network-rg/providers/Microsoft.Network/virtualNetworks/test-network-hub-network-vnet"
 }
 
 variable "keyvault_allowed_ips" {
@@ -72,7 +83,7 @@ variable "keyvault_allowed_ips" {
 variable "k8s_admin_group" {
   type = string
   description = "Group"
-  default = "b12c915b-3f10-4e5e-baf4-91db4b7109b9" 
+  default = "1fff09c5-0c5d-42e7-b3b6-e60f5b445de6" 
 }
 
 variable "keyvault_public_network_access_enabled" {
@@ -86,4 +97,10 @@ variable "proxy_address" {
   type = string
   description = "Address of the proxy server"
   default = "" //"http://lthswproxy01.xlthtr.nhs.uk:800/"
+}
+
+variable "enable_hub_dns" {
+  type = bool
+  description = "Installs the private zone dns into the hub network"
+  default = true
 }
