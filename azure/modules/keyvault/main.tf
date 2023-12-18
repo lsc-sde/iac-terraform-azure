@@ -13,7 +13,7 @@ resource "azurerm_key_vault" "keyVault" {
   soft_delete_retention_days  = 7
   purge_protection_enabled    = false
   public_network_access_enabled = var.public_network_access_enabled
-  enable_rbac_authorization = false
+  enable_rbac_authorization = true
 
   sku_name = "standard"
 
@@ -38,10 +38,16 @@ resource "azurerm_key_vault" "keyVault" {
   }
 }
 
-/*
+
 resource "azurerm_role_assignment" "k8s_admin_group" {
   scope = azurerm_key_vault.keyVault.id
   principal_id = var.k8s_admin_group
   role_definition_name =  "Key Vault Data Access Administrator"
 }
-*/
+
+resource "azurerm_role_assignment" "k8s_admin_group_kvco" {
+  scope = azurerm_key_vault.keyVault.id
+  principal_id = var.k8s_admin_group
+  role_definition_name =  "Key Vault Crypto Officer"
+}
+

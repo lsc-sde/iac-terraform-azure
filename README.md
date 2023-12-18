@@ -63,3 +63,4 @@ Once you have a network in place, you will need somewhere to store your terrafor
 
 ### Core Infrastructure
 Once you've got your network and terraform state sorted out you can provision the infrastructure using the core terraform scripts [./azure/03-core-infrastructure](./azure/03-core-infrastructure/).
+        

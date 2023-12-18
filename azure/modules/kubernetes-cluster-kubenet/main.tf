@@ -35,6 +35,15 @@ resource "azurerm_role_assignment" "cluster" {
   role_definition_name = "Contributor"
 }
 
+
+
+resource "azurerm_role_assignment" "cluser_kvcu" {
+  name = "3f3a3113-8be6-4451-a12c-82107ca4e0bc"
+  scope = var.key_vault_id
+  principal_id =  azurerm_user_assigned_identity.cluster.principal_id
+  role_definition_name = "Key Vault Crypto User"
+}
+
 resource "azurerm_role_assignment" "cluster_managed_identity_operator" {
   name = "a3411728-c492-447b-97d5-25549a2e11c9"
   scope = var.resource_group_id
@@ -98,6 +107,13 @@ resource "azurerm_role_assignment" "kubelets_keyvault" {
   role_definition_name = "Key Vault Contributor"
 }
 
+resource "azurerm_role_assignment" "kubelets_kvcu" {
+  name = "5dcbef66-27ec-4a5e-8a61-b32278d02dc1"
+  scope = var.key_vault_id
+  principal_id =  azurerm_user_assigned_identity.kubelets.principal_id
+  role_definition_name = "Key Vault Crypto User"
+}
+
 resource "azurerm_kubernetes_cluster" "cluster" {
   name                = local.name
   location            = var.location
@@ -149,7 +165,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   network_profile {
     network_plugin = "kubenet" 
     network_policy = "calico"
-    pod_cidr = var.pod_cidr
+    // pod_cidr = var.pod_cidr
     load_balancer_sku = "standard"
   }
 
