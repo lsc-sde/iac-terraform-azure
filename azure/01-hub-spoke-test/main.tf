@@ -97,4 +97,5 @@ module "dns_appliance" {
   subnet_id = module.hub_subnet.id
   admin_password = var.admin_password
   prefix = "${var.prefix}-dns"
+  vpn_subnet_cidr = module.hub_vpn.vpn_cidr
 }

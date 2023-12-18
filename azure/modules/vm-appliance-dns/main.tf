@@ -20,7 +20,7 @@ resource "azurerm_virtual_machine_extension" "main" {
 
   settings = <<SETTINGS
  {
-  "commandToExecute": "apt install bind9 -y && apt install dnsutils -y"
+  "script": "${base64encode(local.bind_script)}"
  }
 SETTINGS
 
