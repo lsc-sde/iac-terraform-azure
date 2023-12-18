@@ -69,6 +69,7 @@ module "peering" {
 
   depends_on = [ 
     module.hub_subnet,
+    module.hub_vpn,
     module.spoke_subnet
   ]
 }
@@ -84,10 +85,6 @@ module "hub_vpn" {
   prefix = var.prefix
   tenant_name = var.tenant_name
   spoke_address_space = var.spoke_address_space
-
-  depends_on = [ 
-    module.peering
-  ]
 }
 
 
