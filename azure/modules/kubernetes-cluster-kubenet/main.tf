@@ -12,6 +12,13 @@ resource "azurerm_key_vault_key" "cluster" {
     "verify",
     "wrapKey",
   ]
+
+  tags = var.tags
+
+  depends_on = [ 
+    azurerm_role_assignment.cluster_kvcu,
+    azurerm_role_assignment.kubelets_kvcu,
+   ]
 }
 
 resource "azurerm_user_assigned_identity" "cluster" {
@@ -37,7 +44,7 @@ resource "azurerm_role_assignment" "cluster" {
 
 
 
-resource "azurerm_role_assignment" "cluser_kvcu" {
+resource "azurerm_role_assignment" "cluster_kvcu" {
   name = "3f3a3113-8be6-4451-a12c-82107ca4e0bc"
   scope = var.key_vault_id
   principal_id =  azurerm_user_assigned_identity.cluster.principal_id
@@ -98,6 +105,21 @@ resource "azurerm_role_assignment" "kubelets_network" {
   scope = var.default_node_pool_vnet_id
   principal_id =  azurerm_user_assigned_identity.kubelets.principal_id
   role_definition_name = "Network Contributor"
+}
+
+
+resource "azurerm_role_assignment" "cluster_pzc" {
+  name = "6d271502-a49d-47f8-85a1-34014873f92a"
+  scope = var.azmk8s_zone_id
+  principal_id =  azurerm_user_assigned_identity.cluster.principal_id
+  role_definition_name = "Private DNS Zone Contributor"
+}
+
+resource "azurerm_role_assignment" "kubelets_pzc" {
+  name = "584e313c-768c-41af-bce1-e2eb5f6e1645"
+  scope = var.azmk8s_zone_id
+  principal_id =  azurerm_user_assigned_identity.kubelets.principal_id
+  role_definition_name = "Private DNS Zone Contributor"
 }
 
 resource "azurerm_role_assignment" "kubelets_keyvault" {
@@ -165,7 +187,9 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   network_profile {
     network_plugin = "kubenet" 
     network_policy = "calico"
-    // pod_cidr = var.pod_cidr
+    pod_cidr = local.pod_cidr
+    service_cidr = local.service_cidr
+    dns_service_ip = cidrhost(local.service_cidr, 10)
     load_balancer_sku = "standard"
   }
 

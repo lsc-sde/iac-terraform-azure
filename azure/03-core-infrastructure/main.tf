@@ -71,13 +71,3 @@ module "kubernetes_cluster" {
   resource_group_id = module.resource_group.id
   default_node_pool_vnet_id = var.virtual_network_id
 }
-
-module "storage_account_secret" {
-  source = "../modules/storage-account-secret"
-  name = "secret-${module.storage_account.name}"
-  namespace = "default"
-  storage_account_name = module.storage_account.name
-  storage_account_primary_access_key = module.storage_account.primary_access_key
- 
-  depends_on = [ module.kubernetes_cluster ]
-}

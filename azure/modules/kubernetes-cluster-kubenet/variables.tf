@@ -76,10 +76,27 @@ variable "log_analytics_workspace_id" {
     description = "Location for logs to be exported"
 }
 
+variable "network_cidr" {
+  type = string
+  description = "Network CIDR"
+  default = "100.64.0.0/16" 
+    
+    /* 
+        This defaults to the Carrier Grade NAT space which is unlikely to
+        collide with existing CIDR ranges in the NHS.
+    */
+}
+
 variable "pod_cidr" {
     type = string
     description = "The CIDR to assign to pods running on kubenet"
-    default = "100.64.0.0/10" 
+    default = ""
+}
+
+variable "service_cidr" {
+    type = string
+    description = "The CIDR to assign to pods running on kubenet"
+    default = "" 
     
     /* 
         This defaults to the Carrier Grade NAT space which is unlikely to

@@ -36,20 +36,3 @@ provider "azurerm" {
 provider "random" {
   # Configuration options
 }
-
-provider "kubernetes" {
-  host                   = module.kubernetes_cluster.host
-  client_certificate     = base64decode(module.kubernetes_cluster.client_certificate)
-  client_key             = base64decode(module.kubernetes_cluster.client_key)
-  cluster_ca_certificate = base64decode(module.kubernetes_cluster.cluster_ca_certificate)
-}
-
-provider "helm" {
-  kubernetes {
-    config_path = "~/.kube/config"
-    host                   = module.kubernetes_cluster.host
-    client_certificate     = base64decode(module.kubernetes_cluster.client_certificate)
-    client_key             = base64decode(module.kubernetes_cluster.client_key)
-    cluster_ca_certificate = base64decode(module.kubernetes_cluster.cluster_ca_certificate)
-  }
-}

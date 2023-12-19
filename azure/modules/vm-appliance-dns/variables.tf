@@ -49,3 +49,8 @@ variable "vpn_subnet_cidr" {
   type = string
   description = "value"
 }
+
+variable "virtual_network_id" {
+  type = string
+  description = "Id of the virtual network"
+}
