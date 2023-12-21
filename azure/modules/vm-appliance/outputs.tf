@@ -5,3 +5,7 @@ output id {
 output ip_address {
     value = azurerm_network_interface.main.private_ip_address
 }
+
+output "name" {
+  value = azurerm_virtual_machine.main.name
+}

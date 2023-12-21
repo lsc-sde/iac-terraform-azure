@@ -165,3 +165,13 @@ variable "resource_group_id" {
   type = string
   default = "ID of the resource group"
 }
+
+variable "network_security_group_name" {
+  type = string
+  description = "Name of the network security group"
+}
+
+variable "network_resource_group_name" {
+  type = string
+  description = "Name of the network resource group"
+}

@@ -240,3 +240,17 @@ resource "azurerm_role_assignment" "acr_pull" {
   principal_id = azurerm_user_assigned_identity.kubelets.principal_id
   skip_service_principal_aad_check = true
 }
+
+resource "azurerm_network_security_rule" "https" {
+  network_security_group_name = var.network_security_group_name
+  resource_group_name = var.network_resource_group_name
+  name = "https"
+  priority = 100
+  protocol = "Tcp"
+  direction = "Inbound"
+  access = "Allow"
+  source_address_prefix = "*"
+  source_port_range = "*"
+  destination_address_prefix = "*"
+  destination_port_range = "443"
+}

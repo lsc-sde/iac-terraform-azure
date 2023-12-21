@@ -70,4 +70,6 @@ module "kubernetes_cluster" {
   azmk8s_zone_id = module.private_dns_zone.id
   resource_group_id = module.resource_group.id
   default_node_pool_vnet_id = var.virtual_network_id
+  network_security_group_name = var.network_security_group_name
+  network_resource_group_name = var.network_resource_group_name
 }

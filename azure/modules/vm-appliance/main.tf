@@ -47,6 +47,9 @@ resource "azurerm_virtual_machine" "main" {
     managed_disk_type = "Standard_LRS"
   }
 
+  delete_os_disk_on_termination = true
+  delete_data_disks_on_termination = true
+
   storage_image_reference {
     publisher = var.image_publisher 
     offer     = var.image_offer

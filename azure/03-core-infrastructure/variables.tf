@@ -104,3 +104,15 @@ variable "enable_hub_dns" {
   description = "Installs the private zone dns into the hub network"
   default = true
 }
+
+variable "network_resource_group_name" {
+  type = string
+  description = "Name of the network resource group"
+  default = "test-network-spoke-network-rg"
+}
+
+variable "network_security_group_name" {
+  type = string
+  description = "Name of the network security group"
+  default = "test-network-spoke-network-subnet"
+}

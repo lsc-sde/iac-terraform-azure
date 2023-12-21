@@ -99,4 +99,5 @@ module "dns_appliance" {
   prefix = "${var.prefix}-dns"
   vpn_subnet_cidr = module.hub_vpn.vpn_cidr
   virtual_network_id = module.hub_vnet.id
+  network_security_group_name = module.hub_subnet.security_group_name
 }
