@@ -17,7 +17,7 @@ jobs:
     
     - uses: Azure/login@v1
       with:
-        creds: ${{ secrets.AZURECREDENTIALS }} 
+        creds: ${{ secrets.SANDBOX_AZ_CREDENTIALS }} 
         
     - name: Upload Configuration
       uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.0
