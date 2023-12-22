@@ -23,5 +23,11 @@ jobs:
       uses: hashicorp/setup-terraform@v2.0.3
     
     - name: 'terraform init'
+      working-directory: './azure/01-hub-spoke-test'
       run: |
         terraform init
+
+    - name: 'terraform apply'
+      working-directory: './azure/01-hub-spoke-test'
+      run: |
+        terraform apply -auto-approve
