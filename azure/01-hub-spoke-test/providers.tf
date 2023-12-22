@@ -10,16 +10,15 @@ terraform {
     }
   }
 
-/*
+
   backend "azurerm" {
-      resource_group_name  = ""
-      storage_account_name = ""
+      resource_group_name  = "lsc-sde-sandbox-environment-rg"
+      storage_account_name = "lscsdesandboxenvironment"
       container_name       = "tfstate"
-      key                  = "prd.tfstate"
-      tenant_id            = "f12f0279-8a84-4068-8322-7a6fb0f839b8"
-      subscription_id      = "4e36d23a-0f01-44f6-b3b1-54e033f2b1f1"
+      key                  = "01-hub-spoke-test.tfstate"
+      tenant_id            = "4600653f-a3c3-4253-b7b4-bef5fa774def"
+      subscription_id      = "5bb2478d-e497-4ca1-964e-4aaa9f754a5d"
   }
-*/
 }
 
 provider "azuread" {
