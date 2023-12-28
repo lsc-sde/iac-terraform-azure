@@ -25,6 +25,15 @@ jobs:
     - name: 'terraform init'
       working-directory: './azure/01-hub-spoke-test'
       run: |
+        export AZ_CREDENTIALS=<<<EOF
+        ${{ secrets.SANDBOX_AZ_CREDENTIALS }}
+        EOF
+        export ARM_CLIENT_ID=$(echo $AZ_CREDENTIALS | jq '.clientId')
+        echo "ARM_CLIENT_ID: ${ARM_CLIENT_ID}"
+
+        export ARM_CLIENT_SECRET=$(echo $AZ_CREDENTIALS | jq '.clientSecret')
+        export ARM_TENANT_ID=$(echo $AZ_CREDENTIALS | jq '.tenantId')
+        export ARM_SUBSCRIPTION_ID=$(echo $AZ_CREDENTIALS | jq '.subscriptionId')
         terraform init
 
     - name: 'terraform apply'
