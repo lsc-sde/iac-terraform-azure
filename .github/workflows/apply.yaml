@@ -8,7 +8,6 @@ on:
   #schedule:
   #  - "30 7 * * 1,2,4,5"
 
-
 jobs:
   hub-spoke:
     uses: lsc-sde/lsc-sde/.github/workflows/terraform.yaml@main
