@@ -64,6 +64,8 @@ module "kubernetes_cluster" {
   prefix = var.prefix
   key_vault_id = module.key_vault.id
   log_analytics_workspace_id = module.diagnostics_workspace.id
+  log_analytics_workspace_name = module.diagnostics_workspace.name
+
   cluster_admin_ids = var.cluster_admin_ids
   default_node_pool_vnet_subnet_id = var.subnet_id
   container_registry_id = module.container_registry.id

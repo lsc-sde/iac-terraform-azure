@@ -76,6 +76,11 @@ variable "log_analytics_workspace_id" {
     description = "Location for logs to be exported"
 }
 
+variable "log_analytics_workspace_name" {
+    type = string
+    description = "Name of the log analytics workspace for logs to be exported"
+}
+
 variable "network_cidr" {
   type = string
   description = "Network CIDR"
