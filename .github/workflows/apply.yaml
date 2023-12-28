@@ -1,12 +1,8 @@
 name: Terraform Apply
 
 on:
-  push:
-    branches: 
-    - "issues/sjt/13-pipeline" 
-
-  #schedule:
-  #  - "30 7 * * 1,2,4,5"
+  schedule:
+  - "30 7 * * 1,2,4,5"
 
 
 jobs:
