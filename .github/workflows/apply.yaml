@@ -1,6 +1,10 @@
 name: Terraform Apply
 
 on:
+  #push:
+  #  branches: 
+  #  - "main" 
+
   schedule:
   - "30 7 * * 1,2,4,5"
 
