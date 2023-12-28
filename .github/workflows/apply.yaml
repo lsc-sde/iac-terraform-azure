@@ -1,0 +1,27 @@
+name: Terraform Apply
+
+on:
+  #push:
+  #  branches: 
+  #  - "main" 
+
+  schedule:
+  - cron: "30 7 * * 1,2,4,5"
+
+
+jobs:
+  hub-spoke:
+    uses: lsc-sde/lsc-sde/.github/workflows/terraform.yaml@main
+    with:
+      workingDirectory: './azure/01-hub-spoke-test'
+      action: apply
+    secrets:
+      azureCredentials: ${{ secrets.sandbox_az_credentials }}
+  core-infrastructure:
+    needs: hub-spoke
+    uses: lsc-sde/lsc-sde/.github/workflows/terraform.yaml@main
+    with:
+      workingDirectory: './azure/03-core-infrastructure'
+      action: apply
+    secrets:
+      azureCredentials: ${{ secrets.sandbox_az_credentials }}

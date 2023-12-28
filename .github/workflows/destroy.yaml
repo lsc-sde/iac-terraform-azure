@@ -1,0 +1,23 @@
+name: Terraform Destroy
+
+on:
+  schedule:
+    - cron: "0 16 * * 1,2,4,5"
+
+
+jobs:
+  core-infrastructure:
+    uses: lsc-sde/lsc-sde/.github/workflows/terraform.yaml@main
+    with:
+      workingDirectory: './azure/03-core-infrastructure'
+      action: destroy
+    secrets:
+      azureCredentials: ${{ secrets.sandbox_az_credentials }}
+  hub-spoke:
+    needs: core-infrastructure
+    uses: lsc-sde/lsc-sde/.github/workflows/terraform.yaml@main
+    with:
+      workingDirectory: './azure/01-hub-spoke-test'
+      action: destroy
+    secrets:
+      azureCredentials: ${{ secrets.sandbox_az_credentials }}
