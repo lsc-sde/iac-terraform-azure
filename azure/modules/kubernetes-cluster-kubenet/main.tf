@@ -1,3 +1,19 @@
+resource "azurerm_log_analytics_solution" "container_insights" {
+  solution_name         = "ContainerInsights"
+  location              = var.location
+  resource_group_name   = var.resource_group_name
+  workspace_resource_id = var.log_analytics_workspace_id
+  workspace_name        = var.log_analytics_workspace_name
+
+  plan {
+    publisher = "Microsoft"
+    product   = "OMSGallery/ContainerInsights"
+  }
+
+  tags = var.tags
+
+}
+
 resource "azurerm_key_vault_key" "cluster" {
   key_vault_id = var.key_vault_id
   name = local.kms_key_name
@@ -225,6 +241,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   }
 
   depends_on = [ 
+    azurerm_log_analytics_solution.container_insights,
     azurerm_role_assignment.cluster,
     azurerm_user_assigned_identity.kubelets,
     azurerm_role_assignment.cluster_managed_identity_operator,
