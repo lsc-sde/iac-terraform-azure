@@ -10,9 +10,16 @@ on:
 
 
 jobs:
-  apply:
+  hub-spoke:
     uses: lsc-sde/lsc-sde/.github/workflows/terraform.yaml@main
     with:
       workingDirectory: './azure/01-hub-spoke-test'
+    secrets:
+      azureCredentials: ${{ secrets.sandbox_az_credentials }}
+  core-infrastructure:
+    needs: hub-spoke
+    uses: lsc-sde/lsc-sde/.github/workflows/terraform.yaml@main
+    with:
+      workingDirectory: './azure/03-core-infrastructure'
     secrets:
       azureCredentials: ${{ secrets.sandbox_az_credentials }}
