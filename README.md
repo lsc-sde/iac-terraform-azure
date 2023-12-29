@@ -44,19 +44,35 @@ As the solution is designed for use within NHS networks, the expectation is that
 
 ```mermaid
 flowchart LR
-    Hub((Hub Network)) --> Spoke((Spoke Network)) --> Subnet[[Environment Subnet]] --> Cluster([Kubernetes Cluster])
+
+    VPN[Virtual Network Gateway] --> Hub((Hub Network)) --> Spoke((Spoke Network)) --> Subnet[[Environment Subnet]] --> Cluster([Kubernetes Cluster])
 
 ```
 
 if you don't have a hub/spoke design to work from, you can set one up using the terraform in [./azure/01-hub-spoke-test](azure/01-hub-spoke-test).
 
-This has no backend so you can simply useo the commands
+To run this from your local machine, you must be logged in to az cli.
 
-```terraform
+```bash
 terraform init
 terraform plan
 terraform apply
 ```
+
+Please note that because of the way azure P2S VPN works, the details of the VPN will change each time it is provisioned, as a result you will need to import the VPN configuration every time the gateway is provisioned. You can get the vpn client configuration using the following command in azure cli
+
+```bash
+az network vnet-gateway vpn-client generate -g test-network-hub-network-rg -n test-network-vpngw -o tsv
+```
+
+This will output a URL to the Azure VPN Configuration. You can then download this file which should download as vpnclientconfiguration.zip
+
+This zip file will contain two folders:
+
+* AzureVPN
+* Generic
+
+The file *azurevpnconfig.xml* in AzureVPN can be imported into Azure VPN client and used to connect to the environment.
 
 ### Terraform State
 Once you have a network in place, you will need somewhere to store your terraform backend in state. You can either use an existing storage or you can provision a new storage account using the terraform in [./azure/02-state-store](./azure/02-state-store/)
