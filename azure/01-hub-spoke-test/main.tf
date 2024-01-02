@@ -40,6 +40,10 @@ module "hub_subnet" {
   address_space = local.hub_subnet
   location = var.location
   tags = var.tags
+
+  depends_on = [ 
+    module.spoke_subnet
+   ]
 }
 
 module "spoke_subnet" {
@@ -54,37 +58,27 @@ module "spoke_subnet" {
   default_service_endpoints = true
 }
 
-module "peering" {
-  source = "../modules/internal-vnet-peering"
-
-  source_name = "Hub"
-  source_resource_group_name = module.hub_resource_group.name
-  source_virtual_network_id = module.hub_vnet.id
-  source_virtual_network_name = module.hub_vnet.name
-  
-  destination_name = "Spoke"
-  destination_resource_group_name = module.spoke_resource_group.name
-  destination_virtual_network_id = module.spoke_vnet.id
-  destination_virtual_network_name = module.spoke_vnet.name
-
-  depends_on = [ 
-    module.hub_subnet,
-    module.hub_vpn,
-    module.spoke_subnet
-  ]
-}
 
 module "hub_vpn" {
   source = "../modules/vpn-gateway"
   resource_group_name = module.hub_resource_group.name
   gateway_subnet_prefix = local.vpn_subnet
   location = var.location
-  tags = var.tags
+  tags = merge(var.tags, 
+  {
+    "Hub.Subnet": module.hub_subnet.id
+    "Spoke.Subnet": module.spoke_subnet.id
+  })
   vpn_client_prefix = var.vpn_client_prefix 
   virtual_network_name = module.hub_vnet.name
   prefix = var.prefix
   tenant_name = var.tenant_name
   spoke_address_space = var.spoke_address_space
+
+  depends_on = [ 
+    module.hub_subnet,
+    module.spoke_subnet
+   ]
 }
 
 
@@ -102,6 +96,24 @@ module "dns_appliance" {
   network_security_group_name = module.hub_subnet.security_group_name
 
   depends_on = [ 
-      module.peering
+      module.hub_vpn
    ]
+}
+
+module "peering" {
+  source = "../modules/internal-vnet-peering"
+
+  source_name = "Hub"
+  source_resource_group_name = module.hub_resource_group.name
+  source_virtual_network_id = module.hub_vnet.id
+  source_virtual_network_name = module.hub_vnet.name
+  
+  destination_name = "Spoke"
+  destination_resource_group_name = module.spoke_resource_group.name
+  destination_virtual_network_id = module.spoke_vnet.id
+  destination_virtual_network_name = module.spoke_vnet.name
+
+  depends_on = [ 
+    module.hub_vpn
+  ]
 }
