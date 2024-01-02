@@ -40,6 +40,10 @@ module "hub_subnet" {
   address_space = local.hub_subnet
   location = var.location
   tags = var.tags
+
+  depends_on = [ 
+    module.spoke_subnet
+   ]
 }
 
 module "spoke_subnet" {
@@ -52,6 +56,48 @@ module "spoke_subnet" {
   location = var.location
   tags = var.tags
   default_service_endpoints = true
+}
+
+
+module "hub_vpn" {
+  source = "../modules/vpn-gateway"
+  resource_group_name = module.hub_resource_group.name
+  gateway_subnet_prefix = local.vpn_subnet
+  location = var.location
+  tags = merge(var.tags, 
+  {
+    "Hub.Subnet": module.hub_subnet.id
+    "Spoke.Subnet": module.spoke_subnet.id
+  })
+  vpn_client_prefix = var.vpn_client_prefix 
+  virtual_network_name = module.hub_vnet.name
+  prefix = var.prefix
+  tenant_name = var.tenant_name
+  spoke_address_space = var.spoke_address_space
+
+  depends_on = [ 
+    module.hub_subnet,
+    module.spoke_subnet
+   ]
+}
+
+
+module "dns_appliance" {
+  source = "../modules/vm-appliance-dns"
+  resource_group_name = module.hub_resource_group.name
+  tags = var.tags
+  location = var.location
+  purpose = "Test DNS Appliance"
+  subnet_id = module.hub_subnet.id
+  admin_password = var.admin_password
+  prefix = "${var.prefix}-dns"
+  vpn_subnet_cidr = module.hub_vpn.vpn_cidr
+  virtual_network_id = module.hub_vnet.id
+  network_security_group_name = module.hub_subnet.security_group_name
+
+  depends_on = [ 
+      module.hub_vpn
+   ]
 }
 
 module "peering" {
@@ -68,36 +114,6 @@ module "peering" {
   destination_virtual_network_name = module.spoke_vnet.name
 
   depends_on = [ 
-    module.hub_subnet,
-    module.hub_vpn,
-    module.spoke_subnet
+    module.hub_vpn
   ]
-}
-
-module "hub_vpn" {
-  source = "../modules/vpn-gateway"
-  resource_group_name = module.hub_resource_group.name
-  gateway_subnet_prefix = local.vpn_subnet
-  location = var.location
-  tags = var.tags
-  vpn_client_prefix = var.vpn_client_prefix 
-  virtual_network_name = module.hub_vnet.name
-  prefix = var.prefix
-  tenant_name = var.tenant_name
-  spoke_address_space = var.spoke_address_space
-}
-
-
-module "dns_appliance" {
-  source = "../modules/vm-appliance-dns"
-  resource_group_name = module.hub_resource_group.name
-  tags = var.tags
-  location = var.location
-  purpose = "Test DNS Appliance"
-  subnet_id = module.hub_subnet.id
-  admin_password = var.admin_password
-  prefix = "${var.prefix}-dns"
-  vpn_subnet_cidr = module.hub_vpn.vpn_cidr
-  virtual_network_id = module.hub_vnet.id
-  network_security_group_name = module.hub_subnet.security_group_name
 }
