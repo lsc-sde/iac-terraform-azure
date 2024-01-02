@@ -1,9 +1,9 @@
 name: Terraform Apply
 
 on:
-  #push:
-  #  branches: 
-  #  - "main" 
+  push:
+    branches: 
+    - "issues/sjt/22-build-inconsistencies" 
 
   schedule:
   - cron: "30 7 * * 1,2,4,5"
