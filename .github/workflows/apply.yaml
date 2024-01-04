@@ -3,7 +3,7 @@ name: Terraform Apply
 on:
   push:
     branches: 
-    - "issues/sjt/22-build-inconsistencies" 
+    - "issues/sjt/24-spoke-network-range" 
 
   schedule:
   - cron: "30 7 * * 1,2,4,5"

@@ -26,7 +26,7 @@ variable "name" {
 variable "spoke_address_space" {
   type = string
   description = "Address Space of the Spoke Network"
-  default = "10.26.104.0/23"
+  default = "10.26.104.0/25"
 }
 
 variable "tags" {
