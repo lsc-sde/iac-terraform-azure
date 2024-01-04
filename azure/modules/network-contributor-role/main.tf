@@ -7,7 +7,9 @@ resource "azurerm_role_definition" "main" {
     actions     = [
         "Microsoft.Network/networkSecurityGroups/securityRules/write",
         "Microsoft.Network/privateDnsZones/write",
-        "Microsoft.Network/privateEndpoints/write"
+        "Microsoft.Network/privateEndpoints/write",
+        "Microsoft.Network/virtualNetworks/subnets/join/action",
+        "Microsoft.Network/privateDnsZones/virtualNetworkLinks/write"
     ]
     not_actions = []
   }
