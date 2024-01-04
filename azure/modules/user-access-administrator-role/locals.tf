@@ -2,6 +2,7 @@ locals {
     assignable_roles = {
         "Key Vault Data Access Administrator" = "8b54135c-b56d-4d72-a534-26097cfdc8d8",
         "Key Vault Crypto Officer" = "14b46e9e-c2b7-41b4-b07b-48a6ebf60603",
+        "Key Vault Crypto User" = "12338af0-0e69-4776-bea7-57ae8d297424",
         "Contributor" = "b24988ac-6180-42a0-ab88-20f7382dd24c",
         "Managed Identity Operator" = "f1a07417-d97a-45cb-824c-7a7467783830",
         "Network Contributor" = "4d97b98b-1d4f-4787-a291-c67834d212e7",
