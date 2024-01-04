@@ -124,6 +124,12 @@ module "contributorRole" {
   service_principal_id = var.service_principal_id
 }
 
+module "networkContributorRole" {
+  source = "../modules/network-contributor-role"
+
+  service_principal_id = var.service_principal_id
+}
+
 module "userAccessAdminRole" {
   source = "../modules/user-access-administrator-role"
 
