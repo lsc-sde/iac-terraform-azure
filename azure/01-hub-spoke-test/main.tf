@@ -117,3 +117,15 @@ module "peering" {
     module.hub_vpn
   ]
 }
+
+module "contributorRole" {
+  source = "../modules/contributor-role"
+
+  service_principal_id = var.service_principal_id
+}
+
+module "userAccessAdminRole" {
+  source = "../modules/user-access-administrator-role"
+
+  service_principal_id = var.service_principal_id
+}
