@@ -60,3 +60,9 @@ variable "admin_password" {
   sensitive = true
   default = "BadgerMushroom@1556"
 }
+
+variable "service_principal_id" {
+  type = string
+  default = "d4b1fc84-f1a1-4522-82d3-23c48ffb2c4c"
+  description = "The object ID of the service principal that is going to be used to apply the terraform to" 
+}

@@ -3,7 +3,7 @@ name: Terraform Apply
 on:
   push:
     branches: 
-    - "issues/sjt/24-spoke-network-range" 
+    - "issues/sjt/25-custom-roles"
 
   schedule:
   - cron: "30 7 * * 1,2,4,5"
@@ -24,4 +24,4 @@ jobs:
       workingDirectory: './azure/03-core-infrastructure'
       action: apply
     secrets:
-      azureCredentials: ${{ secrets.sandbox_az_credentials }}
+      azureCredentials: ${{ secrets.sandbox_az_credentials_limited_permissions }}

@@ -12,7 +12,7 @@ jobs:
       workingDirectory: './azure/03-core-infrastructure'
       action: destroy
     secrets:
-      azureCredentials: ${{ secrets.sandbox_az_credentials }}
+      azureCredentials: ${{ secrets.sandbox_az_credentials_limited_permissions }}
   hub-spoke:
     needs: core-infrastructure
     uses: lsc-sde/lsc-sde/.github/workflows/terraform.yaml@main
