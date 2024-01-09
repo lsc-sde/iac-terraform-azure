@@ -14,6 +14,7 @@ resource "azurerm_log_analytics_solution" "container_insights" {
 
 }
 
+/*
 resource "azurerm_key_vault_key" "cluster" {
   key_vault_id = var.key_vault_id
   name = local.kms_key_name
@@ -36,6 +37,7 @@ resource "azurerm_key_vault_key" "cluster" {
     module.kubelets_kvcu,
    ]
 }
+*/
 
 resource "azurerm_user_assigned_identity" "cluster" {
   name                = local.cluster_identity_name
@@ -64,15 +66,6 @@ resource "azurerm_user_assigned_identity" "deployment" {
     "TF.Module" = "kubernetes-cluster-kubenet",
   })
 }
-
-module "cluster_contributor" {
-  source = "../role-assignment"
-
-  scope = var.azmk8s_zone_id
-  principal_id =  azurerm_user_assigned_identity.cluster.principal_id
-  role_definition_name = "Contributor"
-}
-
 
 module "cluster_kvcu" {
   source = "../role-assignment"
@@ -118,14 +111,6 @@ resource "azurerm_user_assigned_identity" "kubelets" {
     "TF.Resource" = "kubelets"
     "TF.Module" = "kubernetes-cluster-kubenet",
   })
-}
-
-module "kubelets_contributor" {
-  source = "../role-assignment"
-
-  scope = var.azmk8s_zone_id
-  principal_id =  azurerm_user_assigned_identity.kubelets.principal_id
-  role_definition_name = "Contributor"
 }
 
 module "kubelets_managed_identity_operator" {
@@ -260,14 +245,15 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   }
   azure_policy_enabled = true
 
+  /*
   key_management_service {
     key_vault_network_access = "Private"
     key_vault_key_id = azurerm_key_vault_key.cluster.id
   }
+  */
 
   depends_on = [ 
     azurerm_log_analytics_solution.container_insights,
-    module.cluster_contributor,
     azurerm_user_assigned_identity.kubelets,
     module.cluster_managed_identity_operator,
     module.kubelets_managed_identity_operator,

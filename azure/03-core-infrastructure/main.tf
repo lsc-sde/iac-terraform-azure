@@ -79,6 +79,7 @@ module "kubernetes_cluster" {
   network_resource_group_name = var.network_resource_group_name
   private_zone_resource_group_name = var.private_zone_resource_group_name
   apply_nsg_rules = var.apply_nsg_rules
+  hub_subscription_id = var.hub_subscription_id
 }
 
 module "keda" {

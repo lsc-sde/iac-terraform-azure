@@ -196,3 +196,8 @@ variable "private_zone_resource_group_name" {
   type = string
   description = "Name of the resource group containing the private zones"
 }
+
+variable "hub_subscription_id" {
+  type = string
+  description = "The ID of the hub subscription"
+}
