@@ -13,6 +13,7 @@ module "container_registry" {
   prefix = var.prefix
 }
 
+/*
 module "private_dns_zone" {
   source = "../modules/private-dns-zone"
 
@@ -22,6 +23,7 @@ module "private_dns_zone" {
   hub_virtual_network_id = var.hub_virtual_network_id
   tags = var.tags
 }
+*/
 
 module "key_vault" {
   source = "../modules/keyvault"
@@ -31,7 +33,8 @@ module "key_vault" {
   prefix = var.prefix
   allowed_ips = var.keyvault_allowed_ips
   k8s_admin_group = var.k8s_admin_group
-  public_network_access_enabled = var.keyvault_public_network_access_enabled
+  public_network_access_enabled = var.keyvault_public_network_access_enabled  
+  purge_protection_enabled = var.keyvault_purge_protection_enabled
 }
 
 module "diagnostics_workspace" {
@@ -51,8 +54,8 @@ module "storage_account" {
   ip_rules = var.ip_rules
   subnet_id = var.subnet_id
   azurefile_privatezone_enabled = true
-  azurefile_privatezone_name = module.private_dns_zone.name
-  azurefile_privatezone_resource_group_name = module.resource_group.name
+  azurefile_privatezone_resource_group_name = var.private_zone_resource_group_name
+  hub_subscription_id = var.hub_subscription_id
 }
 
 
@@ -69,11 +72,13 @@ module "kubernetes_cluster" {
   cluster_admin_ids = var.cluster_admin_ids
   default_node_pool_vnet_subnet_id = var.subnet_id
   container_registry_id = module.container_registry.id
-  azmk8s_zone_id = module.private_dns_zone.id
+  azmk8s_zone_id = "/subscriptions/${var.hub_subscription_id}/resourceGroups/${var.private_zone_resource_group_name}/providers/Microsoft.Network/privateDnsZones/privatelink.uksouth.azmk8s.io"
   resource_group_id = module.resource_group.id
   default_node_pool_vnet_id = var.virtual_network_id
   network_security_group_name = var.network_security_group_name
   network_resource_group_name = var.network_resource_group_name
+  private_zone_resource_group_name = var.private_zone_resource_group_name
+  apply_nsg_rules = var.apply_nsg_rules
 }
 
 module "keda" {

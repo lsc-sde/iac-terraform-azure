@@ -52,3 +52,8 @@ variable "azurefile_privatezone_enabled" {
     description = "Whether to create the private zone records"
     default = false
 }
+
+variable "hub_subscription_id" {
+  type = string
+  description = "The ID of the hub subscription"
+}

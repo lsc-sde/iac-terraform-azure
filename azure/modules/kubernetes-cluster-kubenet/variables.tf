@@ -186,3 +186,13 @@ variable "network_resource_group_name" {
   type = string
   description = "Name of the network resource group"
 }
+
+variable "apply_nsg_rules" {
+  type = bool
+  description = "apply NSG rules"
+}
+
+variable "private_zone_resource_group_name" {
+  type = string
+  description = "Name of the resource group containing the private zones"
+}

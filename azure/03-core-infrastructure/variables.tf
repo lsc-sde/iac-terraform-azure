@@ -89,7 +89,7 @@ variable "k8s_admin_group" {
 variable "keyvault_public_network_access_enabled" {
   type = bool
   description = "Allow public access to the key vault"
-  default = true
+  default = false
 }
 
 
@@ -115,4 +115,29 @@ variable "network_security_group_name" {
   type = string
   description = "Name of the network security group"
   default = "test-network-spoke-network-subnet"
+}
+
+variable "hub_subscription_id" {
+  type = string
+  description = "The ID of the hub subscription"
+  default = "5bb2478d-e497-4ca1-964e-4aaa9f754a5d"
+}
+
+variable "private_zone_resource_group_name" {
+  type = string
+  description = "Name of the resource group containing the private zones"
+  default = ""
+}
+
+variable "apply_nsg_rules" {
+  type = bool
+  description = "apply NSG rules"
+  default = true
+}
+
+
+variable "keyvault_purge_protection_enabled" {
+  type = bool
+  description = "Enable Purge protection"
+  default = false
 }

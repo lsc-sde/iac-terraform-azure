@@ -32,8 +32,8 @@ resource "azurerm_key_vault_key" "cluster" {
   tags = var.tags
 
   depends_on = [ 
-    azurerm_role_assignment.cluster_kvcu,
-    azurerm_role_assignment.kubelets_kvcu,
+    module.cluster_kvcu,
+    module.kubelets_kvcu,
    ]
 }
 
@@ -65,38 +65,42 @@ resource "azurerm_user_assigned_identity" "deployment" {
   })
 }
 
-resource "azurerm_role_assignment" "cluster" {
-  name = "a11590e0-f117-4028-8430-a52663a53118"
+module "cluster_contributor" {
+  source = "../role-assignment"
+
   scope = var.azmk8s_zone_id
   principal_id =  azurerm_user_assigned_identity.cluster.principal_id
   role_definition_name = "Contributor"
 }
 
 
+module "cluster_kvcu" {
+  source = "../role-assignment"
 
-resource "azurerm_role_assignment" "cluster_kvcu" {
-  name = "3f3a3113-8be6-4451-a12c-82107ca4e0bc"
   scope = var.key_vault_id
   principal_id =  azurerm_user_assigned_identity.cluster.principal_id
   role_definition_name = "Key Vault Crypto User"
 }
 
-resource "azurerm_role_assignment" "cluster_managed_identity_operator" {
-  name = "a3411728-c492-447b-97d5-25549a2e11c9"
+module "cluster_managed_identity_operator" {
+  source = "../role-assignment"
+
   scope = var.resource_group_id
   principal_id =  azurerm_user_assigned_identity.cluster.principal_id
   role_definition_name = "Managed Identity Operator"
 }
 
-resource "azurerm_role_assignment" "cluster_network" {
-  name = "7d23c9c8-be44-4c9b-bea8-60a2c4f7a59a"
+module "cluster_network" {
+  source = "../role-assignment"
+
   scope = var.default_node_pool_vnet_id
   principal_id =  azurerm_user_assigned_identity.cluster.principal_id
   role_definition_name = "Network Contributor"
 }
 
-resource "azurerm_role_assignment" "cluster_keyvault" {
-  name = "0cb5292e-3e8a-4435-8717-43c841c28a58"
+module "cluster_keyvault" {
+  source = "../role-assignment"
+
   scope = var.key_vault_id
   principal_id =  azurerm_user_assigned_identity.cluster.principal_id
   role_definition_name = "Key Vault Contributor"
@@ -116,51 +120,58 @@ resource "azurerm_user_assigned_identity" "kubelets" {
   })
 }
 
-resource "azurerm_role_assignment" "kubelets" {
-  name = "4e48e760-4c83-42b5-bd0e-21f724c6ca27"
+module "kubelets_contributor" {
+  source = "../role-assignment"
+
   scope = var.azmk8s_zone_id
   principal_id =  azurerm_user_assigned_identity.kubelets.principal_id
   role_definition_name = "Contributor"
 }
 
-resource "azurerm_role_assignment" "kubelets_managed_identity_operator" {
-  name = "81025c61-5a56-42bd-ab77-73901477c73c"
+module "kubelets_managed_identity_operator" {
+  source = "../role-assignment"
+
   scope = var.resource_group_id
   principal_id =  azurerm_user_assigned_identity.kubelets.principal_id
   role_definition_name = "Managed Identity Operator"
 }
 
-resource "azurerm_role_assignment" "kubelets_network" {
-  name = "939a823f-22d2-41dd-8a11-a6d3fe4e338f"
+module "kubelets_network" {
+  source = "../role-assignment"
+
   scope = var.default_node_pool_vnet_id
   principal_id =  azurerm_user_assigned_identity.kubelets.principal_id
   role_definition_name = "Network Contributor"
 }
 
 
-resource "azurerm_role_assignment" "cluster_pzc" {
-  name = "6d271502-a49d-47f8-85a1-34014873f92a"
+module "cluster_pzc" {
+  source = "../role-assignment"
+
   scope = var.azmk8s_zone_id
   principal_id =  azurerm_user_assigned_identity.cluster.principal_id
   role_definition_name = "Private DNS Zone Contributor"
 }
 
-resource "azurerm_role_assignment" "kubelets_pzc" {
-  name = "584e313c-768c-41af-bce1-e2eb5f6e1645"
+module "kubelets_pzc" {
+  source = "../role-assignment"
+
   scope = var.azmk8s_zone_id
   principal_id =  azurerm_user_assigned_identity.kubelets.principal_id
   role_definition_name = "Private DNS Zone Contributor"
 }
 
-resource "azurerm_role_assignment" "kubelets_keyvault" {
-  name = "c5d56270-6718-4c33-9454-86fc771fecfa"
+module "kubelets_keyvault" {
+  source = "../role-assignment"
+
   scope = var.key_vault_id
   principal_id =  azurerm_user_assigned_identity.kubelets.principal_id
   role_definition_name = "Key Vault Contributor"
 }
 
-resource "azurerm_role_assignment" "kubelets_kvcu" {
-  name = "5dcbef66-27ec-4a5e-8a61-b32278d02dc1"
+module "kubelets_kvcu" {
+  source = "../role-assignment"
+
   scope = var.key_vault_id
   principal_id =  azurerm_user_assigned_identity.kubelets.principal_id
   role_definition_name = "Key Vault Crypto User"
@@ -256,23 +267,26 @@ resource "azurerm_kubernetes_cluster" "cluster" {
 
   depends_on = [ 
     azurerm_log_analytics_solution.container_insights,
-    azurerm_role_assignment.cluster,
+    module.cluster_contributor,
     azurerm_user_assigned_identity.kubelets,
-    azurerm_role_assignment.cluster_managed_identity_operator,
-    azurerm_role_assignment.kubelets_managed_identity_operator,
-    azurerm_role_assignment.cluster_network,
-    azurerm_role_assignment.kubelets_network
+    module.cluster_managed_identity_operator,
+    module.kubelets_managed_identity_operator,
+    module.cluster_network,
+    module.kubelets_network
    ]
 }
 
-resource "azurerm_role_assignment" "acr_pull" {
+module "acr_pull" {
+  source = "../role-assignment"
+
   scope = var.container_registry_id
   role_definition_name = "AcrPull"
   principal_id = azurerm_user_assigned_identity.kubelets.principal_id
-  skip_service_principal_aad_check = true
 }
 
 resource "azurerm_network_security_rule" "https" {
+  count = var.apply_nsg_rules ? 1 : 0
+
   network_security_group_name = var.network_security_group_name
   resource_group_name = var.network_resource_group_name
   name = "https"

@@ -8,10 +8,10 @@ resource "azurerm_key_vault" "keyVault" {
   name                        = local.name
   location                    = var.location
   resource_group_name         = var.resource_group_name
-  enabled_for_disk_encryption = true
+  enabled_for_disk_encryption = var.public_network_access_enabled
   tenant_id                   = data.azurerm_client_config.current.tenant_id
   soft_delete_retention_days  = 7
-  purge_protection_enabled    = false
+  purge_protection_enabled    = var.purge_protection_enabled
   public_network_access_enabled = var.public_network_access_enabled
   enable_rbac_authorization = true
 
@@ -24,7 +24,7 @@ resource "azurerm_key_vault" "keyVault" {
   })
 
   network_acls {
-    bypass = "AzureServices"
+    bypass = var.public_network_access_enabled ? "AzureServices" : "None"
     default_action = "Allow"
     ip_rules = var.allowed_ips
   }
