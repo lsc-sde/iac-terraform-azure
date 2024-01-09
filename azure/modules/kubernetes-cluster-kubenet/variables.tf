@@ -26,6 +26,12 @@ variable "kubelet_identity_name" {
     default = ""
 }
 
+variable "deployment_identity_name" {
+    type = string
+    description = "Name of the managed identity for the deployment"
+    default = ""
+}
+
 variable "prefix" {
     type = string
     description = "Naming Prefix"

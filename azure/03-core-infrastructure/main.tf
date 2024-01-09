@@ -75,3 +75,14 @@ module "kubernetes_cluster" {
   network_security_group_name = var.network_security_group_name
   network_resource_group_name = var.network_resource_group_name
 }
+
+module "keda" {
+  source = "../modules/kubernetes-deployment-script"
+  location = var.location
+  resource_group_name = module.resource_group.name
+  subnet_id = var.subnet_id
+  name = module.kubernetes_cluster.name
+  cluster_id = module.kubernetes_cluster.id
+  storage_account_name = module.storage_account.name
+  tags = var.tags
+}

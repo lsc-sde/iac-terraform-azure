@@ -70,7 +70,7 @@ variable "virtual_network_id" {
 variable "hub_virtual_network_id" {
   type = string
   description = "The id of the hub virtual network we're linking to"
-  default = "/subscriptions/5bb2478d-e497-4ca1-964e-4aaa9f754a5d/resourceGroups/test-network-hub-network-rg/providers/Microsoft.Network/virtualNetworks/test-network-hub-network-vnet"
+  default = "/subscriptions/de97be38-945e-4824-a44b-5b101c0e048b/resourceGroups/rg-icb-uks-plt-network/providers/Microsoft.Network/virtualNetworks/vnet-icb-uks-plt-azFirewall"
 }
 
 variable "keyvault_allowed_ips" {

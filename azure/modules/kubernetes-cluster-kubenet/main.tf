@@ -51,6 +51,20 @@ resource "azurerm_user_assigned_identity" "cluster" {
   })
 }
 
+resource "azurerm_user_assigned_identity" "deployment" {
+  name                = local.deployment_identity_name
+  resource_group_name = var.resource_group_name
+  location            = var.location
+
+  tags = merge(var.tags, {
+    "Name" = local.name,
+    "Purpose" = "Cluster Identity"
+    "TF.Type" = "azurerm_user_assigned_identity"
+    "TF.Resource" = "cluster"
+    "TF.Module" = "kubernetes-cluster-kubenet",
+  })
+}
+
 resource "azurerm_role_assignment" "cluster" {
   name = "a11590e0-f117-4028-8430-a52663a53118"
   scope = var.azmk8s_zone_id

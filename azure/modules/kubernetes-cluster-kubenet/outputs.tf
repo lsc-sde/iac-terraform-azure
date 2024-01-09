@@ -1,13 +1,37 @@
 output "id" {
     value = azurerm_kubernetes_cluster.cluster.id
+
+    depends_on = [ 
+      azurerm_network_security_rule.https,
+      azurerm_kubernetes_cluster.cluster
+     ]
 }
 
 output "name" {
     value = azurerm_kubernetes_cluster.cluster.name
+
+    depends_on = [ 
+      azurerm_network_security_rule.https,
+      azurerm_kubernetes_cluster.cluster
+     ]
+}
+
+output "deployment_identity_id" {
+    value = azurerm_user_assigned_identity.deployment.id
+  
+    depends_on = [ 
+      azurerm_network_security_rule.https,
+      azurerm_kubernetes_cluster.cluster
+     ]
 }
 
 output "host" {
     value = azurerm_kubernetes_cluster.cluster.kube_admin_config.0.host
+
+    depends_on = [ 
+      azurerm_network_security_rule.https,
+      azurerm_kubernetes_cluster.cluster
+     ]
 }
 
 output "client_certificate" {
