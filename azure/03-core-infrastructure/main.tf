@@ -84,6 +84,7 @@ module "kubernetes_cluster" {
   private_zone_resource_group_name = var.private_zone_resource_group_name
   apply_nsg_rules = var.apply_nsg_rules
   hub_subscription_id = var.hub_subscription_id
+  defender_log_analytics_workspace_id = var.defender_log_analytics_workspace_id
 }
 
 module "keda" {

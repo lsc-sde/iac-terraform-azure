@@ -2,6 +2,13 @@ resource "azurerm_user_assigned_identity" "keyVault" {
   name                = local.identity_name
   resource_group_name = var.resource_group_name
   location            = var.location
+
+  tags = merge(var.tags, {
+    "TF.Type" = "azurerm_user_assigned_identity"
+    "TF.Resource" = "keyVault"
+    "TF.Module" = "keyvault",
+  })
+
 }
 
 resource "azurerm_key_vault" "keyVault" {

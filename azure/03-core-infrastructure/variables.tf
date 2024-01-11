@@ -141,3 +141,22 @@ variable "keyvault_purge_protection_enabled" {
   description = "Enable Purge protection"
   default = false
 }
+
+variable "backend_storage_account_name" {
+  type = string
+  description = "Storage Account Name used by the backend"
+  default = "lscsdesandboxenvironment"
+}
+
+variable "backend_resource_group_name" {
+  type = string
+  description = "Resource Group used by the backend"
+  default = "lsc-sde-sandbox-environment-rg"
+}
+
+variable "defender_log_analytics_workspace_id" {
+    type = string
+    nullable = true
+    description = "ID of the log analytics workspace used by the microsoft defender configuration on k8s"
+    default = null
+}

@@ -10,15 +10,14 @@ terraform {
     }
   }
 
-
-  //backend "azurerm" {
-  //    resource_group_name  = "lsc-sde-sandbox-environment-rg"
-  //    storage_account_name = "lscsdesandboxenvironment"
-  //    container_name       = "tfstate"
-  //    key                  = "03-core-infrastructure.tfstate"
-  //    tenant_id            = "4600653f-a3c3-4253-b7b4-bef5fa774def"
-  //    subscription_id      = "5bb2478d-e497-4ca1-964e-4aaa9f754a5d"
-  //}
+  /*
+  backend "azurerm" {
+      resource_group_name  = var.backend_resource_group_name
+      storage_account_name = bar.backend_storage_account_name
+      container_name       = "tfstate"
+      key                  = "03-core-infrastructure.tfstate"
+  }
+  */
 }
 
 provider "azuread" {

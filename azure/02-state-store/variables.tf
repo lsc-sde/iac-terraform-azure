@@ -4,11 +4,6 @@ variable "location" {
   default = "uksouth"
 }
 
-variable "resource_group_name" {
-  type = string
-  description = "resource group to deploy"
-}
-
 variable "tags" {
     type = map(string)
     description = "List of tags to generate"
@@ -30,4 +25,20 @@ variable "ip_rules" {
   type = list(string)
   description = "List of allowed IP addresses"
   default = [ "208.127.197.187" ]
+}
+
+variable "prefix" {
+  type = string
+  description = "Naming prefix"
+  default = "lscsandboxsde"
+}
+
+variable "hub_subscription_id" {
+  type = string
+  description = "The ID of the hub subscription"
+}
+
+variable "admin_group_id" {
+  type = string 
+  description = "id of the admin group"
 }

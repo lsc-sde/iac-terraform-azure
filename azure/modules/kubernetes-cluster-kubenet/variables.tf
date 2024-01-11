@@ -201,3 +201,9 @@ variable "hub_subscription_id" {
   type = string
   description = "The ID of the hub subscription"
 }
+
+variable "defender_log_analytics_workspace_id" {
+    type = string
+    nullable = true
+    description = "ID of the log analytics workspace used by the microsoft defender configuration on k8s"
+}
