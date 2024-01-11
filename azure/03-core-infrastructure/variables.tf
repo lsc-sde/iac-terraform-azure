@@ -135,6 +135,12 @@ variable "apply_nsg_rules" {
   default = true
 }
 
+variable "environment_name" {
+  type = string
+  description = "Name of the environment (in lowercase)"
+  default = "sandbox"
+}
+
 
 variable "keyvault_purge_protection_enabled" {
   type = bool

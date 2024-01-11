@@ -30,3 +30,4 @@ keyvault_purge_protection_enabled = true
 backend_resource_group_name  = "lscsdesbxstate-rg"
 backend_storage_account_name = "lscsdesbxstate8ddbeyve"
 defender_log_analytics_workspace_id = "/subscriptions/de97be38-945e-4824-a44b-5b101c0e048b/resourceGroups/rg-icb-uks-plt-logs/providers/Microsoft.OperationalInsights/workspaces/log-icb-uks-plt-log01"
+environment_name = "sandbox"

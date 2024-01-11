@@ -38,3 +38,8 @@ variable "branch_name" {
   description = "The branch to follow on source control"
   default = "main"
 }
+
+variable "environment_name" {
+  type = string
+  description = "Name of the environment (in lowercase)"
+}

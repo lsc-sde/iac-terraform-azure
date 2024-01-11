@@ -96,4 +96,5 @@ module "keda" {
   cluster_id = module.kubernetes_cluster.id
   storage_account_name = module.storage_account.name
   tags = var.tags
+  environment_name = var.environment_name
 }
