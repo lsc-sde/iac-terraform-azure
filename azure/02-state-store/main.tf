@@ -22,4 +22,5 @@ module "role_assignment" {
   scope = module.storage.id
   principal_id = var.admin_group_id
   role_definition_name = "Storage Blob Data Contributor"
+  skip_service_principal_aad_check = false
 }
