@@ -35,6 +35,10 @@ module "key_vault" {
   k8s_admin_group = var.k8s_admin_group
   public_network_access_enabled = var.keyvault_public_network_access_enabled  
   purge_protection_enabled = var.keyvault_purge_protection_enabled
+  subnet_id = var.subnet_id
+  hub_subscription_id = var.hub_subscription_id
+  keyvault_privatezone_enabled = true
+  keyvault_privatezone_resource_group_name = var.private_zone_resource_group_name
 }
 
 module "diagnostics_workspace" {

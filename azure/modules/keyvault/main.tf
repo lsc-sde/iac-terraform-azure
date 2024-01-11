@@ -51,3 +51,43 @@ resource "azurerm_role_assignment" "k8s_admin_group_kvco" {
   role_definition_name =  "Key Vault Crypto Officer"
 }
 
+
+
+resource "azurerm_private_endpoint" "keyVault" {
+  name                = "pep-${local.name}"
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  subnet_id           = var.subnet_id
+  private_service_connection {
+    name                           = "psc-${local.name}"
+    private_connection_resource_id = azurerm_key_vault.keyVault.id
+    is_manual_connection           = false
+    subresource_names              = ["vault"]
+  }
+  tags = merge(var.tags, {
+     "TF.Type" = "azurerm_private_endpoint"
+     "TF.Resource" = "keyVault"
+     "TF.Module" = "keyvault",
+  })
+
+}
+
+
+resource "azurerm_private_dns_a_record" "keyVault" {
+  provider = azurerm.hubsubscription
+
+  count = var.keyvault_privatezone_enabled ? 1 : 0
+  name                = azurerm_key_vault.keyVault.name
+  zone_name           = "privatelink.vaultcore.azure.net"
+  resource_group_name = var.keyvault_privatezone_resource_group_name
+  ttl                 = 300
+  records             = [
+    azurerm_private_endpoint.keyVault.private_service_connection.0.private_ip_address
+  ]
+
+  tags = merge(var.tags, {
+     "TF.Type" = "azurerm_private_dns_a_record"
+     "TF.Resource" = "keyVault"
+     "TF.Module" = "keyvault",
+  })
+}
