@@ -113,6 +113,24 @@ resource "azurerm_user_assigned_identity" "kubelets" {
   })
 }
 
+
+
+module "cluster_network_contributor" {
+  source = "../role-assignment"
+
+  scope = data.azurerm_resource_group.network_resource_group.id
+  principal_id =  azurerm_user_assigned_identity.cluster.principal_id
+  role_definition_name = "Network Contributor"
+}
+
+module "kubelets_network_contributor" {
+  source = "../role-assignment"
+
+  scope = data.azurerm_resource_group.network_resource_group.id
+  principal_id =  azurerm_user_assigned_identity.kubelets.principal_id
+  role_definition_name = "Network Contributor"
+}
+
 module "kubelets_managed_identity_operator" {
   source = "../role-assignment"
 
@@ -217,6 +235,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
     service_cidr = local.service_cidr
     dns_service_ip = cidrhost(local.service_cidr, 10)
     load_balancer_sku = "standard"
+    outbound_type = "userDefinedRouting"
   }
 
   dynamic "http_proxy_config" {
@@ -258,7 +277,9 @@ resource "azurerm_kubernetes_cluster" "cluster" {
     module.cluster_managed_identity_operator,
     module.kubelets_managed_identity_operator,
     module.cluster_network,
-    module.kubelets_network
+    module.kubelets_network,
+    module.kubelets_network_contributor,
+    module.cluster_network_contributor
    ]
 }
 

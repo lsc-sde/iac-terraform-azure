@@ -8,7 +8,7 @@ resource "azurerm_kubernetes_flux_configuration" "keda" {
   name       = "keda"
   cluster_id = var.cluster_id
   namespace  = "keda"
-  scope = "namespace"
+  scope = "cluster"
 
   git_repository {
     url             = "https://github.com/lsc-sde/iac-flux-keda"
@@ -36,7 +36,7 @@ resource "azurerm_kubernetes_flux_configuration" "nginx" {
   name       = "nginx"
   cluster_id = var.cluster_id
   namespace  = "nginx"
-  scope = "namespace"
+  scope = "cluster"
 
   git_repository {
     url             = "https://github.com/lsc-sde/iac-flux-nginx"
