@@ -4,6 +4,32 @@ resource "azurerm_kubernetes_cluster_extension" "flux" {
   extension_type = "microsoft.flux"
 }
 
+resource "azurerm_kubernetes_flux_configuration" "certmanager" {
+  name       = "cert-manager"
+  cluster_id = var.cluster_id
+  namespace  = "cert-manager"
+  scope = "cluster"
+
+  git_repository {
+    url             = "https://github.com/lsc-sde/iac-flux-certmanager.git"
+    reference_type  = "branch"
+    reference_value = var.branch_name
+    sync_interval_in_seconds = 60
+    timeout_in_seconds = 600
+  }
+
+  kustomizations {
+    name = "cert-manager"
+    sync_interval_in_seconds = 60
+    retry_interval_in_seconds = 60
+    timeout_in_seconds = 600
+  }
+
+  depends_on = [
+    azurerm_kubernetes_cluster_extension.flux
+  ]
+}
+
 resource "azurerm_kubernetes_flux_configuration" "keda" {
   name       = "keda"
   cluster_id = var.cluster_id
