@@ -158,13 +158,24 @@ resource "azurerm_kubernetes_flux_configuration" "jupyterhub" {
   }
 
   kustomizations {
-    name = "sources"
+    name = "shared-config"
     sync_interval_in_seconds = 60
     retry_interval_in_seconds = 60
     timeout_in_seconds = 600
-    path = "sources"
+    path = "sources/config"
 
     depends_on = [ "cluster-config" ]
+  }
+
+
+  kustomizations {
+    name = "package"
+    sync_interval_in_seconds = 60
+    retry_interval_in_seconds = 60
+    timeout_in_seconds = 600
+    path = "sources/package"
+
+    depends_on = [ "shared-config" ]
   }
 
   depends_on = [
