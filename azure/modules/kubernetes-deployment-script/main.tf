@@ -138,7 +138,7 @@ resource "azurerm_kubernetes_flux_configuration" "prefect_server" {
 resource "azurerm_kubernetes_flux_configuration" "jupyterhub" {
   name       = "jupyterhub"
   cluster_id = var.cluster_id
-  namespace  = "juypterhub"
+  namespace  = "jupyterhub"
   scope = "cluster"
 
   git_repository {
