@@ -139,7 +139,7 @@ module "kubelets_managed_identity_operator" {
 
 
 resource "azurerm_role_assignment" "kubelets_kvso" {
-  scope = azurerm_key_vault.keyVault.id
+  scope = var.key_vault_id
   principal_id =  azurerm_user_assigned_identity.kubelets.principal_id
   role_definition_name =  "Key Vault Secrets Officer"
 }
