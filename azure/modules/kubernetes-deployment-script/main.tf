@@ -86,7 +86,7 @@ resource "azurerm_kubernetes_flux_configuration" "nginx" {
     name = "nginx"
     sync_interval_in_seconds = 60
     retry_interval_in_seconds = 60
-    timeout_in_seconds = 600
+    timeout_in_seconds = 900
   }
 
   depends_on = [
