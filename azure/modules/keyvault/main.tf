@@ -56,9 +56,22 @@ resource "azurerm_role_assignment" "k8s_admin_group_kvco" {
   scope = azurerm_key_vault.keyVault.id
   principal_id = var.k8s_admin_group
   role_definition_name =  "Key Vault Crypto Officer"
+
+  depends_on = [ 
+    azurerm_role_assignment.k8s_admin_group
+   ]
 }
 
 
+resource "azurerm_role_assignment" "k8s_admin_group_kvso" {
+  scope = azurerm_key_vault.keyVault.id
+  principal_id = var.k8s_admin_group
+  role_definition_name =  "Key Vault Secrets Officer"
+
+  depends_on = [ 
+    azurerm_role_assignment.k8s_admin_group
+   ]
+}
 
 resource "azurerm_private_endpoint" "keyVault" {
   name                = "pep-${local.name}"
