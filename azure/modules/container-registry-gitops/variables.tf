@@ -19,6 +19,11 @@ variable "branch_name" {
   description = "Name of the branch"
 }
 
+variable "category_name" {
+  type = string
+  description = "Name of the category"
+}
+
 variable "image_name" {
   type = string
   description = "Name of the image to generate"

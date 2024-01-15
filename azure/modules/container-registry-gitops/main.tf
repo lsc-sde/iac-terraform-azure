@@ -1,5 +1,5 @@
 resource "azurerm_container_registry_task" "main" {
-  name                  = var.image_name
+  name                  = "${var.category_name}-${var.image_name}"
   container_registry_id = var.container_registry_id
   platform {
     os = "Linux"
@@ -9,8 +9,8 @@ resource "azurerm_container_registry_task" "main" {
     context_path         = "${local.url}#${var.branch_name}:${var.folder_path}"
     context_access_token = var.pat_token
     image_names          = [
-        "${var.image_name}:{{.Run.ID}}", 
-        "${var.image_name}:latest"
+        "${var.category_name}/${var.image_name}:{{.Run.ID}}", 
+        "${var.category_name}/${var.image_name}:latest"
     ]
   }
 
@@ -19,6 +19,10 @@ resource "azurerm_container_registry_task" "main" {
     events = [ "commit", "pullrequest" ]
     repository_url = local.url
     branch = var.branch_name
-    source_type = "github"
+    source_type = "Github"
+    authentication {
+      token = var.pat_token
+      token_type = "PAT"
+    }
   }
 }

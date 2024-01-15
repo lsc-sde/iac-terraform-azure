@@ -6,4 +6,5 @@ module "datascience_notebook" {
     pat_token = var.pat_token
     repository_name = "docker-datascience-notebook"
     image_name = "datascience-notebook"
+    category_name = "jupyter-images"
 }
