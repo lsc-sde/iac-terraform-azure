@@ -54,13 +54,6 @@ resource "azurerm_kubernetes_flux_configuration" "keda" {
     timeout_in_seconds = 600
   }
   
-  kustomizations {
-    name = "cluster-config"
-    sync_interval_in_seconds = 60
-    retry_interval_in_seconds = 60
-    timeout_in_seconds = 600
-    path = "cluster/${var.environment_name}"
-  }
 
   kustomizations {
     name = "sources"
@@ -68,8 +61,15 @@ resource "azurerm_kubernetes_flux_configuration" "keda" {
     retry_interval_in_seconds = 60
     timeout_in_seconds = 600
     path = "sources"
-
-    depends_on = [ "cluster-config" ]
+  }
+  
+  kustomizations {
+    name = "cluster-config"
+    sync_interval_in_seconds = 60
+    retry_interval_in_seconds = 60
+    timeout_in_seconds = 600
+    path = "cluster/${var.environment_name}"
+    depends_on = [ "sources" ]
   }
 
   depends_on = [
