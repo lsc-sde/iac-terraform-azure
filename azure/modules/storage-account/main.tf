@@ -54,10 +54,11 @@ resource "azurerm_private_endpoint" "main" {
 }
 
 resource "azurerm_private_dns_a_record" "main" {
+  provider = azurerm.hubsubscription
+
   count = var.azurefile_privatezone_enabled ? 1 : 0
-  
-  name                = "dns-a-${local.name}"
-  zone_name           = var.azurefile_privatezone_name
+  name                = azurerm_storage_account.main.name
+  zone_name           = "privatelink.file.core.windows.net"
   resource_group_name = var.azurefile_privatezone_resource_group_name
   ttl                 = 300
   records             = [

@@ -26,6 +26,12 @@ variable "kubelet_identity_name" {
     default = ""
 }
 
+variable "deployment_identity_name" {
+    type = string
+    description = "Name of the managed identity for the deployment"
+    default = ""
+}
+
 variable "prefix" {
     type = string
     description = "Naming Prefix"
@@ -123,7 +129,7 @@ variable "key_vault_id" {
 variable "kubernetes_version" {
   type = string
   description = "Version of kubernetes to provision on the cluster"
-  default = "1.28.0"
+  default = "1.28.3"
 }
 
 variable "default_node_pool_max_pods" {
@@ -179,4 +185,25 @@ variable "network_security_group_name" {
 variable "network_resource_group_name" {
   type = string
   description = "Name of the network resource group"
+}
+
+variable "apply_nsg_rules" {
+  type = bool
+  description = "apply NSG rules"
+}
+
+variable "private_zone_resource_group_name" {
+  type = string
+  description = "Name of the resource group containing the private zones"
+}
+
+variable "hub_subscription_id" {
+  type = string
+  description = "The ID of the hub subscription"
+}
+
+variable "defender_log_analytics_workspace_id" {
+    type = string
+    nullable = true
+    description = "ID of the log analytics workspace used by the microsoft defender configuration on k8s"
 }

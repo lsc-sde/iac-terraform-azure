@@ -7,4 +7,6 @@ resource "azurerm_resource_group" "main" {
     "TF.Resource" = "main"
     "TF.Module" = "resource-group",
   })
+
+  
 }

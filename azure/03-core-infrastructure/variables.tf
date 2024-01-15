@@ -70,7 +70,7 @@ variable "virtual_network_id" {
 variable "hub_virtual_network_id" {
   type = string
   description = "The id of the hub virtual network we're linking to"
-  default = "/subscriptions/5bb2478d-e497-4ca1-964e-4aaa9f754a5d/resourceGroups/test-network-hub-network-rg/providers/Microsoft.Network/virtualNetworks/test-network-hub-network-vnet"
+  default = "/subscriptions/de97be38-945e-4824-a44b-5b101c0e048b/resourceGroups/rg-icb-uks-plt-network/providers/Microsoft.Network/virtualNetworks/vnet-icb-uks-plt-azFirewall"
 }
 
 variable "keyvault_allowed_ips" {
@@ -89,7 +89,7 @@ variable "k8s_admin_group" {
 variable "keyvault_public_network_access_enabled" {
   type = bool
   description = "Allow public access to the key vault"
-  default = true
+  default = false
 }
 
 
@@ -115,4 +115,54 @@ variable "network_security_group_name" {
   type = string
   description = "Name of the network security group"
   default = "test-network-spoke-network-subnet"
+}
+
+variable "hub_subscription_id" {
+  type = string
+  description = "The ID of the hub subscription"
+  default = "5bb2478d-e497-4ca1-964e-4aaa9f754a5d"
+}
+
+variable "private_zone_resource_group_name" {
+  type = string
+  description = "Name of the resource group containing the private zones"
+  default = ""
+}
+
+variable "apply_nsg_rules" {
+  type = bool
+  description = "apply NSG rules"
+  default = true
+}
+
+variable "environment_name" {
+  type = string
+  description = "Name of the environment (in lowercase)"
+  default = "sandbox"
+}
+
+
+variable "keyvault_purge_protection_enabled" {
+  type = bool
+  description = "Enable Purge protection"
+  default = false
+}
+
+variable "backend_storage_account_name" {
+  type = string
+  description = "Storage Account Name used by the backend"
+  default = "lscsdesandboxenvironment"
+}
+
+variable "backend_resource_group_name" {
+  type = string
+  description = "Resource Group used by the backend"
+  default = "lsc-sde-sandbox-environment-rg"
+}
+
+variable "defender_log_analytics_workspace_id" {
+    type = string
+    nullable = true
+    description = "ID of the log analytics workspace used by the microsoft defender configuration on k8s"
+    default = null
 }

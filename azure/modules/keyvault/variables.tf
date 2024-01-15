@@ -45,3 +45,30 @@ variable "public_network_access_enabled" {
   type = bool
   description = "Allow public access to the key vault"
 }
+
+variable "purge_protection_enabled" {
+  type = bool
+  description = "Enable Purge protection"
+}
+
+variable "subnet_id" {
+    type = string
+    description = "Id for the subnet"
+}
+
+variable "hub_subscription_id" {
+  type = string
+  description = "The ID of the hub subscription"
+}
+
+variable "keyvault_privatezone_resource_group_name" {
+  type = string
+  description = "resource group for the azure file private zone"
+  default = ""
+}
+
+variable "keyvault_privatezone_enabled" {
+    type = bool
+    description = "Whether to create the private zone records"
+    default = false
+}
