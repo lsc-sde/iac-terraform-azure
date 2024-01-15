@@ -30,3 +30,8 @@ variable tags {
     type = map(string)
     description = "List of tags to generate"
 }
+
+variable "subnet_id" {
+    type = string
+    description = "The ID of the subnet"  
+}

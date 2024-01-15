@@ -6,7 +6,7 @@ resource "azurerm_container_registry_task" "main" {
   }
   docker_step {
     dockerfile_path      = "Dockerfile"
-    context_path         = "${local.url}#${var.branch_name}:${var.folder_path}"
+    context_path         = "${local.url}#${var.branch_name}"
     context_access_token = var.pat_token
     image_names          = [
         "${var.category_name}/${var.image_name}:{{.Run.ID}}", 

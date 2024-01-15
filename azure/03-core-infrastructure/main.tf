@@ -11,6 +11,7 @@ module "container_registry" {
   tags = var.tags
   resource_group_name =  module.resource_group.name
   prefix = var.prefix
+  subnet_id = var.subnet_id
 }
 
 /*

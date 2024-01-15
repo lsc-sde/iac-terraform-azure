@@ -46,3 +46,8 @@ variable "url" {
   description = "URL of the github repository"
   default = ""
 }
+
+variable tags {
+    type = map(string)
+    description = "List of tags to generate"
+}
