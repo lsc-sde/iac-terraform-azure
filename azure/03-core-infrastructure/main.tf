@@ -7,7 +7,7 @@ module "resource_group" {
 
 module "container_registry" {
   source = "../modules/container-registry"
-  location = var.location
+  location = var.acr_location
   tags = var.tags
   resource_group_name =  module.resource_group.name
   prefix = var.prefix
@@ -107,4 +107,5 @@ module "docker_images" {
   container_registry_id = module.container_registry.id
   branch_name = var.branch_name
   pat_token = var.pat_token
+  tags = var.tags
 }

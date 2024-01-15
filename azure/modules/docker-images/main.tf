@@ -7,4 +7,5 @@ module "datascience_notebook" {
     repository_name = "docker-datascience-notebook"
     image_name = "datascience-notebook"
     category_name = "jupyter-images"
+    tags = var.tags
 }

@@ -4,6 +4,12 @@ variable "location" {
   default = "uksouth"
 }
 
+variable "acr_location" {
+  type = string
+  description = "Location to deploy the resources"
+  default = "uksouth"
+}
+
 variable "prefix" {
   type = string
   description = "Naming prefix"

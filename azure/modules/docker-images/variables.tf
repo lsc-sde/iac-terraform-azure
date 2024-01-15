@@ -13,3 +13,8 @@ variable "pat_token" {
   sensitive = true
   description = "The PAT Token for the GIT Repository"
 }
+
+variable tags {
+    type = map(string)
+    description = "List of tags to generate"
+}

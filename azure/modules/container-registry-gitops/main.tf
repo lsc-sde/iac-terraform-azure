@@ -13,6 +13,7 @@ resource "azurerm_container_registry_task" "main" {
         "${var.category_name}/${var.image_name}:latest"
     ]
   }
+  tags = var.tags
 
   source_trigger {
     name = var.repository_name
@@ -24,9 +25,10 @@ resource "azurerm_container_registry_task" "main" {
       token = var.pat_token
       token_type = "PAT"
     }
+    enabled = false
   }
 }
 
-resource "azurerm_container_registry_task_schedule_run_now" "main" {
-  container_registry_task_id = azurerm_container_registry_task.main.id
-}
+#resource "azurerm_container_registry_task_schedule_run_now" "main" {
+#  container_registry_task_id = azurerm_container_registry_task.main.id
+#}
