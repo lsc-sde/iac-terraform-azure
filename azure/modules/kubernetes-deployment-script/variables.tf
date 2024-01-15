@@ -36,7 +36,6 @@ variable "cluster_id" {
 variable "branch_name" {
   type = string
   description = "The branch to follow on source control"
-  default = "main"
 }
 
 variable "environment_name" {

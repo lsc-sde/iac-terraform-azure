@@ -97,4 +97,13 @@ module "keda" {
   storage_account_name = module.storage_account.name
   tags = var.tags
   environment_name = var.environment_name
+  branch_name = var.branch_name
+}
+
+module "docker_images" {
+  source = "../modules/docker-images"
+
+  container_registry_id = module.container_registry.id
+  branch_name = var.branch_name
+  pat_token = var.pat_token
 }
