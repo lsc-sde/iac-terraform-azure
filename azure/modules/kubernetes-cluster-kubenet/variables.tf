@@ -207,3 +207,9 @@ variable "defender_log_analytics_workspace_id" {
     nullable = true
     description = "ID of the log analytics workspace used by the microsoft defender configuration on k8s"
 }
+
+variable "pat_token" {
+  type = string
+  sensitive = true
+  description = "The PAT Token for the GIT Repository"
+}

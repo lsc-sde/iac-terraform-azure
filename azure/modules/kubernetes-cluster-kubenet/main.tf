@@ -14,6 +14,12 @@ resource "azurerm_log_analytics_solution" "container_insights" {
 
 }
 
+resource "azurerm_key_vault_secret" "example" {
+  name         = "PatToken"
+  value        = var.pat_token
+  key_vault_id = var.key_vault_id
+}
+
 resource "azurerm_key_vault_key" "cluster" {
   key_vault_id = var.key_vault_id
   name = local.kms_key_name
