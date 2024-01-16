@@ -23,7 +23,7 @@ resource "azurerm_private_endpoint" "main" {
     name                           = "psc-${local.name}"
     private_connection_resource_id = azurerm_container_registry.main.id
     is_manual_connection           = false
-    subresource_names              = ["vault"]
+    subresource_names              = ["registry"]
   }
 
   tags = merge(var.tags, {
