@@ -34,25 +34,6 @@ resource "azurerm_private_endpoint" "main" {
 
 }
 
-
-resource "azurerm_private_dns_a_record" "main" {
-  provider = azurerm.hubsubscription
-
-  name                = azurerm_container_registry.main.name
-  zone_name           = "privatelink.azurecr.io"
-  resource_group_name = var.privatezone_resource_group_name
-  ttl                 = 300
-  records             = [
-    azurerm_private_endpoint.main.private_service_connection.0.private_ip_address
-  ]
-
-  tags = merge(var.tags, {
-     "TF.Type" = "azurerm_private_dns_a_record"
-     "TF.Resource" = "main"
-     "TF.Module" = "container-registry",
-  })
-}
-
 resource "azurerm_key_vault_secret" "admin_username" {
   name         = "AcrAdminUserName"
   value        = azurerm_container_registry.main.admin_username
