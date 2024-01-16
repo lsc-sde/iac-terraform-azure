@@ -12,6 +12,9 @@ module "container_registry" {
   resource_group_name =  module.resource_group.name
   prefix = var.prefix
   key_vault_id = module.key_vault.id
+  subnet_id = var.subnet_id
+  hub_subscription_id = var.hub_subscription_id
+  privatezone_resource_group_name = var.private_zone_resource_group_name
 }
 
 /*

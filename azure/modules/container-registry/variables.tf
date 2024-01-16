@@ -35,3 +35,18 @@ variable "key_vault_id" {
   type = string
   description = "The ID of the key vault where we will store the ACR Admin Password"
 }
+variable "subnet_id" {
+    type = string
+    description = "Id for the subnet"
+}
+
+variable "hub_subscription_id" {
+  type = string
+  description = "The ID of the hub subscription"
+}
+
+variable "privatezone_resource_group_name" {
+  type = string
+  description = "resource group for the azure file private zone"
+  default = ""
+}
