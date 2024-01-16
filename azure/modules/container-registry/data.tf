@@ -6,6 +6,6 @@ data "azurerm_private_dns_zone" "frontend" {
 
 data "azurerm_private_dns_zone" "data" {
     provider = azurerm.hubsubscription
-    name = "privatelink.uksouth.data.azurecr.io"
+    name = "uksouth.privatelink.azurecr.io"
     resource_group_name = var.privatezone_resource_group_name
 }
