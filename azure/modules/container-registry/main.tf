@@ -32,6 +32,13 @@ resource "azurerm_private_endpoint" "main" {
      "TF.Module" = "container-registry",
   })
 
+  private_dns_zone_group {
+    name = local.name
+    private_dns_zone_ids = [
+      data.azurerm_private_dns_zone.frontend.id,
+      data.azurerm_private_dns_zone.data.id
+    ]
+  }
 }
 
 resource "azurerm_key_vault_secret" "admin_username" {
