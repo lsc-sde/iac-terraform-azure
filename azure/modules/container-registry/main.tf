@@ -12,3 +12,15 @@ resource "azurerm_container_registry" "main" {
     "TF.Module" = "container-registry",
   })
 }
+
+resource "azurerm_key_vault_secret" "admin_username" {
+  name         = "AcrAdminUserName"
+  value        = azurerm_container_registry.main.admin_username
+  key_vault_id = var.key_vault_id
+}
+
+resource "azurerm_key_vault_secret" "admin_password" {
+  name         = "AcrAdminPassword"
+  value        = azurerm_container_registry.main.admin_password
+  key_vault_id = var.key_vault_id
+}

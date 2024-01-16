@@ -30,3 +30,8 @@ variable tags {
     type = map(string)
     description = "List of tags to generate"
 }
+
+variable "key_vault_id" {
+  type = string
+  description = "The ID of the key vault where we will store the ACR Admin Password"
+}
