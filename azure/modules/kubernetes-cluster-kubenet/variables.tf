@@ -230,7 +230,7 @@ variable gitrunner_node_pool_max_node_count {
 variable gitrunner_node_pool_vm_size {
     type = string
     description = "The sku for the VM size of the default node group"
-    default = "Standard_B4ms"
+    default = "Standard_B2ms"
 }
 
 variable "gitrunner_node_pool_max_pods" {

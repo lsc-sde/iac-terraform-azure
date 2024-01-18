@@ -353,6 +353,10 @@ resource "azurerm_kubernetes_cluster_node_pool" "github_runners" {
   ultra_ssd_enabled = true
   zones = [ "1" ]
   
+  node_taints = [
+    "sdeAppType=github-runner:NoSchedule"
+  ]
+  
   node_labels = {
     "lsc-sde.nhs.uk/nodeType" = "github-runner"
   }
