@@ -332,12 +332,12 @@ resource "azurerm_user_assigned_identity" "github_runner_kubelets" {
 
 
 resource "azurerm_kubernetes_cluster_node_pool" "github_runners" {
-  name                  = "githubrunners"
+  name                  = "github"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.cluster.id
   vm_size               = var.gitrunner_node_pool_vm_size
 
   tags = merge(var.tags, {
-    "Name" = local.name,
+    "Name" = "github",
     "Purpose" = "GitRunner Node Pool"
     "TF.Type" = "azurerm_kubernetes_cluster_node_pool"
     "TF.Resource" = "github_runners"
