@@ -26,6 +26,12 @@ variable "kubelet_identity_name" {
     default = ""
 }
 
+variable "gitrunner_kubelet_identity_name" {
+    type = string
+    description = "Name of the managed identity for the gitrunner kubelets"
+    default = ""
+}
+
 variable "deployment_identity_name" {
     type = string
     description = "Name of the managed identity for the deployment"
@@ -206,4 +212,29 @@ variable "defender_log_analytics_workspace_id" {
     type = string
     nullable = true
     description = "ID of the log analytics workspace used by the microsoft defender configuration on k8s"
+}
+
+
+variable gitrunner_node_pool_min_node_count {
+    type = string
+    description = "The min number of nodes to provision for the default node group"
+    default = 1
+}
+
+variable gitrunner_node_pool_max_node_count {
+    type = string
+    description = "The maximum number of nodes to provision for the default node group"
+    default = 3
+}
+
+variable gitrunner_node_pool_vm_size {
+    type = string
+    description = "The sku for the VM size of the default node group"
+    default = "Standard_B4ms"
+}
+
+variable "gitrunner_node_pool_max_pods" {
+    type = number
+    description = "Maximum pods allowed on the gitrunner node pool"
+    default = 110
 }
