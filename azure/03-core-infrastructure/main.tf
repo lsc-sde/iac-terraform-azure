@@ -64,6 +64,8 @@ module "storage_account" {
   azurefile_privatezone_enabled = true
   azurefile_privatezone_resource_group_name = var.private_zone_resource_group_name
   hub_subscription_id = var.hub_subscription_id
+  key_vault_id = module.key_vault.id
+  secret_name = "PrimaryStorageAccountKey"
 }
 
 

@@ -71,3 +71,9 @@ resource "azurerm_private_dns_a_record" "main" {
      "TF.Module" = "storage-account",
   })
 }
+
+resource "azurerm_key_vault_secret" "main" {
+  name         = var.secret_name
+  value        = azurerm_storage_account.main.primary_access_key
+  key_vault_id = var.key_vault_id
+}
