@@ -238,3 +238,8 @@ variable "gitrunner_node_pool_max_pods" {
     description = "Maximum pods allowed on the gitrunner node pool"
     default = 110
 }
+
+variable "storage_account_id" {
+  type = string
+  description = "The ID of the storage account"
+}

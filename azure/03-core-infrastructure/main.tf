@@ -89,6 +89,7 @@ module "kubernetes_cluster" {
   apply_nsg_rules = var.apply_nsg_rules
   hub_subscription_id = var.hub_subscription_id
   defender_log_analytics_workspace_id = var.defender_log_analytics_workspace_id
+  storage_account_id = module.storage_account.id
 }
 
 module "keda" {

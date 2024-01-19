@@ -367,3 +367,11 @@ resource "azurerm_kubernetes_cluster_node_pool" "github_runners" {
      ]
   }
 }
+
+module "cluster_network_contributor" {
+  source = "../role-assignment"
+
+  scope = var.storage_account_id
+  principal_id =  azurerm_user_assigned_identity.kubelets.principal_id
+  role_definition_name = "Contributor"
+}
