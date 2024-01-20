@@ -73,7 +73,13 @@ resource "azurerm_private_dns_a_record" "main" {
 }
 
 resource "azurerm_key_vault_secret" "main" {
-  name         = var.secret_name
+  name         = var.account_key_secret_name
   value        = azurerm_storage_account.main.primary_access_key
+  key_vault_id = var.key_vault_id
+}
+
+resource "azurerm_key_vault_secret" "storage_account_name" {
+  name         = var.account_name_secret_name
+  value        = azurerm_storage_account.main.name
   key_vault_id = var.key_vault_id
 }

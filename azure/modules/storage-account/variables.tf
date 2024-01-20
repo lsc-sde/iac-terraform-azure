@@ -63,7 +63,12 @@ variable "key_vault_id" {
   description = "The ID of the key vault to add the secret to"
 }
 
-variable "secret_name" {
+variable "account_key_secret_name" {
   type = string
   description = "Name of the Secret to store the primary access key"
+}
+
+variable "account_name_secret_name" {
+  type = string
+  description = "Name of the Secret to store the storage account name"
 }
