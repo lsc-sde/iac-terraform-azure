@@ -383,3 +383,19 @@ module "kubelet_smb_elevated_contributor" {
   principal_id = azurerm_user_assigned_identity.kubelets.principal_id
   role_definition_name = "Storage File Data SMB Share Elevated Contributor"
 }
+
+module "cluster_storage_account_contributor" {
+  source = "../role-assignment"
+
+  scope = var.storage_account_id
+  principal_id =  azurerm_user_assigned_identity.cluster.principal_id
+  role_definition_name = "Contributor"
+}
+
+module "cluster_smb_elevated_contributor" {
+  source = "../role-assignment"
+
+  scope = var.storage_account_id
+  principal_id = azurerm_user_assigned_identity.cluster.principal_id
+  role_definition_name = "Storage File Data SMB Share Elevated Contributor"
+}
