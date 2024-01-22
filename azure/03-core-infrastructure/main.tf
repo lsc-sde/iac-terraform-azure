@@ -11,6 +11,10 @@ module "container_registry" {
   tags = var.tags
   resource_group_name =  module.resource_group.name
   prefix = var.prefix
+  key_vault_id = module.key_vault.id
+  subnet_id = var.subnet_id
+  hub_subscription_id = var.hub_subscription_id
+  privatezone_resource_group_name = var.private_zone_resource_group_name
 }
 
 /*
@@ -60,6 +64,9 @@ module "storage_account" {
   azurefile_privatezone_enabled = true
   azurefile_privatezone_resource_group_name = var.private_zone_resource_group_name
   hub_subscription_id = var.hub_subscription_id
+  key_vault_id = module.key_vault.id
+  account_key_secret_name = "PrimaryStorageAccountKey"
+  account_name_secret_name = "PrimaryStorageAccountName"
 }
 
 
@@ -85,6 +92,7 @@ module "kubernetes_cluster" {
   apply_nsg_rules = var.apply_nsg_rules
   hub_subscription_id = var.hub_subscription_id
   defender_log_analytics_workspace_id = var.defender_log_analytics_workspace_id
+  storage_account_id = module.storage_account.id
 }
 
 module "keda" {

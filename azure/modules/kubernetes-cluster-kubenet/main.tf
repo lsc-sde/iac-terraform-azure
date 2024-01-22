@@ -314,3 +314,88 @@ resource "azurerm_network_security_rule" "https" {
   destination_address_prefix = "*"
   destination_port_range = "443"
 }
+
+resource "azurerm_user_assigned_identity" "github_runner_kubelets" {
+  name                = local.gitrunner_kubelet_identity_name
+  resource_group_name = var.resource_group_name
+  location            = var.location
+
+  tags = merge(var.tags, {
+    "Name" = local.name,
+    "Purpose" = "GitRunner Kubelets Identity"
+    "TF.Type" = "azurerm_user_assigned_identity"
+    "TF.Resource" = "github_runner_kubelets"
+    "TF.Module" = "kubernetes-cluster-kubenet",
+  })
+}
+
+
+
+resource "azurerm_kubernetes_cluster_node_pool" "github_runners" {
+  name                  = "github"
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.cluster.id
+  vm_size               = var.gitrunner_node_pool_vm_size
+
+  tags = merge(var.tags, {
+    "Name" = "github",
+    "Purpose" = "GitRunner Node Pool"
+    "TF.Type" = "azurerm_kubernetes_cluster_node_pool"
+    "TF.Resource" = "github_runners"
+    "TF.Module" = "kubernetes-cluster-kubenet",
+  })
+
+  enable_auto_scaling = true
+  max_pods = var.gitrunner_node_pool_max_pods
+  min_count = var.gitrunner_node_pool_min_node_count
+  max_count = var.gitrunner_node_pool_max_node_count
+  vnet_subnet_id = var.default_node_pool_vnet_subnet_id
+  enable_node_public_ip = false
+  ultra_ssd_enabled = true
+  zones = [ "1" ]
+  
+  node_taints = [
+    "sdeAppType=github-runner:NoSchedule"
+  ]
+  
+  node_labels = {
+    "lsc-sde.nhs.uk/nodeType" = "github-runner"
+  }
+
+  lifecycle {
+    ignore_changes = [ 
+      node_count,
+     ]
+  }
+}
+
+module "kubelet_storage_account_contributor" {
+  source = "../role-assignment"
+
+  scope = var.storage_account_id
+  principal_id =  azurerm_user_assigned_identity.kubelets.principal_id
+  role_definition_name = "Contributor"
+}
+
+module "kubelet_smb_elevated_contributor" {
+  source = "../role-assignment"
+
+  scope = var.storage_account_id
+  principal_id = azurerm_user_assigned_identity.kubelets.principal_id
+  role_definition_name = "Storage File Data SMB Share Elevated Contributor"
+}
+
+module "cluster_storage_account_contributor" {
+  source = "../role-assignment"
+
+  scope = var.storage_account_id
+  principal_id =  azurerm_user_assigned_identity.cluster.principal_id
+  role_definition_name = "Contributor"
+}
+
+module "cluster_smb_elevated_contributor" {
+  source = "../role-assignment"
+
+  scope = var.storage_account_id
+  principal_id = azurerm_user_assigned_identity.cluster.principal_id
+  role_definition_name = "Storage File Data SMB Share Elevated Contributor"
+}

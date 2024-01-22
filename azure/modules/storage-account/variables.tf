@@ -57,3 +57,18 @@ variable "hub_subscription_id" {
   type = string
   description = "The ID of the hub subscription"
 }
+
+variable "key_vault_id" {
+  type = string
+  description = "The ID of the key vault to add the secret to"
+}
+
+variable "account_key_secret_name" {
+  type = string
+  description = "Name of the Secret to store the primary access key"
+}
+
+variable "account_name_secret_name" {
+  type = string
+  description = "Name of the Secret to store the storage account name"
+}

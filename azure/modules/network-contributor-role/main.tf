@@ -11,7 +11,8 @@ resource "azurerm_role_definition" "main" {
         "Microsoft.Network/virtualNetworks/subnets/join/action",
         "Microsoft.Network/virtualNetworks/join/action",
         "Microsoft.Network/privateDnsZones/virtualNetworkLinks/write",
-        "Microsoft.Network/privateDnsZones/A/write"
+        "Microsoft.Network/privateDnsZones/A/write",
+        "Microsoft.Network/privateEndpoints/privateDnsZoneGroups/write"
     ]
     not_actions = []
   }

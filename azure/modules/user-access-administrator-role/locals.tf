@@ -8,7 +8,8 @@ locals {
         "Network Contributor" = "4d97b98b-1d4f-4787-a291-c67834d212e7",
         "Private DNS Zone Contributor" = "b12aa53e-6015-4669-85d0-8515ebb3ae7f",
         "AcrPull" = "7f951dda-4ed3-4680-a7ca-43fe172d538d",
-        "Key Vault Contributor" = "f25e0fa2-a7c8-4377-a976-54943a77a395"
+        "Key Vault Contributor" = "f25e0fa2-a7c8-4377-a976-54943a77a395",
+        "Storage File Data SMB Share Elevated Contributor" = "a7264617-510b-434b-a828-9731dc254ea7"
     }
     assignable_role_ids = join(", ", values(local.assignable_roles))
 }
