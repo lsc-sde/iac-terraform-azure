@@ -90,24 +90,10 @@ resource "azurerm_private_endpoint" "keyVault" {
      "TF.Module" = "keyvault",
   })
 
-}
-
-
-resource "azurerm_private_dns_a_record" "keyVault" {
-  provider = azurerm.hubsubscription
-
-  count = var.keyvault_privatezone_enabled ? 1 : 0
-  name                = azurerm_key_vault.keyVault.name
-  zone_name           = "privatelink.vaultcore.azure.net"
-  resource_group_name = var.keyvault_privatezone_resource_group_name
-  ttl                 = 300
-  records             = [
-    azurerm_private_endpoint.keyVault.private_service_connection.0.private_ip_address
-  ]
-
-  tags = merge(var.tags, {
-     "TF.Type" = "azurerm_private_dns_a_record"
-     "TF.Resource" = "keyVault"
-     "TF.Module" = "keyvault",
-  })
+  private_dns_zone_group {
+    name = local.name
+    private_dns_zone_ids = [
+      data.azurerm_private_dns_zone.main.id,
+    ]
+  }
 }

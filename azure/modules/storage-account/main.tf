@@ -51,25 +51,12 @@ resource "azurerm_private_endpoint" "main" {
      "TF.Module" = "storage-account",
   })
 
-}
-
-resource "azurerm_private_dns_a_record" "main" {
-  provider = azurerm.hubsubscription
-
-  count = var.azurefile_privatezone_enabled ? 1 : 0
-  name                = azurerm_storage_account.main.name
-  zone_name           = "privatelink.file.core.windows.net"
-  resource_group_name = var.azurefile_privatezone_resource_group_name
-  ttl                 = 300
-  records             = [
-    azurerm_private_endpoint.main.private_service_connection.0.private_ip_address
-  ]
-
-  tags = merge(var.tags, {
-     "TF.Type" = "azurerm_private_dns_a_record"
-     "TF.Resource" = "main"
-     "TF.Module" = "storage-account",
-  })
+  private_dns_zone_group {
+    name = local.name
+    private_dns_zone_ids = [
+      data.azurerm_private_dns_zone.main.id,
+    ]
+  }
 }
 
 resource "azurerm_key_vault_secret" "main" {
