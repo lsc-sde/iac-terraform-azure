@@ -32,6 +32,7 @@ resource "azurerm_mssql_server" "main" {
   administrator_login           = local.administrator_login
   administrator_login_password  = random_password.password.result
   public_network_access_enabled = false
+  primary_user_assigned_identity_id = azurerm_user_assigned_identity.main.id
 
   tags = merge(var.tags, {
     "TF.Type"     = "azurerm_mssql_server"
