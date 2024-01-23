@@ -221,3 +221,45 @@ resource "azurerm_kubernetes_flux_configuration" "github_runner" {
     azurerm_kubernetes_cluster_extension.flux
   ]
 }
+
+## https://github.com/lsc-sde/iac-flux-keycloak
+
+
+
+resource "azurerm_kubernetes_flux_configuration" "keycloak" {
+  name       = "keycloak"
+  cluster_id = var.cluster_id
+  namespace  = "keycloak"
+  scope = "cluster"
+
+  git_repository {
+    url             = "https://github.com/lsc-sde/iac-flux-keycloak"
+    reference_type  = "branch"
+    reference_value = var.branch_name
+    sync_interval_in_seconds = 60
+    timeout_in_seconds = 600
+  }
+
+  kustomizations {
+    name = "sources"
+    sync_interval_in_seconds = 60
+    retry_interval_in_seconds = 60
+    timeout_in_seconds = 600
+    path = "sources"
+
+  }
+
+  kustomizations {
+    name = "cluster-config"
+    sync_interval_in_seconds = 60
+    retry_interval_in_seconds = 60
+    timeout_in_seconds = 600
+    path = "cluster/${var.environment_name}"
+
+    depends_on = [ "sources" ]
+  }
+
+  depends_on = [
+    azurerm_kubernetes_cluster_extension.flux
+  ]
+}

@@ -135,3 +135,9 @@ module "userAccessAdminRole" {
 
   service_principal_id = var.service_principal_id
 }
+
+module "shareAdminRole"{
+  source = "../modules/share-administrator-role"
+
+  service_principal_id = var.service_principal_id
+}

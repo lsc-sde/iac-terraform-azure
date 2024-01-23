@@ -106,3 +106,28 @@ module "keda" {
   tags = var.tags
   environment_name = var.environment_name
 }
+
+module "sql_server" {
+  source = "../modules/sql-server"
+
+  location = var.location
+  tags = var.tags
+  resource_group_name = module.resource_group.name
+  prefix = var.prefix
+  subnet_id = var.subnet_id
+  privatezone_resource_group_name = var.private_zone_resource_group_name
+  hub_subscription_id = var.hub_subscription_id
+  key_vault_id = module.key_vault.id
+}
+
+module "keycloak_database" {
+  source = "../modules/sql-database"
+
+  name = "keycloak"
+  location = var.location
+  resource_group_name = module.resource_group.name
+  sql_server_id = module.sql_server.id
+  tags = var.tags
+  key_vault_id = module.key_vault.id
+  sku_name = var.keycloak_db_sku_name
+}
