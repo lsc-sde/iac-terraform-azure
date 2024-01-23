@@ -2,7 +2,7 @@
 resource "azurerm_role_definition" "main" {
   name        = "SDE Share Admin"
   scope       = data.azurerm_subscription.main.id
-  description = "This role provides the data"
+  description = "This role provides the data access permissions missing from azure to manage shares"
 
   permissions {
     data_actions = [ 
