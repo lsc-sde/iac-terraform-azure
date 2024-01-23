@@ -18,7 +18,7 @@ resource "azurerm_mssql_database" "main" {
   server_id                                    = var.sql_server_id
   collation                                    = "SQL_Latin1_General_CP1_CI_AS"
   sku_name                                     = var.sku_name
-  transparent_data_encryption_key_vault_key_id = azurerm_key_vault_key.tde.id
+  #transparent_data_encryption_key_vault_key_id = azurerm_key_vault_key.tde.id
   tags = merge(var.tags, {
     "TF.Type"     = "azurerm_mssql_database"
     "TF.Resource" = "main"
