@@ -45,6 +45,12 @@ resource "azurerm_mssql_server" "main" {
         azurerm_user_assigned_identity.main.id
      ]
   }
+  
+  azuread_administrator {
+    login_username = azurerm_user_assigned_identity.main.name
+    object_id      = azurerm_user_assigned_identity.main.principal_id
+  }
+
 }
 
 resource "azurerm_private_endpoint" "main" {
