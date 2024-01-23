@@ -166,3 +166,9 @@ variable "defender_log_analytics_workspace_id" {
     description = "ID of the log analytics workspace used by the microsoft defender configuration on k8s"
     default = null
 }
+
+variable "keycloak_db_sku_name" {
+  type = string
+  description = "Name of the SKU for the keycloak database"
+  default = "S0"
+}
