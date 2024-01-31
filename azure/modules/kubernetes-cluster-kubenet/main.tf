@@ -206,7 +206,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
     vnet_subnet_id = var.default_node_pool_vnet_subnet_id
     enable_node_public_ip = false
     ultra_ssd_enabled = true
-    zones = [ "1" ]
+    zones = [ "1", "2", "3" ]
     temporary_name_for_rotation = "temppool"
     upgrade_settings {
       max_surge = "10%"
@@ -215,9 +215,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
 
   identity {
     type = "UserAssigned"
-    identity_ids = [
-      azurerm_user_assigned_identity.cluster.id
-    ]
+    identity_ids = local.identity_ids
   }
 
   kubelet_identity {
@@ -315,50 +313,72 @@ resource "azurerm_network_security_rule" "https" {
   destination_port_range = "443"
 }
 
-resource "azurerm_user_assigned_identity" "github_runner_kubelets" {
-  name                = local.gitrunner_kubelet_identity_name
+resource "azurerm_user_assigned_identity" "gitops_kubelets" {
+  count = var.enable_gitops ? 1 : 0
+  name                = local.gitops_kubelet_identity_name
   resource_group_name = var.resource_group_name
   location            = var.location
 
   tags = merge(var.tags, {
     "Name" = local.name,
-    "Purpose" = "GitRunner Kubelets Identity"
+    "Purpose" = "GitOps Kubelets Identity"
     "TF.Type" = "azurerm_user_assigned_identity"
-    "TF.Resource" = "github_runner_kubelets"
+    "TF.Resource" = "gitops_kubelets"
     "TF.Module" = "kubernetes-cluster-kubenet",
   })
 }
 
 
 
-resource "azurerm_kubernetes_cluster_node_pool" "github_runners" {
-  name                  = "github"
+module "gitops_acr_pull" {
+  count = var.enable_gitops ? 1 : 0
+  source = "../role-assignment"
+
+  scope = var.container_registry_id
+  role_definition_name = "AcrPull"
+  principal_id = azurerm_user_assigned_identity.gitops_kubelets[0].principal_id
+}
+
+
+
+module "gitops_acr_push" {
+  count = var.enable_gitops ? 1 : 0
+  source = "../role-assignment"
+
+  scope = var.container_registry_id
+  role_definition_name = "AcrPush"
+  principal_id = azurerm_user_assigned_identity.gitops_kubelets[0].principal_id
+}
+
+resource "azurerm_kubernetes_cluster_node_pool" "gitops" {
+  count = var.enable_gitops ? 1 : 0
+  name                  = "gitops"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.cluster.id
-  vm_size               = var.gitrunner_node_pool_vm_size
+  vm_size               = var.gitops_node_pool_vm_size
 
   tags = merge(var.tags, {
-    "Name" = "github",
-    "Purpose" = "GitRunner Node Pool"
+    "Name" = "gitops",
+    "Purpose" = "GitOps Node Pool"
     "TF.Type" = "azurerm_kubernetes_cluster_node_pool"
-    "TF.Resource" = "github_runners"
+    "TF.Resource" = "gitops"
     "TF.Module" = "kubernetes-cluster-kubenet",
   })
 
   enable_auto_scaling = true
-  max_pods = var.gitrunner_node_pool_max_pods
-  min_count = var.gitrunner_node_pool_min_node_count
-  max_count = var.gitrunner_node_pool_max_node_count
+  max_pods = var.gitops_node_pool_max_pods
+  min_count = var.gitops_node_pool_min_node_count
+  max_count = var.gitops_node_pool_max_node_count
   vnet_subnet_id = var.default_node_pool_vnet_subnet_id
   enable_node_public_ip = false
   ultra_ssd_enabled = true
-  zones = [ "1" ]
+  zones = [ "1", "2", "3" ]
   
   node_taints = [
-    "sdeAppType=github-runner:NoSchedule"
+    "sdeAppType=gitops:NoSchedule"
   ]
   
   node_labels = {
-    "lsc-sde.nhs.uk/nodeType" = "github-runner"
+    "lsc-sde.nhs.uk/nodeType" = "gitops"
   }
 
   lifecycle {

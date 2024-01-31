@@ -172,3 +172,9 @@ variable "keycloak_db_sku_name" {
   description = "Name of the SKU for the keycloak database"
   default = "S0"
 }
+
+variable "enable_gitops" {
+  type = bool
+  description = "Enable the gitops"
+  default = true
+}
