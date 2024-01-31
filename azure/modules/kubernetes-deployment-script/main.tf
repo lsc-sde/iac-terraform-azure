@@ -186,6 +186,7 @@ resource "azurerm_kubernetes_flux_configuration" "jupyterhub" {
 
 
 resource "azurerm_kubernetes_flux_configuration" "github_runner" {
+  count = var.enable_gitops ? 1 : 0
   name       = "github-runner"
   cluster_id = var.cluster_id
   namespace  = "github-runner"

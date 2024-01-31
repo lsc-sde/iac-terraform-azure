@@ -106,6 +106,7 @@ module "keda" {
   storage_account_name = module.storage_account.name
   tags = var.tags
   environment_name = var.environment_name
+  enable_gitops = var.enable_gitops
 }
 
 module "sql_server" {
