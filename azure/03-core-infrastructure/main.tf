@@ -17,6 +17,16 @@ module "container_registry" {
   privatezone_resource_group_name = var.private_zone_resource_group_name
 }
 
+module "container_registry_tasks" {
+  source = "../modules/container-registry-tasks"
+  container_registry_id = module.container_registry.id
+  user_assigned_identity_id = module.container_registry.task_identity_id
+  client_id = module.container_registry.task_client_id
+  pat_token = var.pat_token
+  branch_name = var.branch_name
+  login_server = module.container_registry.fqdn
+}
+
 /*
 module "private_dns_zone" {
   source = "../modules/private-dns-zone"
@@ -107,6 +117,7 @@ module "keda" {
   tags = var.tags
   environment_name = var.environment_name
   enable_gitops = var.enable_gitops
+  branch_name = var.branch_name
 }
 
 module "sql_server" {

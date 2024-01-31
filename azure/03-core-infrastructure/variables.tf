@@ -178,3 +178,14 @@ variable "enable_gitops" {
   description = "Enable the gitops"
   default = true
 }
+
+variable "pat_token" {
+  type = string
+  description = "THE PAT_TOKEN used to open the repositories"
+}
+
+variable "branch_name" {
+  type = string
+  description = "The branch to follow on source control"
+  default = "main"
+}

@@ -215,7 +215,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
 
   identity {
     type = "UserAssigned"
-    identity_ids = local.identity_ids
+    identity_ids = [ azurerm_user_assigned_identity.kubelets.id ]
   }
 
   kubelet_identity {
