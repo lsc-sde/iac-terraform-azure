@@ -5,6 +5,7 @@ resource "azurerm_container_registry" "main" {
   admin_enabled = true
   sku = "Premium"
   public_network_access_enabled = false
+  network_rule_bypass_option = "AzureServices"
 
   tags = merge(var.tags, {
     "TF.Type" = "azurerm_container_registry"
