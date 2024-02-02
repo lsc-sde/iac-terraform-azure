@@ -263,3 +263,32 @@ resource "azurerm_kubernetes_flux_configuration" "keycloak" {
     azurerm_kubernetes_cluster_extension.flux
   ]
 }
+
+
+
+resource "azurerm_kubernetes_flux_configuration" "lscsde" {
+  name       = "lscsde"
+  cluster_id = var.cluster_id
+  namespace  = "lscsde"
+  scope = "cluster"
+
+  git_repository {
+    url             = "https://github.com/lsc-sde/iac-flux-lscsde"
+    reference_type  = "branch"
+    reference_value = var.branch_name
+    sync_interval_in_seconds = 60
+    timeout_in_seconds = 600
+  }
+
+  kustomizations {
+    name = "sources"
+    sync_interval_in_seconds = 60
+    retry_interval_in_seconds = 60
+    timeout_in_seconds = 600
+    path = "sources"
+  }
+
+  depends_on = [
+    azurerm_kubernetes_cluster_extension.flux
+  ]
+}
