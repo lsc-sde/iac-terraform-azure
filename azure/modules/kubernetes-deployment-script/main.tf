@@ -286,6 +286,15 @@ resource "azurerm_kubernetes_flux_configuration" "lscsde" {
     retry_interval_in_seconds = 60
     timeout_in_seconds = 600
     path = "sources"
+    depends_on = [ "cluster-config" ]
+  }
+
+  kustomizations {
+    name = "cluster-config"
+    sync_interval_in_seconds = 60
+    retry_interval_in_seconds = 60
+    timeout_in_seconds = 600
+    path = "clusters/${var.environment_name}"
   }
 
   depends_on = [
