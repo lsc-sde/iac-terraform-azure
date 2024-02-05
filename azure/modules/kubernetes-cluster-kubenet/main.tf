@@ -164,7 +164,7 @@ module "cluster_pzc" {
 module "kubelets_pzc" {
   source = "../role-assignment"
 
-  scope = var.azmk8s_zone_id
+  scope = local.private_zone_resource_group_id
   principal_id =  azurerm_user_assigned_identity.kubelets.principal_id
   role_definition_name = "Private DNS Zone Contributor"
 }

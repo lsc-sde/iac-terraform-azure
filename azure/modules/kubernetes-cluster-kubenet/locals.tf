@@ -8,4 +8,5 @@ locals {
   proxy_details = var.proxy_address != "" ? [ var.proxy_address ] : []
   pod_cidr = var.pod_cidr != "" ? var.pod_cidr : cidrsubnet(var.network_cidr, 1, 0)
   service_cidr = var.service_cidr != "" ? var.service_cidr : cidrsubnet(var.network_cidr, 1, 1)
+  private_zone_resource_group_id = "/subscriptions/${var.hub_subscription_id}/resourceGroups/${var.private_zone_resource_group_name}"
 }
