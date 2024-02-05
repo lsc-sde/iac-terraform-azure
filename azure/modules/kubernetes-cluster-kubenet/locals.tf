@@ -9,4 +9,5 @@ locals {
   pod_cidr = var.pod_cidr != "" ? var.pod_cidr : cidrsubnet(var.network_cidr, 1, 0)
   service_cidr = var.service_cidr != "" ? var.service_cidr : cidrsubnet(var.network_cidr, 1, 1)
   identity_ids = var.enable_gitops ? [ azurerm_user_assigned_identity.cluster.id, azurerm_user_assigned_identity.gitops_kubelets[0].id ] : [ azurerm_user_assigned_identity.cluster.id ]
+  private_zone_resource_group_id = "/subscriptions/${var.hub_subscription_id}/resourceGroups/${var.private_zone_resource_group_name}"
 }
