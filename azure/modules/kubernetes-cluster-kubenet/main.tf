@@ -297,6 +297,14 @@ module "acr_pull" {
   principal_id = azurerm_user_assigned_identity.kubelets.principal_id
 }
 
+module "acr_push" {
+  source = "../role-assignment"
+
+  scope = var.container_registry_id
+  role_definition_name = "AcrPush"
+  principal_id = azurerm_user_assigned_identity.kubelets.principal_id
+}
+
 resource "azurerm_network_security_rule" "https" {
   count = var.apply_nsg_rules ? 1 : 0
 
