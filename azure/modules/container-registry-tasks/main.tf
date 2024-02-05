@@ -11,6 +11,13 @@ resource "azurerm_container_registry_task" "datascience_notebook" {
     ]
   }
 
+
+  tags = merge(var.tags, {
+    "TF.Type" = "azurerm_container_registry_task"
+    "TF.Resource" = "datascience_notebook"
+    "TF.Module" = "container-registry-tasks",
+  })
+
   registry_credential {
     source {
       login_mode = "Default"
@@ -43,5 +50,6 @@ resource "azurerm_container_registry_task" "datascience_notebook" {
 }
 
 resource "azurerm_container_registry_task_schedule_run_now" "datascience_notebook" {
+  count = var.run_now ? 1 : 0
   container_registry_task_id = azurerm_container_registry_task.datascience_notebook.id
 }

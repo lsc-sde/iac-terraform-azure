@@ -25,6 +25,7 @@ module "container_registry_tasks" {
   pat_token = var.pat_token
   branch_name = var.branch_name
   login_server = module.container_registry.fqdn
+  tags = var.tags
 }
 
 /*

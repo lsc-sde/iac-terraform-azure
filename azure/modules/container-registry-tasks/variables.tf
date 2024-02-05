@@ -27,3 +27,14 @@ variable "login_server" {
   type = string
   description = "The FQDN of the ACR registry"
 }
+
+variable "run_now" {
+  type = bool
+  description = "Run the tasks now"
+  default = false
+}
+
+variable "tags" {
+    type = map(string)
+    description = "List of tags to generate"
+}
