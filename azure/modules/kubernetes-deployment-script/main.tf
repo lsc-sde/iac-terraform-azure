@@ -289,6 +289,16 @@ resource "azurerm_kubernetes_flux_configuration" "lscsde" {
     path = "sources"
   }
 
+  kustomizations {
+    name = "cluster-config"
+    sync_interval_in_seconds = 60
+    retry_interval_in_seconds = 60
+    timeout_in_seconds = 600
+    path = "clusters/${var.environment_name}"
+
+    depends_on = [ "sources" ]
+  }
+
   depends_on = [
     azurerm_kubernetes_cluster_extension.flux
   ]
