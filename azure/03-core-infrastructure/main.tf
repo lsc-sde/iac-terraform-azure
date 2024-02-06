@@ -152,3 +152,14 @@ resource "azurerm_key_vault_secret" "admin_password" {
   value        = var.pat_token
   key_vault_id = module.key_vault.id
 }
+
+module "kubernetes_cluster_configuration" {
+  source = "../../kubernetes"
+  host = module.kubernetes_cluster.host
+  client_certificate = module.kubernetes_cluster.client_certificate
+  client_key = module.kubernetes_cluster.client_key
+  cluster_ca_certificate = module.kubernetes_cluster.cluster_ca_certificate
+  cluster_configuation = {
+    "AZURE_CLIENT_ID" = module.kubernetes_cluster.kubelet_identity_client_id
+  }
+}
