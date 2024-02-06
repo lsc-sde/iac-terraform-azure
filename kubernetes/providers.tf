@@ -10,7 +10,7 @@ terraform {
 provider "kubernetes" {
   # Configuration options
   host = var.host
-  client_key = var.client_key
-  client_certificate = var.client_certificate
-  cluster_ca_certificate = var.cluster_ca_certificate
+  client_key = base64encode(var.client_key)
+  client_certificate = base64encode(var.client_certificate)
+  cluster_ca_certificate = base64encode(var.cluster_ca_certificate)
 }
