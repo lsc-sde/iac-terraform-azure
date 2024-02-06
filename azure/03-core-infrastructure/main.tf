@@ -161,5 +161,7 @@ module "kubernetes_cluster_configuration" {
   cluster_ca_certificate = module.kubernetes_cluster.cluster_ca_certificate
   cluster_configuation = {
     "AZURE_CLIENT_ID" = module.kubernetes_cluster.kubelet_identity_client_id
+    "AZURE_KEYVAULT_NAME" = module.key_vault.name
+    "AZURE_STORAGE_ACCOUNT" = module.storage_account.name
   }
 }
