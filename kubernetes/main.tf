@@ -1,6 +1,6 @@
 module namespace {
     source = "./namespace"
-    name = "lscsde"
+    name = "lscsde-config"
 }
 
 module cluster_config {
