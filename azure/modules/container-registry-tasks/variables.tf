@@ -16,6 +16,7 @@ variable "client_id" {
 variable "pat_token" {
     type = string
     description = "PAT TOKEN to use when talking to the repositories"
+    sensitive = true
 }
 
 variable "branch_name" {

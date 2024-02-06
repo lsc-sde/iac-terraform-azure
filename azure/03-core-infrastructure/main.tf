@@ -145,3 +145,10 @@ module "keycloak_database" {
   key_vault_id = module.key_vault.id
   sku_name = var.keycloak_db_sku_name
 }
+
+
+resource "azurerm_key_vault_secret" "admin_password" {
+  name         = "PatToken"
+  value        = var.pat_token
+  key_vault_id = module.key_vault.id
+}

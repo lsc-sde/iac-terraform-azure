@@ -182,6 +182,7 @@ variable "enable_gitops" {
 variable "pat_token" {
   type = string
   description = "THE PAT_TOKEN used to open the repositories"
+  sensitive = true
 }
 
 variable "branch_name" {
