@@ -190,3 +190,13 @@ variable "branch_name" {
   description = "The branch to follow on source control"
   default = "main"
 }
+
+variable "dns_prefix" {
+  type = string
+  description = "The prefix for any DNS records on the private DNS"
+}
+
+variable "dns_zone" {
+  type = string
+  description = "The DNS zone for any DNS records on private DNS" 
+}
