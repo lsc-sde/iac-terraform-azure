@@ -163,5 +163,6 @@ module "kubernetes_cluster_configuration" {
     "AZURE_CLIENT_ID" = module.kubernetes_cluster.kubelet_identity_client_id
     "AZURE_KEYVAULT_NAME" = module.key_vault.name
     "AZURE_STORAGE_ACCOUNT" = module.storage_account.name
+    "AZURE_TENANT_ID" = data.azurerm_client_config.current.tenant_id
   }
 }
