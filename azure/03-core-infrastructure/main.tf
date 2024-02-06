@@ -170,5 +170,7 @@ module "kubernetes_cluster_configuration" {
     "dns_subscription_id" = var.hub_subscription_id
     "azure_subscription_id" = data.azurerm_client_config.current.subscription_id
     "azure_sql_server" = module.sql_server.name
+    "azure_resource_group" = module.resource_group.name
+    "azure_location" = var.location
   }
 }
