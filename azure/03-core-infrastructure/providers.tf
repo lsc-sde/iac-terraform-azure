@@ -11,9 +11,9 @@ terraform {
   }
 
   backend "azurerm" {
-      subscription_id = var.backend_subscription_id
-      resource_group_name  = var.backend_resource_group_name
-      storage_account_name = var.backend_storage_account_name
+      subscription_id = "f227cc66-c370-426c-ae73-24d75a8ddc4d"
+      resource_group_name  = "lscsdesbxstate-rg"
+      storage_account_name = "lscsdesbxstate8ddbeyve"
       container_name       = "tfstate"
       key                  = "core-infrastructure.tfstate"
   }

@@ -148,21 +148,6 @@ variable "keyvault_purge_protection_enabled" {
   default = false
 }
 
-variable "backend_storage_account_name" {
-  type = string
-  description = "Storage Account Name used by the backend"
-}
-
-variable "backend_resource_group_name" {
-  type = string
-  description = "Resource Group used by the backend"
-}
-
-variable "backend_subscription_id" {
-  type = string
-  description = "Subscription ID used by the backend"
-}
-
 variable "defender_log_analytics_workspace_id" {
     type = string
     nullable = true
