@@ -10,14 +10,12 @@ terraform {
     }
   }
 
-  /*
   backend "azurerm" {
       resource_group_name  = var.backend_resource_group_name
       storage_account_name = bar.backend_storage_account_name
       container_name       = "tfstate"
-      key                  = "03-core-infrastructure.tfstate"
+      key                  = "core-infrastructure.tfstate"
   }
-  */
 }
 
 provider "azuread" {
