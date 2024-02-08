@@ -15,6 +15,7 @@ module "container_registry" {
   subnet_id = var.subnet_id
   hub_subscription_id = var.hub_subscription_id
   privatezone_resource_group_name = var.private_zone_resource_group_name
+  subscription_id = var.subscription_id
 }
 
 module "container_registry_tasks" {
@@ -54,6 +55,7 @@ module "key_vault" {
   hub_subscription_id = var.hub_subscription_id
   keyvault_privatezone_enabled = true
   keyvault_privatezone_resource_group_name = var.private_zone_resource_group_name
+  subscription_id = var.subscription_id
 }
 
 module "diagnostics_workspace" {
@@ -78,6 +80,7 @@ module "storage_account" {
   key_vault_id = module.key_vault.id
   account_key_secret_name = "PrimaryStorageAccountKey"
   account_name_secret_name = "PrimaryStorageAccountName"
+  subscription_id = var.subscription_id
 }
 
 
@@ -132,6 +135,7 @@ module "sql_server" {
   privatezone_resource_group_name = var.private_zone_resource_group_name
   hub_subscription_id = var.hub_subscription_id
   key_vault_id = module.key_vault.id
+  subscription_id = var.subscription_id
 }
 
 module "keycloak_database" {

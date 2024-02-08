@@ -72,3 +72,8 @@ variable "account_name_secret_name" {
   type = string
   description = "Name of the Secret to store the storage account name"
 }
+
+variable "subscription_id" {
+  type = string 
+  description = "The subscription id to deploy this to"
+}

@@ -44,3 +44,8 @@ variable "key_vault_id" {
   type = string
   description = "The ID of the key vault to add the secret to"
 }
+
+variable "subscription_id" {
+  type = string 
+  description = "The subscription id to deploy this to"
+}

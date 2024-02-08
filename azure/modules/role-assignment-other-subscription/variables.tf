@@ -13,3 +13,7 @@ variable "role_definition_name" {
 variable "subscription_id" {
   type = string
 }
+
+variable "target_subscription_id" {
+  type = string
+}
