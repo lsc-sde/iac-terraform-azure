@@ -9,4 +9,5 @@ az provider register --namespace Microsoft.ContainerService
 az provider register --namespace Microsoft.Storage
 az provider register --namespace Microsoft.OperationsManagement
 az provider register --namespace Microsoft.KeyVault
+az provider register --namespace Microsoft.KubernetesConfiguration
 ```
