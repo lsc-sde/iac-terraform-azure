@@ -16,8 +16,8 @@ subscription_id = "a700d992-ab84-4ca9-bac0-84b37eb2047d"
 cluster_admin_ids = [ "6df08821-b30d-434b-b2bb-f6bc1191c29b" ]
 network_security_group_name = "nsg-lsc-uks-tredev-snet-tre"
 network_resource_group_name = "rg-lsc-uks-tredev-network"
-virtual_network_id = "/subscriptions/a700d992-ab84-4ca9-bac0-84b37eb2047d/resourceGroups/rg-lsc-uks-tredev-network/providers/Microsoft.Network/virtualNetworks/vnet-lsc-uks-tresbx-spoke"
-subnet_id = "/subscriptions/a700d992-ab84-4ca9-bac0-84b37eb2047d/resourceGroups/rg-lsc-uks-tresbx-network/providers/Microsoft.Network/virtualNetworks/vnet-lsc-uks-tresbx-spoke/subnets/snet-tre"
+virtual_network_id = "/subscriptions/a700d992-ab84-4ca9-bac0-84b37eb2047d/resourceGroups/rg-lsc-uks-tredev-network/providers/Microsoft.Network/virtualNetworks/vnet-lsc-uks-tredev-spoke"
+subnet_id = "/subscriptions/a700d992-ab84-4ca9-bac0-84b37eb2047d/resourceGroups/rg-lsc-uks-tredev-network/providers/Microsoft.Network/virtualNetworks/vnet-lsc-uks-tredev-spoke/subnets/snet-tre"
 ip_rules = [
     "208.127.197.187" // not sure what this is
 ]
