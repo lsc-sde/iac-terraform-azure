@@ -10,6 +10,7 @@ terraform {
     }
   }
 
+  /*
   backend "azurerm" {
       subscription_id = "f227cc66-c370-426c-ae73-24d75a8ddc4d"
       resource_group_name  = "lscsdesbxstate-rg"
@@ -17,6 +18,7 @@ terraform {
       container_name       = "tfstate"
       key                  = "core-infrastructure.tfstate"
   }
+  */
 }
 
 provider "azuread" {
