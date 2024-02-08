@@ -307,7 +307,6 @@ module "acr_push" {
 
 
 resource  "azurerm_network_security_rule" "allow_vnetinbound" {
-  provider = azurerm.hubsubscription
   network_security_group_name = var.network_security_group_name
   resource_group_name = var.network_resource_group_name
   name = "Allow-VnetInBound"
