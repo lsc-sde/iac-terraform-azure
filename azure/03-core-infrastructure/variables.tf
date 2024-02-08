@@ -123,6 +123,12 @@ variable "hub_subscription_id" {
   default = "5bb2478d-e497-4ca1-964e-4aaa9f754a5d"
 }
 
+variable "subscription_id" {
+  type = string
+  description = "The ID of the hub subscription"
+  default = "5bb2478d-e497-4ca1-964e-4aaa9f754a5d"
+}
+
 variable "private_zone_resource_group_name" {
   type = string
   description = "Name of the resource group containing the private zones"

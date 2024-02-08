@@ -27,6 +27,7 @@ provider "azuread" {
 
 provider "azurerm" {
   features {}
+  subscription_id = var.subscription_id
   // tenant_id            = ""
   // subscription_id      = ""
   skip_provider_registration = true
