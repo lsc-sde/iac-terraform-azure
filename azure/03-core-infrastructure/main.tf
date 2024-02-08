@@ -88,6 +88,7 @@ module "kubernetes_cluster" {
   source = "../modules/kubernetes-cluster-kubenet"
   location = var.location
   tags = var.tags
+  subscription_id = var.subscription_id
   resource_group_name = module.resource_group.name
   prefix = var.prefix
   key_vault_id = module.key_vault.id

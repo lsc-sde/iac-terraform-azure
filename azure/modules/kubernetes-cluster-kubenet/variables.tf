@@ -247,3 +247,8 @@ variable "storage_account_id" {
   type = string
   description = "The ID of the storage account"
 }
+
+variable "subscription_id" {
+  type = string 
+  description = "The subscription id to deploy this to"
+}

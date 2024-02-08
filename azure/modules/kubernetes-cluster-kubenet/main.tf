@@ -305,6 +305,22 @@ module "acr_push" {
   principal_id = azurerm_user_assigned_identity.kubelets.principal_id
 }
 
+
+resource  "azurerm_network_security_rule" "allow_vnetinbound" {
+  provider = azurerm.hubsubscription
+  network_security_group_name = var.network_security_group_name
+  resource_group_name = var.network_resource_group_name
+  name = "Allow-VnetInBound"
+  priority = 101
+  protocol = "*"
+  direction = "Inbound"
+  access = "Allow"
+  source_address_prefix = "VirtualNetwork"
+  source_port_range = "*"
+  destination_address_prefix = "VirtualNetwork"
+  destination_port_range = "*"
+}
+
 resource "azurerm_network_security_rule" "https" {
   count = var.apply_nsg_rules ? 1 : 0
 
