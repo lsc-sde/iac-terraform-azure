@@ -15,6 +15,18 @@ module "container_registry" {
   subnet_id = var.subnet_id
   hub_subscription_id = var.hub_subscription_id
   privatezone_resource_group_name = var.private_zone_resource_group_name
+  subscription_id = var.subscription_id
+}
+
+module "container_registry_tasks" {
+  source = "../modules/container-registry-tasks"
+  container_registry_id = module.container_registry.id
+  user_assigned_identity_id = module.container_registry.task_identity_id
+  client_id = module.container_registry.task_client_id
+  pat_token = var.pat_token
+  branch_name = var.branch_name
+  login_server = module.container_registry.fqdn
+  tags = var.tags
 }
 
 /*
@@ -43,6 +55,7 @@ module "key_vault" {
   hub_subscription_id = var.hub_subscription_id
   keyvault_privatezone_enabled = true
   keyvault_privatezone_resource_group_name = var.private_zone_resource_group_name
+  subscription_id = var.subscription_id
 }
 
 module "diagnostics_workspace" {
@@ -67,6 +80,7 @@ module "storage_account" {
   key_vault_id = module.key_vault.id
   account_key_secret_name = "PrimaryStorageAccountKey"
   account_name_secret_name = "PrimaryStorageAccountName"
+  subscription_id = var.subscription_id
 }
 
 
@@ -74,6 +88,7 @@ module "kubernetes_cluster" {
   source = "../modules/kubernetes-cluster-kubenet"
   location = var.location
   tags = var.tags
+  subscription_id = var.subscription_id
   resource_group_name = module.resource_group.name
   prefix = var.prefix
   key_vault_id = module.key_vault.id
@@ -93,6 +108,7 @@ module "kubernetes_cluster" {
   hub_subscription_id = var.hub_subscription_id
   defender_log_analytics_workspace_id = var.defender_log_analytics_workspace_id
   storage_account_id = module.storage_account.id
+  enable_gitops = var.enable_gitops
 }
 
 module "keda" {
@@ -105,6 +121,8 @@ module "keda" {
   storage_account_name = module.storage_account.name
   tags = var.tags
   environment_name = var.environment_name
+  enable_gitops = var.enable_gitops
+  branch_name = var.branch_name
 }
 
 module "sql_server" {
@@ -118,6 +136,7 @@ module "sql_server" {
   privatezone_resource_group_name = var.private_zone_resource_group_name
   hub_subscription_id = var.hub_subscription_id
   key_vault_id = module.key_vault.id
+  subscription_id = var.subscription_id
 }
 
 module "keycloak_database" {
@@ -130,4 +149,33 @@ module "keycloak_database" {
   tags = var.tags
   key_vault_id = module.key_vault.id
   sku_name = var.keycloak_db_sku_name
+}
+
+
+resource "azurerm_key_vault_secret" "admin_password" {
+  name         = "PatToken"
+  value        = var.pat_token
+  key_vault_id = module.key_vault.id
+}
+
+module "kubernetes_cluster_configuration" {
+  source = "../../kubernetes"
+  host = module.kubernetes_cluster.host
+  client_certificate = module.kubernetes_cluster.client_certificate
+  client_key = module.kubernetes_cluster.client_key
+  cluster_ca_certificate = module.kubernetes_cluster.cluster_ca_certificate
+  cluster_configuation = {
+    "azure_client_id" = module.kubernetes_cluster.kubelet_identity_client_id
+    "azure_keyvault_name" = module.key_vault.name
+    "azure_storage_account" = module.storage_account.name
+    "azure_tenant_id" = data.azurerm_client_config.current.tenant_id
+    "private_dnz_zone" = var.dns_zone
+    "dns_prefix" = var.dns_prefix
+    "dns_resource_group" = var.private_zone_resource_group_name
+    "dns_subscription_id" = var.hub_subscription_id
+    "azure_subscription_id" = data.azurerm_client_config.current.subscription_id
+    "azure_sql_server" = module.sql_server.name
+    "azure_resource_group" = module.resource_group.name
+    "azure_location" = var.location
+  }
 }

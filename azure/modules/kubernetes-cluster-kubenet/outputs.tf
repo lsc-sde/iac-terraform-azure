@@ -25,6 +25,15 @@ output "deployment_identity_id" {
      ]
 }
 
+output "kubelet_identity_client_id" {
+    value = azurerm_user_assigned_identity.kubelets.client_id
+  
+    depends_on = [ 
+      azurerm_network_security_rule.https,
+      azurerm_kubernetes_cluster.cluster
+     ]
+}
+
 output "host" {
     value = azurerm_kubernetes_cluster.cluster.kube_admin_config.0.host
 

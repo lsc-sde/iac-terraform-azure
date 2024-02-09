@@ -5,6 +5,13 @@ resource "azurerm_container_registry" "main" {
   admin_enabled = true
   sku = "Premium"
   public_network_access_enabled = false
+  network_rule_bypass_option = "AzureServices"
+
+
+  identity {
+    type = "UserAssigned"
+    identity_ids = [ azurerm_user_assigned_identity.tasks.id ]
+  }
 
   tags = merge(var.tags, {
     "TF.Type" = "azurerm_container_registry"
@@ -51,4 +58,44 @@ resource "azurerm_key_vault_secret" "admin_password" {
   name         = "AcrAdminPassword"
   value        = azurerm_container_registry.main.admin_password
   key_vault_id = var.key_vault_id
+}
+
+resource "azurerm_user_assigned_identity" "tasks" {
+  name                = "${local.name}-tasks"
+  resource_group_name = var.resource_group_name
+  location            = var.location
+
+  tags = merge(var.tags, {
+    "Name" = local.name,
+    "Purpose" = "GitOps Kubelets Identity"
+    "TF.Type" = "azurerm_user_assigned_identity"
+    "TF.Resource" = "tasks"
+    "TF.Module" = "container-registry",
+  })
+}
+
+
+module "tasks_acr_pull" {
+  source = "../role-assignment"
+
+  scope = azurerm_container_registry.main.id
+  role_definition_name = "AcrPull"
+  principal_id = azurerm_user_assigned_identity.tasks.principal_id
+}
+
+module "tasks_acr_push" {
+  source = "../role-assignment"
+
+  scope = azurerm_container_registry.main.id
+  role_definition_name = "AcrPush"
+  principal_id = azurerm_user_assigned_identity.tasks.principal_id
+}
+
+
+module "tasks_contributor" {
+  source = "../role-assignment"
+
+  scope = azurerm_container_registry.main.id
+  role_definition_name = "Contributor"
+  principal_id = azurerm_user_assigned_identity.tasks.principal_id
 }

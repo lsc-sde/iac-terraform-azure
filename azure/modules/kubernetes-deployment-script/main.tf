@@ -3,7 +3,7 @@ resource "azurerm_kubernetes_cluster_extension" "flux" {
   cluster_id     = var.cluster_id
   extension_type = "microsoft.flux"
 }
-
+/*
 resource "azurerm_kubernetes_flux_configuration" "certmanager" {
   name       = "cert-manager"
   cluster_id = var.cluster_id
@@ -186,6 +186,7 @@ resource "azurerm_kubernetes_flux_configuration" "jupyterhub" {
 
 
 resource "azurerm_kubernetes_flux_configuration" "github_runner" {
+  count = var.enable_gitops ? 1 : 0
   name       = "github-runner"
   cluster_id = var.cluster_id
   namespace  = "github-runner"
@@ -264,7 +265,7 @@ resource "azurerm_kubernetes_flux_configuration" "keycloak" {
   ]
 }
 
-
+*/
 
 resource "azurerm_kubernetes_flux_configuration" "lscsde" {
   name       = "lscsde"
@@ -279,16 +280,6 @@ resource "azurerm_kubernetes_flux_configuration" "lscsde" {
     sync_interval_in_seconds = 60
     timeout_in_seconds = 600
   }
-
-  kustomizations {
-    name = "sources"
-    sync_interval_in_seconds = 60
-    retry_interval_in_seconds = 60
-    timeout_in_seconds = 600
-    path = "sources"
-    depends_on = [ "cluster-config" ]
-  }
-
   kustomizations {
     name = "cluster-config"
     sync_interval_in_seconds = 60

@@ -50,3 +50,8 @@ variable "privatezone_resource_group_name" {
   description = "resource group for the azure file private zone"
   default = ""
 }
+
+variable "subscription_id" {
+  type = string 
+  description = "The subscription id to deploy this to"
+}

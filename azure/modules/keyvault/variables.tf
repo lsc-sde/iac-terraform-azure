@@ -72,3 +72,8 @@ variable "keyvault_privatezone_enabled" {
     description = "Whether to create the private zone records"
     default = false
 }
+
+variable "subscription_id" {
+  type = string 
+  description = "The subscription id to deploy this to"
+}

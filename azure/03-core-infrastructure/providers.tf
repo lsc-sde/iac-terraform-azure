@@ -12,10 +12,11 @@ terraform {
 
   /*
   backend "azurerm" {
-      resource_group_name  = var.backend_resource_group_name
-      storage_account_name = bar.backend_storage_account_name
+      subscription_id = "f227cc66-c370-426c-ae73-24d75a8ddc4d"
+      resource_group_name  = "lscsdesbxstate-rg"
+      storage_account_name = "lscsdesbxstate8ddbeyve"
       container_name       = "tfstate"
-      key                  = "03-core-infrastructure.tfstate"
+      key                  = "core-infrastructure.tfstate"
   }
   */
 }
@@ -26,6 +27,7 @@ provider "azuread" {
 
 provider "azurerm" {
   features {}
+  subscription_id = var.subscription_id
   // tenant_id            = ""
   // subscription_id      = ""
   skip_provider_registration = true
