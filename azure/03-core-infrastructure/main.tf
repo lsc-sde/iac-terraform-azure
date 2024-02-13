@@ -162,6 +162,12 @@ resource "random_bytes" "jupyter_cookie_secret" {
   length = 32
 }
 
+resource "azurerm_key_vault_secret" "jupyter_cookie_secret" {
+  name         = "JupyterCookieSecret"
+  value        = random_bytes.jupyter_cookie_secret.hex
+  key_vault_id = module.key_vault.id
+}
+
 module "kubernetes_cluster_configuration" {
   source = "../../kubernetes"
   host = module.kubernetes_cluster.host
@@ -181,6 +187,5 @@ module "kubernetes_cluster_configuration" {
     "azure_sql_server" = module.sql_server.name
     "azure_resource_group" = module.resource_group.name
     "azure_location" = var.location
-    "jupyter_cookie_secret" = random_bytes.jupyter_cookie_secret.hex
   }
 }
