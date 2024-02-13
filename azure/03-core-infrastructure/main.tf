@@ -158,6 +158,16 @@ resource "azurerm_key_vault_secret" "admin_password" {
   key_vault_id = module.key_vault.id
 }
 
+resource "random_bytes" "jupyter_cookie_secret" {
+  length = 32
+}
+
+resource "azurerm_key_vault_secret" "jupyter_cookie_secret" {
+  name         = "JupyterCookieSecret"
+  value        = random_bytes.jupyter_cookie_secret.hex
+  key_vault_id = module.key_vault.id
+}
+
 module "kubernetes_cluster_configuration" {
   source = "../../kubernetes"
   host = module.kubernetes_cluster.host

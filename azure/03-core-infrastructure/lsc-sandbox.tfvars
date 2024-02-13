@@ -12,7 +12,7 @@ tags = {
     "Budget - Source" = "Revenue",
     "Budget - Cost Centre" = "TBC"
 }
-subscription_id="f227cc66-c370-426c-ae73-24d75a8ddc4"
+subscription_id="f227cc66-c370-426c-ae73-24d75a8ddc4d"
 cluster_admin_ids = [ "8759908d-3bec-4c05-911b-0034b59ea017" ]
 network_security_group_name = "nsg-lsc-uks-tresbx-snet-tre"
 network_resource_group_name = "rg-lsc-uks-tresbx-network"
