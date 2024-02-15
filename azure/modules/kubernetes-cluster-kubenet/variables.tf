@@ -14,6 +14,11 @@ variable "name" {
     default = ""
 }
 
+variable "sku_tier" {
+  type = string
+  description = "The SKU Tier that should be used for this Kubernetes Cluster. Possible values are Free, Standard (which includes the Uptime SLA) and Premium. Defaults to Free."
+}
+
 variable "cluster_identity_name" {
     type = string
     description = "Name of the managed identity for the cluster"
