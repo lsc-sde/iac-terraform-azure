@@ -195,6 +195,7 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   private_dns_zone_id = var.azmk8s_zone_id 
   kubernetes_version = var.kubernetes_version
   role_based_access_control_enabled = true
+  sku_tier = var.sku_tier
   
   default_node_pool {
     name       = "default"

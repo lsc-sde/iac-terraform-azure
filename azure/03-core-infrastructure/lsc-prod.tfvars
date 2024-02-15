@@ -32,3 +32,4 @@ defender_log_analytics_workspace_id = "/subscriptions/de97be38-945e-4824-a44b-5b
 environment_name = "prod"
 dns_prefix=""
 dns_zone = "xlscsde.nhs.uk"
+kubernetes_sku_tier = "Standard"

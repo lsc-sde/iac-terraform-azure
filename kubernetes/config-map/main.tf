@@ -5,4 +5,10 @@ resource "kubernetes_config_map" "main" {
   }
 
   data = var.literals
+
+  lifecycle {
+    ignore_changes = [ 
+      metadata[0].annotations
+     ]
+  }
 }

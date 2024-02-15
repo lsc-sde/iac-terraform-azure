@@ -10,6 +10,12 @@ variable "prefix" {
   default = "lscsandboxsde"
 }
 
+variable "kubernetes_sku_tier" {
+  type = string
+  description = "The SKU Tier that should be used for this Kubernetes Cluster. Possible values are Free, Standard (which includes the Uptime SLA) and Premium. Defaults to Free."
+  default = "Free"
+}
+
 variable "tags" {
     type = map(string)
     description = "List of tags to generate"

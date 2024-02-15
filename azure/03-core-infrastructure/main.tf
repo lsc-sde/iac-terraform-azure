@@ -109,6 +109,7 @@ module "kubernetes_cluster" {
   defender_log_analytics_workspace_id = var.defender_log_analytics_workspace_id
   storage_account_id = module.storage_account.id
   enable_gitops = var.enable_gitops
+  sku_tier = var.kubernetes_sku_tier
 }
 
 module "keda" {
