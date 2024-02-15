@@ -8,7 +8,7 @@ resource "kubernetes_config_map" "main" {
 
   lifecycle {
     ignore_changes = [ 
-      metadata.annotations
+      metadata[0].annotations
      ]
   }
 }
