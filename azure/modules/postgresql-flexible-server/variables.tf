@@ -50,7 +50,7 @@ variable "subscription_id" {
   description = "The subscription id to deploy this to"
 }
 
-variable "version" {
+variable "posgresql_version" {
   type = string
   description = "Version of postgresql to use"
   default = "12"

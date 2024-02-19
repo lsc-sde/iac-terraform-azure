@@ -28,7 +28,7 @@ resource "azurerm_postgresql_server" "main" {
   name                   = local.name
   resource_group_name    = var.resource_group_name
   location               = var.location
-  version                = var.version
+  version                = var.posgresql_version
   administrator_login    = local.administrator_login
   administrator_login_password = random_password.password.result
   ssl_enforcement_enabled = true
