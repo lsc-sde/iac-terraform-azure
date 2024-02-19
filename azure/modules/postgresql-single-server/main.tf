@@ -81,10 +81,6 @@ resource "azurerm_private_endpoint" "main" {
       data.azurerm_private_dns_zone.main.id,
     ]
   }
-
-  depends_on = [ 
-    module.sql_server_kvcu
-   ]
 }
 
 resource "azurerm_key_vault_secret" "password" {
