@@ -8,18 +8,18 @@ resource "azuread_application" "main" {
     requested_access_token_version = 2
 
     oauth2_permission_scope {
-      admin_consent_description  = "Allow the application to access ${purpose} on behalf of the signed-in user."
+      admin_consent_description  = "Allow the application to access ${var.purpose} on behalf of the signed-in user."
       admin_consent_display_name = "User I"
       enabled                    = true
       id                         = "fea5ab29-3f60-4598-9746-72dbaadd6880"
       type                       = "User"
-      user_consent_description   = "Allow the application to access ${purpose} on your behalf."
-      user_consent_display_name  = "Access ${purpose}"
+      user_consent_description   = "Allow the application to access ${var.purpose} on your behalf."
+      user_consent_display_name  = "Access ${var.purpose}"
       value                      = "user_impersonation"
     }
 
     oauth2_permission_scope {
-      admin_consent_description  = "Administer the ${purpose} application"
+      admin_consent_description  = "Administer the ${var.purpose} application"
       admin_consent_display_name = "Administer"
       enabled                    = true
       id                         = "0b8668f8-ac6c-4ba7-8407-aff1d6050484"
