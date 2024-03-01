@@ -194,7 +194,7 @@ module jupytersp {
   purpose = "jupyterhub"
   client_fqdn = "${var.dns_prefix}jupyter.${var.dns_zone}"
   key_vault_id = module.key_vault.id
-  secret_name = "JupyterAppRegistrationSecret"
+  secret_name = "JupyterAppRegistrationClientSecret"
 }
 
 module "kubernetes_cluster_configuration" {

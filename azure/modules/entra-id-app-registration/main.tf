@@ -43,13 +43,13 @@ resource "azuread_service_principal" "main" {
 }
 
 
-resource "azuread_service_principal_password" "main" {
-  service_principal_id = azuread_service_principal.main.object_id
+resource "azuread_application_password" "main" {
+  application_id = azuread_application.main.application_id
 }
 
 resource "azurerm_key_vault_secret" "main" {
   name         = var.secret_name
-  value        = azuread_service_principal_password.main.value
+  value        = azuread_application_password.main.value
   key_vault_id = var.key_vault_id
 }
 
