@@ -8,6 +8,7 @@ resource "azuread_application" "main" {
     id = "bf54935a-b11a-4606-b4d7-f5a7227bc7d8"
     description = "Administrators of the jupyter system"
     allowed_member_types = [ "User" ]
+    value = "admin"
   }
   
   app_role {
@@ -15,6 +16,7 @@ resource "azuread_application" "main" {
     id = "ecd73aeb-0d2b-4a24-871e-10885525222d"
     description = "Basic users of the jupyter system"
     allowed_member_types = [ "User" ]
+    value = "user"
   }
 
   web {
