@@ -44,7 +44,7 @@ resource "azuread_service_principal" "main" {
 
 
 resource "azuread_application_password" "main" {
-  application_id = azuread_application.main.application_id
+  application_id = azuread_application.main.id
 }
 
 resource "azurerm_key_vault_secret" "main" {
