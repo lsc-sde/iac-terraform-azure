@@ -218,6 +218,6 @@ module "kubernetes_cluster_configuration" {
     "azure_location" = var.location
     "postgresql_server" = module.postgresql.fqdn
     "postgresql_username" = module.postgresql.username
-    "jupyterhub_client_id" = module.jupytersp.id
+    "jupyterhub_client_id" = module.jupytersp.client_id
   }
 }
