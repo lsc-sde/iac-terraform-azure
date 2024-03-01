@@ -188,6 +188,15 @@ resource "azurerm_key_vault_secret" "jupyter_cookie_secret" {
   key_vault_id = module.key_vault.id
 }
 
+module "jupyter_appregistration" {
+  source = "../modules/entra-id-app-registration"
+  environment_name = var.environment_name
+  purpose = "jupyterhub"
+  client_fqdn = "${var.dns_prefix}jupyter.${var.dns_zone}"
+  key_vault_id = module.key_vault.id
+  secret_name = "JupyterAppRegistrationSecret"
+}
+
 module "kubernetes_cluster_configuration" {
   source = "../../kubernetes"
   host = module.kubernetes_cluster.host
@@ -209,5 +218,6 @@ module "kubernetes_cluster_configuration" {
     "azure_location" = var.location
     "postgresql_server" = module.postgresql.fqdn
     "postgresql_username" = module.postgresql.username
+    "jupyterhub_client_id" = module.jupyter_appregistration.id
   }
 }
