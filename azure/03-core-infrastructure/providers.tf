@@ -37,10 +37,6 @@ provider "azurerm" {
   skip_provider_registration = true
 }
 
-provider "azuread" {
-  
-}
-
 provider "azurerm" {
   alias = "hubsubscription"
   subscription_id = var.hub_subscription_id
