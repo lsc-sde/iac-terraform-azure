@@ -10,4 +10,5 @@ az provider register --namespace Microsoft.Storage
 az provider register --namespace Microsoft.OperationsManagement
 az provider register --namespace Microsoft.KeyVault
 az provider register --namespace Microsoft.KubernetesConfiguration
+az provider register --namespace Microsoft.DBforPostgreSQL
 ```

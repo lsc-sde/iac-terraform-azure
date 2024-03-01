@@ -152,6 +152,25 @@ module "keycloak_database" {
   sku_name = var.keycloak_db_sku_name
 }
 
+module postgresql {
+  # As of 19/02/2024 private endpoints are in preview on postgres flexible servers, as a result a decision 
+  # has been made to provision these on the postgres single server models until the private endpoints become
+  # generally available. Once they do we will need to perform a migration to the flexible servers. A module for 
+  # this has been defined but as of yet not tested.
+  
+  source = "../modules/postgresql-single-server"
+
+  subscription_id = var.subscription_id
+  location = var.location
+  resource_group_name = module.resource_group.name
+  subnet_id = var.subnet_id
+  tags = var.tags
+  key_vault_id = module.key_vault.id
+  hub_subscription_id = var.hub_subscription_id
+  privatezone_resource_group_name = var.private_zone_resource_group_name
+  prefix = var.prefix
+}
+
 
 resource "azurerm_key_vault_secret" "admin_password" {
   name         = "PatToken"
@@ -188,5 +207,7 @@ module "kubernetes_cluster_configuration" {
     "azure_sql_server" = module.sql_server.name
     "azure_resource_group" = module.resource_group.name
     "azure_location" = var.location
+    "postgresql_server" = module.postgresql.fqdn
+    "postgresql_username" = module.postgresql.username
   }
 }
