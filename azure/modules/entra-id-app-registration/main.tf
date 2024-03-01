@@ -2,6 +2,31 @@ resource "azuread_application" "main" {
   display_name = local.name
   owners       = [data.azuread_client_config.current.object_id]
   sign_in_audience = "AzureADMultipleOrgs"
+  identifier_uris  = ["api://${var.environment_name}-${var.purpose}"]
+  api {
+    mapped_claims_enabled          = true
+    requested_access_token_version = 2
+
+    oauth2_permission_scope {
+      admin_consent_description  = "Allow the application to access ${purpose} on behalf of the signed-in user."
+      admin_consent_display_name = "User I"
+      enabled                    = true
+      id                         = "fea5ab29-3f60-4598-9746-72dbaadd6880"
+      type                       = "User"
+      user_consent_description   = "Allow the application to access ${purpose} on your behalf."
+      user_consent_display_name  = "Access ${purpose}"
+      value                      = "user_impersonation"
+    }
+
+    oauth2_permission_scope {
+      admin_consent_description  = "Administer the ${purpose} application"
+      admin_consent_display_name = "Administer"
+      enabled                    = true
+      id                         = "0b8668f8-ac6c-4ba7-8407-aff1d6050484"
+      type                       = "Admin"
+      value                      = "administer"
+    }
+  }
 
   app_role {
     display_name = "Admin"
