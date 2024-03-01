@@ -22,7 +22,7 @@ resource "azuread_application" "main" {
   web {
     homepage_url  = "https://${var.client_fqdn}"
     logout_url    = "https://${var.client_fqdn}/logout"
-    redirect_uris = ["https://${var.client_fqdn}/account"]
+    redirect_uris = ["https://${var.client_fqdn}/hub/oauth_callback"]
 
     implicit_grant {
       access_token_issuance_enabled = true
