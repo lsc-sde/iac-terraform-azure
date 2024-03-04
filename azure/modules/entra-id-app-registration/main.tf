@@ -1,6 +1,6 @@
 resource "azuread_application" "main" {
   display_name = local.name
-  owners       = [data.azuread_client_config.current.object_id]
+  owners       = local.owners
   sign_in_audience = "AzureADMultipleOrgs"
   identifier_uris  = ["api://${var.environment_name}-${var.purpose}"]
   group_membership_claims = ["SecurityGroup", "ApplicationGroup"]
