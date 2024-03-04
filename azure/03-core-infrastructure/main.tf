@@ -192,6 +192,7 @@ module jupyter_users {
   source = "../modules/entra-id-security-group"
   environment_name = var.environment_name
   purpose = "JupyterhubUsers"
+  owners = var.owners
 }
 
 module jupyter_admins {
@@ -200,6 +201,7 @@ module jupyter_admins {
   purpose = "JupyterhubAdmins"
   has_parent = true
   parent_group_object_id = module.jupyter_users.object_id
+  owners = var.owners
 }
 
 module jupytersp {
@@ -209,6 +211,7 @@ module jupytersp {
   client_fqdn = "${var.dns_prefix}jupyter.${var.dns_zone}"
   key_vault_id = module.key_vault.id
   secret_name = "JupyterAppRegistrationClientSecret"
+  owners = var.owners
 }
 
 module "kubernetes_cluster_configuration" {

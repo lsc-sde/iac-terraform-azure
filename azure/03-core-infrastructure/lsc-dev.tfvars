@@ -32,3 +32,8 @@ defender_log_analytics_workspace_id = "/subscriptions/de97be38-945e-4824-a44b-5b
 environment_name = "dev"
 dns_prefix="dev-"
 dns_zone = "xlscsde.nhs.uk"
+owners = [ 
+    "88fb51fa-8fc5-4191-9a66-25c53b49519d", # Vishnu Chandrabalan
+    "0cc02d86-3114-4f32-a161-3aea530a351f",  # Shaun Turner
+    "08f58465-f402-46c8-80b6-e308a0e90ce6" # spn-treDev-pipelines
+    ]

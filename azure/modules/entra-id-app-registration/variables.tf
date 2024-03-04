@@ -22,3 +22,9 @@ variable "secret_name" {
   type = string
   description = "Name of the secret in azure key vault"
 }
+
+
+variable "owners" {
+  type = list(string)
+  description = "A list of object ID's for users that will own (and therefore be able to manage) any Entra ID objects"
+}

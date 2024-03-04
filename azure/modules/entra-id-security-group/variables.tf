@@ -19,3 +19,8 @@ variable "parent_group_object_id" {
   description = "The object ID of the parent group"
   default = ""
 }
+
+variable "owners" {
+  type = list(string)
+  description = "A list of object ID's for users that will own (and therefore be able to manage) any Entra ID objects"
+}

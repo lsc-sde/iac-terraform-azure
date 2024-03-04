@@ -86,7 +86,7 @@ resource "azuread_application" "main" {
 resource "azuread_service_principal" "main" {
   client_id                    = azuread_application.main.client_id
   app_role_assignment_required = false
-  owners                       = [data.azuread_client_config.current.object_id]
+  owners                       = local.owners
 
   feature_tags {
     enterprise = true
