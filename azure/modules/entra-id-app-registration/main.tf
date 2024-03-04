@@ -59,12 +59,15 @@ resource "azuread_application" "main" {
   optional_claims {
     id_token {
       name = "groups"
+      essential = true
     }
     access_token {
       name = "groups"
+      essential = true
     }
     saml2_token {
       name = "groups"
+      essential = true
     }
   }
 
