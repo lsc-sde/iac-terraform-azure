@@ -56,6 +56,15 @@ resource "azuread_application" "main" {
     }
   }
 
+  optional_claims {
+    id_token {
+      name = "groups"
+    }
+    access_token {
+      name = "groups"
+    }
+  }
+
   
   required_resource_access {
     resource_app_id = "00000003-0000-0000-c000-000000000000" # Microsoft Graph
