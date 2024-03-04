@@ -198,6 +198,8 @@ module jupyter_admins {
   source = "../modules/entra-id-security-group"
   environment_name = var.environment_name
   purpose = "JupyterhubAdmins"
+  has_parent = true
+  parent_group_object_id = module.jupyter_users.object_id
 }
 
 module jupytersp {
