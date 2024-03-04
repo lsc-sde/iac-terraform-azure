@@ -63,6 +63,9 @@ resource "azuread_application" "main" {
     access_token {
       name = "groups"
     }
+    saml2_token {
+      name = "groups"
+    }
   }
 
   
