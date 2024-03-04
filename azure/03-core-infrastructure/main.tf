@@ -188,6 +188,18 @@ resource "azurerm_key_vault_secret" "jupyter_cookie_secret" {
   key_vault_id = module.key_vault.id
 }
 
+module jupyter_users {
+  source = "../modules/entra-id-security-group"
+  environment_name = var.environment_name
+  purpose = "JupyterhubUsers"
+}
+
+module jupyter_admins {
+  source = "../modules/entra-id-security-group"
+  environment_name = var.environment_name
+  purpose = "JupyterhubAdmins"
+}
+
 module jupytersp {
   source = "../modules/entra-id-app-registration"
   environment_name = var.environment_name
@@ -219,5 +231,7 @@ module "kubernetes_cluster_configuration" {
     "postgresql_server" = module.postgresql.fqdn
     "postgresql_username" = module.postgresql.username
     "jupyterhub_client_id" = module.jupytersp.client_id
+    "jupyterhub_users_role" = module.jupyter_users.object_id
+    "jupyterhub_admins_role" = module.jupyter_admins.object_id
   }
 }
