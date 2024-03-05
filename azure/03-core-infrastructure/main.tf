@@ -188,6 +188,32 @@ resource "azurerm_key_vault_secret" "jupyter_cookie_secret" {
   key_vault_id = module.key_vault.id
 }
 
+module jupyter_users {
+  source = "../modules/entra-id-security-group"
+  environment_name = var.environment_name
+  purpose = "JupyterhubUsers"
+  owners = var.owners
+}
+
+module jupyter_admins {
+  source = "../modules/entra-id-security-group"
+  environment_name = var.environment_name
+  purpose = "JupyterhubAdmins"
+  has_parent = true
+  parent_group_object_id = module.jupyter_users.object_id
+  owners = var.owners
+}
+
+module jupytersp {
+  source = "../modules/entra-id-app-registration"
+  environment_name = var.environment_name
+  purpose = "jupyterhub"
+  client_fqdn = "${var.dns_prefix}jupyter.${var.dns_zone}"
+  key_vault_id = module.key_vault.id
+  secret_name = "JupyterAppRegistrationClientSecret"
+  owners = var.owners
+}
+
 module "kubernetes_cluster_configuration" {
   source = "../../kubernetes"
   host = module.kubernetes_cluster.host
@@ -209,5 +235,8 @@ module "kubernetes_cluster_configuration" {
     "azure_location" = var.location
     "postgresql_server" = module.postgresql.fqdn
     "postgresql_username" = module.postgresql.username
+    "jupyterhub_client_id" = module.jupytersp.client_id
+    "jupyterhub_users_role" = module.jupyter_users.object_id
+    "jupyterhub_admins_role" = module.jupyter_admins.object_id
   }
 }

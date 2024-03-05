@@ -33,3 +33,8 @@ environment_name = "prod"
 dns_prefix=""
 dns_zone = "xlscsde.nhs.uk"
 kubernetes_sku_tier = "Standard"
+owners = [ 
+    "88fb51fa-8fc5-4191-9a66-25c53b49519d", # Vishnu Chandrabalan
+    "0cc02d86-3114-4f32-a161-3aea530a351f",  # Shaun Turner
+    "5ca56cf2-9890-441c-bfdc-f5222bb6e6e3" # spn-treProd-pipelines
+    ]

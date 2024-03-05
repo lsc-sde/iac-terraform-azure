@@ -200,3 +200,8 @@ variable "dns_zone" {
   type = string
   description = "The DNS zone for any DNS records on private DNS" 
 }
+
+variable "owners" {
+  type = list(string)
+  description = "A list of object ID's for users that will own (and therefore be able to manage) any Entra ID objects"
+}

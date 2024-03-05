@@ -36,6 +36,14 @@ resource "azurerm_postgresql_server" "main" {
   public_network_access_enabled = false
   backup_retention_days = 35
 
+   threat_detection_policy {
+      disabled_alerts      = []
+      email_account_admins = false
+      email_addresses      = []
+      enabled              = true
+      retention_days       = 0
+    }
+
   storage_mb = var.storage_mb
 
   sku_name   = var.sku_name
