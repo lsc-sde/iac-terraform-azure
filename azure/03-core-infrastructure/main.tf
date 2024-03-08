@@ -223,7 +223,7 @@ module ohdsisp {
   key_vault_id = module.key_vault.id
   secret_name = "OhdsiAppRegistrationClientSecret"
   owners = var.owners
-  redirect_path_suffix = "/WebAPI/user/login/openid"
+  redirect_path_suffix = "/WebAPI/user/oauth/callback?client_name=OidcClient"
 }
 
 module "kubernetes_cluster_configuration" {
