@@ -28,3 +28,15 @@ variable "owners" {
   type = list(string)
   description = "A list of object ID's for users that will own (and therefore be able to manage) any Entra ID objects"
 }
+
+variable "redirect_path_suffix" {
+  type = string
+  description = "The path to login"
+}
+
+variable "logout_url_suffix" {
+  type = string
+  description = "The path to logout"
+  default = "/logout"
+  
+}

@@ -212,6 +212,18 @@ module jupytersp {
   key_vault_id = module.key_vault.id
   secret_name = "JupyterAppRegistrationClientSecret"
   owners = var.owners
+  redirect_path_suffix = "/hub/oauth_callback"
+}
+
+module ohdsisp {
+  source = "../modules/entra-id-app-registration"
+  environment_name = var.environment_name
+  purpose = "ohdsi"
+  client_fqdn = "${var.dns_prefix}ohdsi.${var.dns_zone}"
+  key_vault_id = module.key_vault.id
+  secret_name = "OhdsiAppRegistrationClientSecret"
+  owners = var.owners
+  redirect_path_suffix = "/WebAPI/user/oauth/callback?client_name=OidcClient"
 }
 
 module "kubernetes_cluster_configuration" {
@@ -238,5 +250,6 @@ module "kubernetes_cluster_configuration" {
     "jupyterhub_client_id" = module.jupytersp.client_id
     "jupyterhub_users_role" = module.jupyter_users.object_id
     "jupyterhub_admins_role" = module.jupyter_admins.object_id
+    "ohdsi_client_id" = module.ohdsisp.client_id
   }
 }
