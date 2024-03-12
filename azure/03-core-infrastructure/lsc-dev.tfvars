@@ -37,3 +37,4 @@ owners = [
     "0cc02d86-3114-4f32-a161-3aea530a351f",  # Shaun Turner
     "08f58465-f402-46c8-80b6-e308a0e90ce6" # spn-treDev-pipelines
     ]
+branch_name = "dev"
