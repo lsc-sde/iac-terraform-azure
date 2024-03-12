@@ -205,3 +205,9 @@ variable "owners" {
   type = list(string)
   description = "A list of object ID's for users that will own (and therefore be able to manage) any Entra ID objects"
 }
+
+variable "flux_url" {
+  type = string
+  description = "The URL of the flux repository used to configure the environment"
+  default = "https://github.com/lsc-sde/iac-flux-lscsde"
+}

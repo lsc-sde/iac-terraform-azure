@@ -274,7 +274,7 @@ resource "azurerm_kubernetes_flux_configuration" "lscsde" {
   scope = "cluster"
 
   git_repository {
-    url             = "https://github.com/lsc-sde/iac-flux-lscsde"
+    url             = var.flux_url
     reference_type  = "branch"
     reference_value = var.branch_name
     sync_interval_in_seconds = 60

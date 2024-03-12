@@ -124,6 +124,7 @@ module "keda" {
   environment_name = var.environment_name
   enable_gitops = var.enable_gitops
   branch_name = var.branch_name
+  flux_url = var.flux_url
 }
 
 module "sql_server" {

@@ -48,3 +48,8 @@ variable "environment_name" {
   type = string
   description = "Name of the environment (in lowercase)"
 }
+
+variable "flux_url" {
+  type = string
+  description = "The URL of the flux repository used to configure the environment"
+}
