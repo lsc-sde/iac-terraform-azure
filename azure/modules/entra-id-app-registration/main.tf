@@ -57,6 +57,10 @@ resource "azuread_application" "main" {
     }
   }
 
+  lifecycle {
+    ignore_changes = [ web.0.redirect_uris ]
+  }
+
   optional_claims {
     id_token {
       name = "groups"
