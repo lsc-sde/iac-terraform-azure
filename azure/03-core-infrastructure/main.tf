@@ -158,6 +158,7 @@ module "keycloak_database" {
   tags = var.tags
   key_vault_id = module.key_vault.id
   sku_name = var.keycloak_db_sku_name
+  prevent_destroy = false
 }
 
 module postgresql {

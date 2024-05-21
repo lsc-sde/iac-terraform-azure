@@ -32,3 +32,8 @@ variable "key_vault_id" {
   type = string
   description = "The ID of the key vault to add the secret to"
 }
+
+variable "prevent_destroy" {
+  type = bool
+  description = "Prevent the database from being destroyed"  
+}
