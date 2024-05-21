@@ -129,6 +129,7 @@ module "keda" {
 
 module "sql_server" {
   source = "../modules/sql-server"
+  count = var.sql_server_enabled ? 1 : 0
 
   location = var.location
   tags = var.tags
@@ -143,6 +144,7 @@ module "sql_server" {
 
 module "keycloak_database" {
   source = "../modules/sql-database"
+  count = var.keycloak_database_enabled ? 1 : 0
 
   name = "keycloak"
   location = var.location
@@ -243,7 +245,7 @@ module "kubernetes_cluster_configuration" {
     "dns_resource_group" = var.private_zone_resource_group_name
     "dns_subscription_id" = var.hub_subscription_id
     "azure_subscription_id" = data.azurerm_client_config.current.subscription_id
-    "azure_sql_server" = module.sql_server.name
+    "azure_sql_server" = var.sql_server_enabled ? module.sql_server.name : "not-applicable"
     "azure_resource_group" = module.resource_group.name
     "azure_location" = var.location
     "postgresql_server" = module.postgresql.fqdn
