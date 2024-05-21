@@ -224,18 +224,6 @@ variable "enable_gitops" {
   description = "Enable the gitops"
 }
 
-variable gitops_node_pool_min_node_count {
-    type = string
-    description = "The min number of nodes to provision for the default node group"
-    default = 0
-}
-
-variable gitops_node_pool_max_node_count {
-    type = string
-    description = "The maximum number of nodes to provision for the default node group"
-    default = 3
-}
-
 variable gitops_node_pool_vm_size {
     type = string
     description = "The sku for the VM size of the default node group"
