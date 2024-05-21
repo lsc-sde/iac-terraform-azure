@@ -140,6 +140,11 @@ module "sql_server" {
   hub_subscription_id = var.hub_subscription_id
   key_vault_id = module.key_vault.id
   subscription_id = var.subscription_id
+
+  providers = {
+    azurerm = azurerm
+    azurerm.hubsubscription = azurerm.hubsubscription
+  }
 }
 
 module "keycloak_database" {
