@@ -227,7 +227,7 @@ variable "enable_gitops" {
 variable gitops_node_pool_min_node_count {
     type = string
     description = "The min number of nodes to provision for the default node group"
-    default = 1
+    default = 0
 }
 
 variable gitops_node_pool_max_node_count {
