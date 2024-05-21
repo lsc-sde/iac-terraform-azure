@@ -388,7 +388,8 @@ resource "azurerm_kubernetes_cluster_node_pool" "gitops" {
     "TF.Module" = "kubernetes-cluster-kubenet",
   })
 
-  enable_auto_scaling = true
+  enable_auto_scaling = false
+  node_count = 0
   max_pods = var.gitops_node_pool_max_pods
   min_count = var.gitops_node_pool_min_node_count
   max_count = var.gitops_node_pool_max_node_count
