@@ -211,3 +211,15 @@ variable "flux_url" {
   description = "The URL of the flux repository used to configure the environment"
   default = "https://github.com/lsc-sde/iac-flux-lscsde"
 }
+
+variable "sql_server_enabled" {
+  type = bool
+  description = "Provision an SQL Server"
+  default = false
+}
+
+variable "keycloak_database_enabled" {
+  type = bool
+  description = "Provision an Keycloak database"
+  default = false
+}
