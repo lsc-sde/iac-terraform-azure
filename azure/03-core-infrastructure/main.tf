@@ -154,7 +154,7 @@ module "keycloak_database" {
   name = "keycloak"
   location = var.location
   resource_group_name = module.resource_group.name
-  sql_server_id = module.sql_server.id
+  sql_server_id = var.sql_server_enabled ? module.sql_server.id : ""
   tags = var.tags
   key_vault_id = module.key_vault.id
   sku_name = var.keycloak_db_sku_name
