@@ -142,7 +142,6 @@ module "sql_server" {
   subscription_id = var.subscription_id
 
   providers = {
-    azurerm = azurerm
     azurerm.hubsubscription = azurerm.hubsubscription
   }
 }
