@@ -223,5 +223,3 @@ variable "keycloak_database_enabled" {
   description = "Provision an Keycloak database"
   default = false
 }
-  
-}
