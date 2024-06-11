@@ -223,3 +223,9 @@ variable "keycloak_database_enabled" {
   description = "Provision an Keycloak database"
   default = false
 }
+
+variable "kubernetes_nsg_priority_start" {
+  type = number
+  description = "priority id for kubernetes nsg to start"
+  default = 100
+}

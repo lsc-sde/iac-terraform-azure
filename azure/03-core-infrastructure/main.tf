@@ -110,6 +110,7 @@ module "kubernetes_cluster" {
   storage_account_id = module.storage_account.id
   enable_gitops = var.enable_gitops
   sku_tier = var.kubernetes_sku_tier
+  nsg_priority_start = var.kubernetes_nsg_priority_start
 }
 
 module "keda" {

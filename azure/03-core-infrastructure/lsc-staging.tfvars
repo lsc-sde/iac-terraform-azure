@@ -38,3 +38,4 @@ owners = [
     "08f58465-f402-46c8-80b6-e308a0e90ce6" # spn-treDev-pipelines
     ]
 branch_name = "stg"
+kubernetes_nsg_priority_start = 105
