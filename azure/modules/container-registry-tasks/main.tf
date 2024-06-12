@@ -1,4 +1,5 @@
 resource "azurerm_container_registry_task" "datascience_notebook" {
+  count = var.enable_datascience_notebook ? 1 : 0
   name                  = "datascience-notebook"
   container_registry_id = var.container_registry_id
   platform {
@@ -50,6 +51,6 @@ resource "azurerm_container_registry_task" "datascience_notebook" {
 }
 
 resource "azurerm_container_registry_task_schedule_run_now" "datascience_notebook" {
-  count = var.run_now ? 1 : 0
-  container_registry_task_id = azurerm_container_registry_task.datascience_notebook.id
+  count = var.enable_datascience_notebook ? var.run_now ? 1 : 0 : 0
+  container_registry_task_id = azurerm_container_registry_task.datascience_notebook[0].id
 }
