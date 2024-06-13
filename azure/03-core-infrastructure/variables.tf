@@ -229,3 +229,9 @@ variable "kubernetes_nsg_priority_start" {
   description = "priority id for kubernetes nsg to start"
   default = 100
 }
+
+variable "kubernetes_version" {
+  type = string
+  description = "The kubernetes version to install onto the cluster"
+  default = "1.29.2"
+}
