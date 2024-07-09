@@ -233,6 +233,17 @@ module ohdsisp {
   redirect_path_suffix = "/WebAPI/user/oauth/callback?client_name=OidcClient"
 }
 
+module supersetsp {
+  source = "../modules/entra-id-app-registration"
+  environment_name = var.environment_name
+  purpose = "apachesuperset"
+  client_fqdn = "${var.dns_prefix}superset.${var.dns_zone}"
+  key_vault_id = module.key_vault.id
+  secret_name = "ApacheSupersetAppRegistrationClientSecret"
+  owners = var.owners
+  redirect_path_suffix = "/oauth-authorized/Secure%20Data%20Environment"
+}
+
 module "kubernetes_cluster_configuration" {
   source = "../../kubernetes"
   host = module.kubernetes_cluster.host
@@ -258,5 +269,6 @@ module "kubernetes_cluster_configuration" {
     "jupyterhub_users_role" = module.jupyter_users.object_id
     "jupyterhub_admins_role" = module.jupyter_admins.object_id
     "ohdsi_client_id" = module.ohdsisp.client_id
+    "superset_client_id" = module.supersetsp.client_id
   }
 }
