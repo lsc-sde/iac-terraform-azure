@@ -10,4 +10,10 @@ locals {
   service_cidr = var.service_cidr != "" ? var.service_cidr : cidrsubnet(var.network_cidr, 1, 1)
   identity_ids = var.enable_gitops ? [ azurerm_user_assigned_identity.cluster.id, azurerm_user_assigned_identity.gitops_kubelets[0].id ] : [ azurerm_user_assigned_identity.cluster.id ]
   private_zone_resource_group_id = "/subscriptions/${var.hub_subscription_id}/resourceGroups/${var.private_zone_resource_group_name}"
+
+  allow_https_priority = var.nsg_priority_start
+  allow_https_name = local.allow_https_priority == 100 ? "https" : "https-${var.prefix}"
+
+  allow_vnetinbound_priority = local.allow_https_priority + 1
+  allow_vnetinbound_name = local.allow_vnetinbound_priority == 101 ? "Allow-VnetInBound" : "Allow-VnetInBound-${var.prefix}"
 }
