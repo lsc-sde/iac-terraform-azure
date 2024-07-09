@@ -245,3 +245,8 @@ variable "subscription_id" {
   type = string 
   description = "The subscription id to deploy this to"
 }
+
+variable "nsg_priority_start" {
+  type = number
+  description = "priority for nsg to start"
+}

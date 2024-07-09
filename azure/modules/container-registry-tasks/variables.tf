@@ -39,3 +39,9 @@ variable "tags" {
     type = map(string)
     description = "List of tags to generate"
 }
+
+variable "enable_datascience_notebook" {
+    type = bool
+    description = "Feature flag for enabling datascience notebook"
+    default = false
+}

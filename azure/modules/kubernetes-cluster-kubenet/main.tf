@@ -310,8 +310,8 @@ module "acr_push" {
 resource  "azurerm_network_security_rule" "allow_vnetinbound" {
   network_security_group_name = var.network_security_group_name
   resource_group_name = var.network_resource_group_name
-  name = "Allow-VnetInBound"
-  priority = 101
+  name = local.allow_vnetinbound_name
+  priority = local.allow_vnetinbound_priority
   protocol = "*"
   direction = "Inbound"
   access = "Allow"
@@ -326,8 +326,8 @@ resource "azurerm_network_security_rule" "https" {
 
   network_security_group_name = var.network_security_group_name
   resource_group_name = var.network_resource_group_name
-  name = "https"
-  priority = 100
+  name = local.allow_https_name
+  priority = local.allow_https_priority
   protocol = "Tcp"
   direction = "Inbound"
   access = "Allow"
