@@ -243,7 +243,7 @@ module supersetsp {
   key_vault_id = module.key_vault.id
   secret_name = "ApacheSupersetAppRegistrationClientSecret"
   owners = var.owners
-  redirect_path_suffix = "/oauth-authorized/Secure%20Data%20Environment"
+  redirect_path_suffix = "/oauth-authorized/SSO"
 }
 
 module "kubernetes_cluster_configuration" {
