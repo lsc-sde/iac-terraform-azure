@@ -239,5 +239,5 @@ variable "kubernetes_version" {
 variable "datascience_large_nodepool_vm_size" {
   type = string
   description = "VM Sku for the large datascience node pools"
-  default = "Standard_E2as_v5"
+  default = "Standard_E8as_v5"
 }
