@@ -117,7 +117,7 @@ module "kubernetes_cluster" {
 module "datascience_large_nodepool" {
   source = "../modules/kubernetes-node-pool"
 
-  name = "ds-l"
+  name = "dslarge"
   tags = var.tags
   vm_size = var.datascience_large_nodepool_vm_size
   cluster_id = module.kubernetes_cluster.id
