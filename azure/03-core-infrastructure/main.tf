@@ -114,6 +114,23 @@ module "kubernetes_cluster" {
   kubernetes_version = var.kubernetes_version
 }
 
+module "datascience_large_nodepool" {
+  source = "../modules/kubernetes-node-pool"
+
+  name = "ds-l"
+  tags = var.tags
+  vm_size = var.datascience_large_nodepool_vm_size
+  cluster_id = module.kubernetes_cluster.id
+  purpose = "Large Data Science Notebooks"
+  vnet_subnet_id = var.subnet_id
+  node_taints = [
+    "sdeAppType=datascience-large:NoSchedule"
+  ] 
+  node_labels = {
+    "lsc-sde.nhs.uk/nodeType" = "datascience-large"
+  }
+}
+
 module "keda" {
   source = "../modules/kubernetes-deployment-script"
   location = var.location
