@@ -129,6 +129,7 @@ module "datascience_large_nodepool" {
   node_labels = {
     "lsc-sde.nhs.uk/nodeType" = "datascience-large"
   }
+  max_pods = 20
 }
 
 module "keda" {
