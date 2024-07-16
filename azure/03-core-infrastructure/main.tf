@@ -124,10 +124,10 @@ module "datascience_large_nodepool" {
   purpose = "Large Data Science Notebooks"
   vnet_subnet_id = var.subnet_id
   node_taints = [
-    "sdeAppType=datascience-large:NoSchedule"
+    "xlscsde.nhs.uk/appType=datascience-large:NoSchedule"
   ] 
   node_labels = {
-    "lsc-sde.nhs.uk/nodeType" = "datascience-large"
+    "xlscsde.nhs.uk/nodeType" = "datascience-large"
   }
   max_pods = 20
 }
