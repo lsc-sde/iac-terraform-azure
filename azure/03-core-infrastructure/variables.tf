@@ -235,3 +235,9 @@ variable "kubernetes_version" {
   description = "The kubernetes version to install onto the cluster"
   default = "1.29.2"
 }
+
+variable "datascience_large_nodepool_vm_size" {
+  type = string
+  description = "VM Sku for the large datascience node pools"
+  default = "Standard_E8as_v5"
+}
