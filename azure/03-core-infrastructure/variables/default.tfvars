@@ -37,3 +37,4 @@ owners = [
     "0cc02d86-3114-4f32-a161-3aea530a351f",  # Shaun Turner
     "5cb2e105-b160-46c5-a4b3-a40aab07fca2" # spn-treSandbox-pipelines
     ]
+branch_name = "sandbox"
