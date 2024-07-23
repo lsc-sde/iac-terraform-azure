@@ -233,7 +233,7 @@ variable "kubernetes_nsg_priority_start" {
 variable "kubernetes_version" {
   type = string
   description = "The kubernetes version to install onto the cluster"
-  default = "1.29.2"
+  default = "1.28.10"
 }
 
 variable "datascience_large_nodepool_vm_size" {
