@@ -1,7 +1,7 @@
 location = "uksouth"
 prefix = "lscsdesandbox"
 tags = {
-    "Environment" = "Sandbox",
+    "Environment" = "Sandbox -> Staging",
     "Application Name" = "Secure Data Environment",
     "Project Name" = "TRE Environment",
     "Technical Contact" = "shaun.turner1@nhs.net",
@@ -29,11 +29,12 @@ private_zone_resource_group_name = "rg-icb-uks-plt-dns"
 apply_nsg_rules = false
 keyvault_purge_protection_enabled = true
 defender_log_analytics_workspace_id = "/subscriptions/de97be38-945e-4824-a44b-5b101c0e048b/resourceGroups/rg-icb-uks-plt-logs/providers/Microsoft.OperationalInsights/workspaces/log-icb-uks-plt-log01"
-environment_name = "sandbox"
-dns_prefix="sandbox-"
+environment_name = "stg"
+dns_prefix="stg-"
 dns_zone = "xlscsde.nhs.uk"
 owners = [ 
     "88fb51fa-8fc5-4191-9a66-25c53b49519d", # Vishnu Chandrabalan
     "0cc02d86-3114-4f32-a161-3aea530a351f",  # Shaun Turner
     "5cb2e105-b160-46c5-a4b3-a40aab07fca2" # spn-treSandbox-pipelines
     ]
+branch_name = "stg"
