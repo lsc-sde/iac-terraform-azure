@@ -9,7 +9,10 @@ locals {
         "Private DNS Zone Contributor" = "b12aa53e-6015-4669-85d0-8515ebb3ae7f",
         "AcrPull" = "7f951dda-4ed3-4680-a7ca-43fe172d538d",
         "Key Vault Contributor" = "f25e0fa2-a7c8-4377-a976-54943a77a395",
-        "Storage File Data SMB Share Elevated Contributor" = "a7264617-510b-434b-a828-9731dc254ea7"
+        "Storage File Data SMB Share Elevated Contributor" = "a7264617-510b-434b-a828-9731dc254ea7",
+        "Storage Blob Data Owner" = "b7e6dc6d-f1e8-4753-8033-0f276bb0955b",
+        "Storage Table Data Contributor" = "0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3",
+        "Storage Queue Data Contributor" = "974c5e8b-45b9-4653-ba55-5f855dd0fb88"
     }
     assignable_role_ids = join(", ", values(local.assignable_roles))
 }
