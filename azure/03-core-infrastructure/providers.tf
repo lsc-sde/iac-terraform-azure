@@ -3,7 +3,6 @@ terraform {
     azurerm = {
       source = "hashicorp/azurerm"
       version = "3.88.0"
-      storage_use_azuread = true
     }
     azuread = {
       source = "hashicorp/azuread"
@@ -36,6 +35,7 @@ provider "azurerm" {
   // tenant_id            = ""
   // subscription_id      = ""
   skip_provider_registration = true
+  storage_use_azuread = true
 }
 
 provider "azurerm" {
