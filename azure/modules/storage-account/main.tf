@@ -34,30 +34,56 @@ resource "azurerm_storage_account" "main" {
     
 }
 
-resource "azurerm_private_endpoint" "main" {
-  name                = "pep-${local.name}"
+resource "azurerm_private_endpoint" "file" {
+  name                = "pep-${local.name}-file"
   resource_group_name = var.resource_group_name
   location            = var.location
   subnet_id           = var.subnet_id
   private_service_connection {
-    name                           = "psc-${local.name}"
+    name                           = "psc-${local.name}-file"
     private_connection_resource_id = azurerm_storage_account.main.id
     is_manual_connection           = false
     subresource_names              = ["file"]
   }
   tags = merge(var.tags, {
      "TF.Type" = "azurerm_private_endpoint"
-     "TF.Resource" = "main"
+     "TF.Resource" = "file"
      "TF.Module" = "storage-account",
   })
 
   private_dns_zone_group {
     name = local.name
     private_dns_zone_ids = [
-      data.azurerm_private_dns_zone.main.id,
+      data.azurerm_private_dns_zone.file.id,
     ]
   }
 }
+
+resource "azurerm_private_endpoint" "blob" {
+  name                = "pep-${local.name}-blob"
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  subnet_id           = var.subnet_id
+  private_service_connection {
+    name                           = "psc-${local.name}-blob"
+    private_connection_resource_id = azurerm_storage_account.main.id
+    is_manual_connection           = false
+    subresource_names              = ["blob"]
+  }
+  tags = merge(var.tags, {
+     "TF.Type" = "azurerm_private_endpoint"
+     "TF.Resource" = "blob"
+     "TF.Module" = "storage-account",
+  })
+
+  private_dns_zone_group {
+    name = local.name
+    private_dns_zone_ids = [
+      data.azurerm_private_dns_zone.blob.id,
+    ]
+  }
+}
+
 
 resource "azurerm_key_vault_secret" "main" {
   name         = var.account_key_secret_name
