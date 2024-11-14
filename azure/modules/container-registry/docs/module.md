@@ -6,6 +6,7 @@ layout: page
 ---
 
 <!-- BEGIN_TF_DOCS -->
+
 ## Requirements
 
 No requirements.
@@ -61,4 +62,5 @@ No requirements.
 | <a name="output_id"></a> [id](#output\_id) | ID of the container registry |
 | <a name="output_task_client_id"></a> [task\_client\_id](#output\_task\_client\_id) | Client Id of the managed identity to be used by tasks |
 | <a name="output_task_identity_id"></a> [task\_identity\_id](#output\_task\_identity\_id) | Id of the managed identity to be used by tasks |
+
 <!-- END_TF_DOCS -->
