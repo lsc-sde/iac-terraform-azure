@@ -99,4 +99,4 @@ has_children: true
 
 ## Outputs
 
-No outputs.\n
+No outputs.
