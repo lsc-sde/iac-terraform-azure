@@ -19,7 +19,7 @@ jobs:
         working-dir: ./azure/03-core-infrastructure
         output-file: ./docs/terraform-docs.md
         output-method: replace
-        output-format: markdown document
+        output-format: markdown table
         git-push: "true"
         template: |
             ---
