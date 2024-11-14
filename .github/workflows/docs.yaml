@@ -20,7 +20,5 @@ jobs:
         output-file: ./docs/terraform-docs.md
         output-method: replace
         git-push: "true"
-        recursive: true
-        recursive-path: modules
         template: |
             ---\ntitle: Terraform Documents\nparent: Azure\ngrand_parent: Terraform\nlayout: page\n---\n\n{{ .Content }}\n
