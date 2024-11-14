@@ -3,6 +3,7 @@ title: Azure
 parent: Terraform
 layout: page
 grand_parent: Infrastructure as Code
+has_children: true
 ---
 
 # Introduction

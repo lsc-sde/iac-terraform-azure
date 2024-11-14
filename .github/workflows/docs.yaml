@@ -22,3 +22,11 @@ jobs:
         git-push: "true"
         recursive: true
         recursive-path: modules
+        template: |
+            ---
+            title: Terraform Documents
+            parent: Azure
+            grand_parent: Terraform
+            layout: page
+            ---
+            {{ .Content }}\n
