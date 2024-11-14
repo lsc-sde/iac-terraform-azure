@@ -16,18 +16,12 @@ jobs:
     - name: Render terraform docs and push changes back to PR
       uses: terraform-docs/gh-actions@v1.3.0
       with:
-        working-dir: ./azure/03-core-infrastructure
-        output-file: ./docs/terraform-docs.md
-        output-method: replace
+        find-dir: ./
+        output-file: ./docs/module.md
+        output-method: inject
         output-format: markdown table
         git-push: "true"
         template: |
-            ---
-            title: Terraform Documents
-            parent: Azure
-            layout: page
-            grand_parent: Terraform
-            has_children: true
-            ---
-            
+            <!-- BEGIN_TF_DOCS -->
             {{ .Content }}
+            <!-- END_TF_DOCS -->

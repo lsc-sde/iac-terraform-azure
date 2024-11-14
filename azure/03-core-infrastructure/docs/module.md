@@ -1,11 +1,13 @@
 ---
-title: Terraform Documents
+title: Core Infrastructure
 parent: Azure
 layout: page
 grand_parent: Terraform
 has_children: true
+nav_order: 3
 ---
 
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
@@ -100,3 +102,4 @@ has_children: true
 ## Outputs
 
 No outputs.
+<!-- END_TF_DOCS -->
