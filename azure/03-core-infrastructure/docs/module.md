@@ -1,3 +1,11 @@
+---
+title: Core Infrastructure
+parent: Azure
+layout: page
+grand_parent: Terraform
+has_children: true
+---
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 

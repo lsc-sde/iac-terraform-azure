@@ -17,7 +17,7 @@ jobs:
       uses: terraform-docs/gh-actions@v1.3.0
       with:
         find-dir: ./
-        output-file: ./docs.md
+        output-file: ./docs/module.md
         output-method: inject
         output-format: markdown table
         git-push: "true"
