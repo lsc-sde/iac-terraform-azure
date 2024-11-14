@@ -6,6 +6,7 @@ layout: page
 ---
 
 <!-- BEGIN_TF_DOCS -->
+
 ## Requirements
 
 No requirements.
@@ -43,4 +44,5 @@ No modules.
 | <a name="output_id"></a> [id](#output\_id) | ID of the diagnostics workspace |
 | <a name="output_name"></a> [name](#output\_name) | name of the diagnostics workspace |
 | <a name="output_workspace_id"></a> [workspace\_id](#output\_workspace\_id) | Workspace ID of the diagnostics workspace |
+
 <!-- END_TF_DOCS -->

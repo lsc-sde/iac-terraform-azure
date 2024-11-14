@@ -8,6 +8,7 @@ nav_order: 1
 ---
 
 <!-- BEGIN_TF_DOCS -->
+
 ## Requirements
 
 | Name | Version |
@@ -59,4 +60,5 @@ No resources.
 ## Outputs
 
 No outputs.
+
 <!-- END_TF_DOCS -->
