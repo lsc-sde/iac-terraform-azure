@@ -1,3 +1,11 @@
+---
+title: Modules
+parent: Terraform
+grand_parent: Infrastructure as Code
+layout: page
+has_children: true
+---
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 

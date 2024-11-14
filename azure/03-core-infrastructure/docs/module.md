@@ -4,6 +4,7 @@ parent: Azure
 layout: page
 grand_parent: Terraform
 has_children: true
+nav_order: 3
 ---
 
 <!-- BEGIN_TF_DOCS -->

@@ -1,3 +1,10 @@
+---
+title: role-assignment-other-subscription
+parent: Modules
+grand_parent: Azure
+layout: page
+---
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 

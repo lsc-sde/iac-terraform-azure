@@ -1,3 +1,12 @@
+---
+title: Hub-Spoke
+parent: Azure
+layout: page
+grand_parent: Terraform
+has_children: true
+nav_order: 1
+---
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 

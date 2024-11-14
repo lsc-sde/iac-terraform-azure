@@ -1,3 +1,10 @@
+---
+title: namespace
+parent: Modules
+grand_parent: Terraform
+layout: page
+---
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 

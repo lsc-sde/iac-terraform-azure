@@ -1,3 +1,12 @@
+---
+title: State Store
+parent: Azure
+layout: page
+grand_parent: Terraform
+has_children: true
+nav_order: 2
+---
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 

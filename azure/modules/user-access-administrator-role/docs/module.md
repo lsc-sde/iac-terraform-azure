@@ -1,3 +1,10 @@
+---
+title: user-access-administrator-role
+parent: Modules
+grand_parent: Azure
+layout: page
+---
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
