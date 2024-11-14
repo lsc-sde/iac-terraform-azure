@@ -1,8 +1,9 @@
 ---
 title: Terraform Documents
 parent: Azure
-grand_parent: Terraform
 layout: page
+grand_parent: Terraform
+has_children: true
 ---
 
 ## Requirements
