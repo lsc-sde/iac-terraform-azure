@@ -1,5 +1,4 @@
-<!-- BEGIN_TF_DOCS -->
-## Requirements
+---\ntitle: Terraform Documents\nparent: Azure\ngrand_parent: Terraform\nlayout: page\n---\n\n## Requirements
 
 | Name | Version |
 |------|---------|
@@ -92,5 +91,4 @@
 
 ## Outputs
 
-No outputs.
-<!-- END_TF_DOCS -->
+No outputs.\n
