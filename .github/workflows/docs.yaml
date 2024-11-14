@@ -4,7 +4,7 @@ on:
 
 permissions:
     contents: write
-    
+
 jobs:
   docs:
     runs-on: ubuntu-latest
@@ -20,3 +20,5 @@ jobs:
         output-file: ./docs/terraform-docs.md
         output-method: replace
         git-push: "true"
+        recursive: true
+        recursive-path: modules
