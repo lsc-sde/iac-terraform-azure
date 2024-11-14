@@ -19,13 +19,15 @@ jobs:
         working-dir: ./azure/03-core-infrastructure
         output-file: ./docs/terraform-docs.md
         output-method: replace
+        output-format: markdown document
         git-push: "true"
         template: |
             ---
             title: Terraform Documents
             parent: Azure
-            grand_parent: Terraform
             layout: page
+            grand_parent: Terraform
+            has_children: true
             ---
             
             {{ .Content }}

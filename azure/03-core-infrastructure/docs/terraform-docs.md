@@ -1,4 +1,12 @@
-\-\-\-\ntitle: Terraform Documents\nparent: Azure\ngrand_parent: Terraform\nlayout: page\n\-\-\-\n\n## Requirements
+---
+title: Terraform Documents
+parent: Azure
+layout: page
+grand_parent: Terraform
+has_children: true
+---
+
+## Requirements
 
 | Name | Version |
 |------|---------|
