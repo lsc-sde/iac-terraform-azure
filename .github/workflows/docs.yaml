@@ -21,4 +21,4 @@ jobs:
         output-method: replace
         git-push: "true"
         template: |
-            ---\ntitle: Terraform Documents\nparent: Azure\ngrand_parent: Terraform\nlayout: page\n---\n\n{{ .Content }}\n
+            \-\-\-\ntitle: Terraform Documents\nparent: Azure\ngrand_parent: Terraform\nlayout: page\n\-\-\-\n\n{{ .Content }}\n
