@@ -241,3 +241,9 @@ variable "datascience_large_nodepool_vm_size" {
   description = "VM Sku for the large datascience node pools"
   default = "Standard_E8as_v5"
 }
+
+variable "gpu_nodepool_vm_size" {
+  type        = string
+  description = ""VM Sku for the GPU node pools"
+  default     = "Standard_NC6s_v3"
+}
