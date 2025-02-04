@@ -134,6 +134,29 @@ module "datascience_large_nodepool" {
   max_pods = 20
 }
 
+module "gpu_nodepool" {
+  source = "../modules/kubernetes-node-pool"
+
+  name            = "gpu"
+  tags            = var.tags
+  vm_size         = var.gpu_nodepool_vm_size
+  cluster_id      = module.kubernetes_cluster.id
+  purpose         = "GPU for LLM Workspaces"
+  vnet_subnet_id  = var.subnet_id
+
+  node_taints = [
+    "xlscsde.nhs.uk/appType=llm-workspace:NoSchedule",
+    "nvidia.com/gpu=present:NoSchedule"
+  ]
+
+  node_labels = {
+    "xlscsde.nhs.uk/appType"  = "llm-workspace",
+    "nvidia.com/gpu"          = "true"
+  }
+
+  max_pods = 20
+}
+
 module "keda" {
   source = "../modules/kubernetes-deployment-script"
   location = var.location
