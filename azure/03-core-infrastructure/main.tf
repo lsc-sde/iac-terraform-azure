@@ -137,7 +137,7 @@ module "datascience_large_nodepool" {
 module "neulander_spot_nodepool" {
   source = "../modules/kubernetes-node-pool"
 
-  name = "neulanderSpot"
+  name = "neuspot"
   tags = var.tags
   vm_size = var.neulander_spot_nodepool_vm_size
   cluster_id = module.kubernetes_cluster.id
@@ -148,7 +148,7 @@ module "neulander_spot_nodepool" {
   ] 
   node_labels = {
     "xlscsde.nhs.uk/appType" = "neulander",
-    "xlscsde.nhs.uk/nodeSize" = "4vCPU-32GB-220GB",
+    "xlscsde.nhs.uk/nodeSize" = "standardSpot",
   } 
   max_count = 10
   priority = "Spot"
