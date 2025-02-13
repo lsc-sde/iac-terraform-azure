@@ -134,6 +134,27 @@ module "datascience_large_nodepool" {
   max_pods = 20
 }
 
+module "neulander_spot_nodepool" {
+  source = "../modules/kubernetes-node-pool"
+
+  name = "neuspot"
+  tags = var.tags
+  vm_size = var.neulander_spot_nodepool_vm_size
+  cluster_id = module.kubernetes_cluster.id
+  purpose = "Spot VMs for Neulander"
+  vnet_subnet_id = var.subnet_id
+  node_taints = [
+    "xlscsde.nhs.uk/appType=neulander:NoSchedule",
+  ] 
+  node_labels = {
+    "xlscsde.nhs.uk/appType" = "neulander",
+    "xlscsde.nhs.uk/nodeSize" = "standardSpot",
+  } 
+  max_count = 10
+  priority = "Spot"
+}
+
+
 module "keda" {
   source = "../modules/kubernetes-deployment-script"
   location = var.location
