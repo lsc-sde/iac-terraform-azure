@@ -232,6 +232,12 @@ resource "azurerm_kubernetes_cluster" "cluster" {
     "TF.Module" = "kubernetes-cluster-kubenet",
   })
   
+  storage_profile {
+    blob_driver_enabled = true
+    disk_driver_enabled = true
+    file_driver_enabled = true
+  }
+
   network_profile {
     network_plugin = "kubenet" 
     network_policy = "calico"

@@ -75,3 +75,9 @@ variable "priority" {
   description = "The priority of the node pool. Possible values are Regular and Spot"
   default     = "Regular"
 }
+
+variable "ultra_ssd_enabled" {
+  type = bool
+  description = "Are ultra SSD storage available for this?"
+  default = true
+}

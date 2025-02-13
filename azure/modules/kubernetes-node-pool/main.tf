@@ -18,7 +18,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "node_pool" {
   max_pods              = var.max_pods
   vnet_subnet_id        = var.vnet_subnet_id
   node_public_ip_enabled = false
-  ultra_ssd_enabled     = true
+  ultra_ssd_enabled     = var.ultra_ssd_enabled
   zones                 = ["1", "2", "3"]
 
   node_taints = var.node_taints
@@ -26,6 +26,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "node_pool" {
   node_labels = var.node_labels
 
   priority = var.priority
+  eviction_policy = var.priority == "Spot" ? "Delete" : null
 
   lifecycle {
     ignore_changes = [

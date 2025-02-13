@@ -152,6 +152,7 @@ module "neulander_spot_nodepool" {
   } 
   max_count = 10
   priority = "Spot"
+  ultra_ssd_enabled = false
 }
 
 
