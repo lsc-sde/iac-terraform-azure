@@ -25,6 +25,8 @@ resource "azurerm_kubernetes_cluster_node_pool" "node_pool" {
 
   node_labels = var.node_labels
 
+  priority = var.priority
+
   lifecycle {
     ignore_changes = [
       node_count,
