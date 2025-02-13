@@ -40,6 +40,7 @@ nav_order: 3
 | <a name="module_keycloak_database"></a> [keycloak\_database](#module\_keycloak\_database) | ../modules/sql-database | n/a |
 | <a name="module_kubernetes_cluster"></a> [kubernetes\_cluster](#module\_kubernetes\_cluster) | ../modules/kubernetes-cluster-kubenet | n/a |
 | <a name="module_kubernetes_cluster_configuration"></a> [kubernetes\_cluster\_configuration](#module\_kubernetes\_cluster\_configuration) | ../../kubernetes | n/a |
+| <a name="module_neulander_spot_nodepool"></a> [neulander\_spot\_nodepool](#module\_neulander\_spot\_nodepool) | ../modules/kubernetes-node-pool | n/a |
 | <a name="module_ohdsisp"></a> [ohdsisp](#module\_ohdsisp) | ../modules/entra-id-app-registration | n/a |
 | <a name="module_postgresql"></a> [postgresql](#module\_postgresql) | ../modules/postgresql-single-server | n/a |
 | <a name="module_resource_group"></a> [resource\_group](#module\_resource\_group) | ../modules/resource-group | n/a |
@@ -86,6 +87,7 @@ nav_order: 3
 | <a name="input_location"></a> [location](#input\_location) | Location to deploy the resources | `string` | `"uksouth"` | no |
 | <a name="input_network_resource_group_name"></a> [network\_resource\_group\_name](#input\_network\_resource\_group\_name) | Name of the network resource group | `string` | `"test-network-spoke-network-rg"` | no |
 | <a name="input_network_security_group_name"></a> [network\_security\_group\_name](#input\_network\_security\_group\_name) | Name of the network security group | `string` | `"test-network-spoke-network-subnet"` | no |
+| <a name="input_neulander_spot_nodepool_vm_size"></a> [neulander\_spot\_nodepool\_vm\_size](#input\_neulander\_spot\_nodepool\_vm\_size) | VM Sku for neulander spot node pools | `string` | `"Standard_E4pds_v6"` | no |
 | <a name="input_nginx_load_balancer"></a> [nginx\_load\_balancer](#input\_nginx\_load\_balancer) | IP adddress for NGINX Ingress Controller Internal Load Balancer | `string` | `"172.18.16.230"` | no |
 | <a name="input_owners"></a> [owners](#input\_owners) | A list of object ID's for users that will own (and therefore be able to manage) any Entra ID objects | `list(string)` | n/a | yes |
 | <a name="input_pat_token"></a> [pat\_token](#input\_pat\_token) | THE PAT\_TOKEN used to open the repositories | `string` | n/a | yes |
