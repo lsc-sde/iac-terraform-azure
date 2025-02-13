@@ -199,13 +199,13 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   
   default_node_pool {
     name       = "default"
-    enable_auto_scaling = true
+    auto_scaling_enabled = true
     max_pods = var.default_node_pool_max_pods
     min_count = var.default_node_pool_min_node_count
     max_count = var.default_node_pool_max_node_count
     vm_size    = var.default_node_pool_vm_size
     vnet_subnet_id = var.default_node_pool_vnet_subnet_id
-    enable_node_public_ip = false
+    node_public_ip_enabled = false
     ultra_ssd_enabled = true
     zones = [ "1", "2", "3" ]
     temporary_name_for_rotation = "temppool"
@@ -252,7 +252,6 @@ resource "azurerm_kubernetes_cluster" "cluster" {
   }
   
   azure_active_directory_role_based_access_control {
-      managed = true
       azure_rbac_enabled = true
       admin_group_object_ids = var.cluster_admin_ids
   }
@@ -395,11 +394,11 @@ resource "azurerm_kubernetes_cluster_node_pool" "gitops" {
     "TF.Module" = "kubernetes-cluster-kubenet",
   })
 
-  enable_auto_scaling = false
+  auto_scaling_enabled = false
   node_count = 0
   max_pods = var.gitops_node_pool_max_pods
   vnet_subnet_id = var.default_node_pool_vnet_subnet_id
-  enable_node_public_ip = false
+  node_public_ip_enabled = false
   ultra_ssd_enabled = true
   zones = [ "1", "2", "3" ]
   

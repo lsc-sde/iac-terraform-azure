@@ -29,5 +29,5 @@ provider "azurerm" {
   features {}
   // tenant_id            = ""
   // subscription_id      = ""
-  skip_provider_registration = true
+  resource_provider_registrations = "none" 
 }

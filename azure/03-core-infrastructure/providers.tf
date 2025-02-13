@@ -2,7 +2,7 @@ terraform {
   required_providers {
     azurerm = {
       source = "hashicorp/azurerm"
-      version = "3.88.0"
+      version = "4.18.0"
     }
     azuread = {
       source = "hashicorp/azuread"
@@ -34,13 +34,14 @@ provider "azurerm" {
   subscription_id = var.subscription_id
   // tenant_id            = ""
   // subscription_id      = ""
-  skip_provider_registration = true
+  resource_provider_registrations = "none" 
 }
 
 provider "azurerm" {
   alias = "hubsubscription"
   subscription_id = var.hub_subscription_id
   features {}
+  resource_provider_registrations = "none" 
 }
 
 provider "random" {
