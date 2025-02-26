@@ -32,6 +32,7 @@ nav_order: 3
 | <a name="module_container_registry_tasks"></a> [container\_registry\_tasks](#module\_container\_registry\_tasks) | ../modules/container-registry-tasks | n/a |
 | <a name="module_datascience_large_nodepool"></a> [datascience\_large\_nodepool](#module\_datascience\_large\_nodepool) | ../modules/kubernetes-node-pool | n/a |
 | <a name="module_diagnostics_workspace"></a> [diagnostics\_workspace](#module\_diagnostics\_workspace) | ../modules/diagnostics-workspace | n/a |
+| <a name="module_gpu_nodepool"></a> [gpu\_nodepool](#module\_gpu\_nodepool) | ../modules/kubernetes-node-pool | n/a |
 | <a name="module_jupyter_admins"></a> [jupyter\_admins](#module\_jupyter\_admins) | ../modules/entra-id-security-group | n/a |
 | <a name="module_jupyter_users"></a> [jupyter\_users](#module\_jupyter\_users) | ../modules/entra-id-security-group | n/a |
 | <a name="module_jupytersp"></a> [jupytersp](#module\_jupytersp) | ../modules/entra-id-app-registration | n/a |
@@ -71,6 +72,7 @@ nav_order: 3
 | <a name="input_enable_hub_dns"></a> [enable\_hub\_dns](#input\_enable\_hub\_dns) | Installs the private zone dns into the hub network | `bool` | `true` | no |
 | <a name="input_environment_name"></a> [environment\_name](#input\_environment\_name) | Name of the environment (in lowercase) | `string` | `"sandbox"` | no |
 | <a name="input_flux_url"></a> [flux\_url](#input\_flux\_url) | The URL of the flux repository used to configure the environment | `string` | `"https://github.com/lsc-sde/iac-flux-lscsde"` | no |
+| <a name="input_gpu_nodepool_vm_size"></a> [gpu\_nodepool\_vm\_size](#input\_gpu\_nodepool\_vm\_size) | VM Sku for the GPU node pools | `string` | `"Standard_NC6s_v3"` | no |
 | <a name="input_hub_subscription_id"></a> [hub\_subscription\_id](#input\_hub\_subscription\_id) | The ID of the hub subscription | `string` | `"5bb2478d-e497-4ca1-964e-4aaa9f754a5d"` | no |
 | <a name="input_hub_virtual_network_id"></a> [hub\_virtual\_network\_id](#input\_hub\_virtual\_network\_id) | The id of the hub virtual network we're linking to | `string` | `"/subscriptions/de97be38-945e-4824-a44b-5b101c0e048b/resourceGroups/rg-icb-uks-plt-network/providers/Microsoft.Network/virtualNetworks/vnet-icb-uks-plt-azFirewall"` | no |
 | <a name="input_ip_rules"></a> [ip\_rules](#input\_ip\_rules) | List of allowed IP addresses | `list(string)` | <pre>[<br/>  "208.127.197.187"<br/>]</pre> | no |
