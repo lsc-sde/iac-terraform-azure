@@ -16,9 +16,16 @@ variable "virtual_network_id" {
 variable "enable_hub_dns" {
   type = bool
   description = "Installs the private zone dns into the hub network"
+  default = false
 }
 
 variable "hub_virtual_network_id" {
   type = string
   description = "The id of the hub virtual network"
+  default = ""
+}
+
+variable "name" {
+  type = string
+  description = "Name of the private DNS zone"
 }

@@ -5,6 +5,14 @@ module "hub_resource_group" {
   location = var.location
 }
 
+resource "random_string" "name" {
+  length = 5
+  upper = false
+  special = false
+  lower = true
+  numeric = true
+}
+
 module "spoke_resource_group" {
   source = "../modules/resource-group"
   prefix = "${var.prefix}-spoke-network"
@@ -136,8 +144,36 @@ module "userAccessAdminRole" {
   service_principal_id = var.service_principal_id
 }
 
-module "shareAdminRole"{
-  source = "../modules/share-administrator-role"
-
-  service_principal_id = var.service_principal_id
+module "blobPrivateLinkDnsZone" {
+  source = "../modules/private-dns-zone"
+  
+  name = "privatelink.blob.core.windows.net"
+  resource_group_name = module.hub_resource_group.name
+  tags = var.tags
+  virtual_network_id = module.hub_vnet.id
 }
+
+module "filePrivateLinkDnsZone" {
+  source = "../modules/private-dns-zone"
+  
+  name = "privatelink.file.core.windows.net"
+  resource_group_name = module.hub_resource_group.name
+  tags = var.tags
+  virtual_network_id = module.hub_vnet.id
+}
+
+module "ourPrivateLinkDnsZone" {
+  source = "../modules/private-dns-zone"
+  
+  name = var.private_dns_zone_name
+  resource_group_name = module.hub_resource_group.name
+  tags = var.tags
+  virtual_network_id = module.hub_vnet.id
+}
+
+#module "shareAdminRole"{
+#  source = "../modules/share-administrator-role"
+#
+#  service_principal_id = var.service_principal_id
+#}
+

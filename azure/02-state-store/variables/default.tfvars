@@ -18,3 +18,4 @@ ip_rules = [
 ]
 hub_subscription_id = "de97be38-945e-4824-a44b-5b101c0e048b"
 admin_group_id = "8759908d-3bec-4c05-911b-0034b59ea017"
+private_zone_resource_group_name = "rg-lsc-uks-tresbx-network"

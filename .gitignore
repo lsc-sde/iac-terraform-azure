@@ -27,3 +27,5 @@ override.tf.json
 .terraformrc
 terraform.rc
 *.lock.hcl
+
+**/hitcs.tfvars

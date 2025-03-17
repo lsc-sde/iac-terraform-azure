@@ -1,8 +1,8 @@
 resource "azurerm_private_dns_zone" "main" {
-  name = "privatelink.uksouth.azmk8s.io"
+  name = var.name
   resource_group_name = var.resource_group_name
    tags = merge(var.tags, {
-    "Name" = "privatelink.uksouth.azmk8s.io",
+    "Name" = var.name
     "Purpose" = "Cluster Identity"
     "TF.Type" = "azurerm_user_assigned_identity"
     "TF.Resource" = "cluster"

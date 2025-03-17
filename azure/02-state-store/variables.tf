@@ -42,3 +42,8 @@ variable "admin_group_id" {
   type = string 
   description = "id of the admin group"
 }
+
+variable "private_zone_resource_group_name" {
+  type = string
+  description = "The resource group that contains the private dns zones"
+}
