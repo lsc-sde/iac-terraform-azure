@@ -40,6 +40,7 @@ No modules.
 | <a name="input_node_count"></a> [node\_count](#input\_node\_count) | Initial number of nodes | `number` | `0` | no |
 | <a name="input_node_labels"></a> [node\_labels](#input\_node\_labels) | Labels to apply against these nodes | `map(string)` | `{}` | no |
 | <a name="input_node_taints"></a> [node\_taints](#input\_node\_taints) | Taints to apply against these nodes | `list(string)` | `[]` | no |
+| <a name="input_priority"></a> [priority](#input\_priority) | The priority of the node pool. Possible values are Regular and Spot | `string` | `"Regular"` | no |
 | <a name="input_purpose"></a> [purpose](#input\_purpose) | The purpose of the node pool | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | List of tags to generate | `map(string)` | n/a | yes |
 | <a name="input_vm_size"></a> [vm\_size](#input\_vm\_size) | n/a | `string` | n/a | yes |

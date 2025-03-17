@@ -247,3 +247,9 @@ variable "gpu_nodepool_vm_size" {
   description = "VM Sku for the GPU node pools"
   default     = "Standard_NC6s_v3"
 }
+
+variable "neulander_spot_nodepool_vm_size" {
+  type = string
+  description = "VM Sku for neulander spot node pools"
+  default = "Standard_E4pds_v6"
+}

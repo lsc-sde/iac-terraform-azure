@@ -11,19 +11,22 @@ resource "azurerm_kubernetes_cluster_node_pool" "node_pool" {
     "TF.Module"   = "kubernetes-node-pool",
   })
 
-  enable_auto_scaling   = var.enable_auto_scaling
+  auto_scaling_enabled   = var.enable_auto_scaling
   node_count            = var.node_count
   min_count             = var.min_count
   max_count             = var.max_count
   max_pods              = var.max_pods
   vnet_subnet_id        = var.vnet_subnet_id
-  enable_node_public_ip = false
-  ultra_ssd_enabled     = true
+  node_public_ip_enabled = false
+  ultra_ssd_enabled     = var.ultra_ssd_enabled
   zones                 = ["1", "2", "3"]
 
   node_taints = var.node_taints
 
   node_labels = var.node_labels
+
+  priority = var.priority
+  eviction_policy = var.priority == "Spot" ? "Delete" : null
 
   lifecycle {
     ignore_changes = [
