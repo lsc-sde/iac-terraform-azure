@@ -140,7 +140,6 @@ variable "key_vault_id" {
 variable "kubernetes_version" {
   type = string
   description = "Version of kubernetes to provision on the cluster"
-  default = "1.28.3"
 }
 
 variable "default_node_pool_max_pods" {

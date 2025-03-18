@@ -13,3 +13,11 @@ output security_group_id {
 output security_group_name {
     value = azurerm_network_security_group.main.name
 }
+
+output route_table_id {
+    value = azurerm_route_table.main.id
+}
+
+output route_table_name {
+    value = azurerm_route_table.main.name
+}

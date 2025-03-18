@@ -112,6 +112,7 @@ module "kubernetes_cluster" {
   sku_tier = var.kubernetes_sku_tier
   nsg_priority_start = var.kubernetes_nsg_priority_start
   kubernetes_version = var.kubernetes_version
+  default_node_pool_vm_size = var.default_node_pool_vm_size
 }
 
 module "datascience_large_nodepool" {

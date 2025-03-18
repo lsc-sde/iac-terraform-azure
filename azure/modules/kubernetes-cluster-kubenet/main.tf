@@ -278,10 +278,10 @@ resource "azurerm_kubernetes_cluster" "cluster" {
 
   azure_policy_enabled = true
 
-  key_management_service {
-    key_vault_network_access = "Private"
-    key_vault_key_id = azurerm_key_vault_key.cluster.id
-  }
+  #key_management_service {
+  #  key_vault_network_access = "Private"
+  #  key_vault_key_id = azurerm_key_vault_key.cluster.id
+  #}
 
   lifecycle {
     ignore_changes = [ 

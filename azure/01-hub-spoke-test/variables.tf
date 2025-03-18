@@ -62,3 +62,8 @@ variable "private_dns_zone_name" {
   type = string
   description = "The private DNS zone that will be used for the endpoints"
 }
+
+variable "subscription_id" {
+  type = string
+  description = "The ID of the subscription to deploy to"
+}

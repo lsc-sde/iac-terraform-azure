@@ -233,7 +233,7 @@ variable "kubernetes_nsg_priority_start" {
 variable "kubernetes_version" {
   type = string
   description = "The kubernetes version to install onto the cluster"
-  default = "1.28.10"
+  default = "1.32.0"
 }
 
 variable "datascience_large_nodepool_vm_size" {
@@ -252,4 +252,10 @@ variable "neulander_spot_nodepool_vm_size" {
   type = string
   description = "VM Sku for neulander spot node pools"
   default = "Standard_E4pds_v6"
+}
+
+variable "default_node_pool_vm_size" {
+  type = string
+  description = "VM Sku for default node pool"
+  default = "Standard_B4ms"
 }

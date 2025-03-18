@@ -38,6 +38,11 @@ variable "hub_subscription_id" {
   description = "The ID of the hub subscription"
 }
 
+variable "subscription_id" {
+  type = string
+  description = "The ID of the subscription to deploy to"
+}
+
 variable "admin_group_id" {
   type = string 
   description = "id of the admin group"
@@ -46,4 +51,10 @@ variable "admin_group_id" {
 variable "private_zone_resource_group_name" {
   type = string
   description = "The resource group that contains the private dns zones"
+}
+
+variable "container_name" {
+  type = string
+  description = "Name of the blob container to create"
+  default = "tfstate"
 }

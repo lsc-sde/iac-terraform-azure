@@ -1,8 +1,17 @@
+
+resource "random_string" "name" {
+  length = 5
+  upper = false
+  special = false
+  lower = true
+  numeric = true
+}
+
 resource "azuread_application" "main" {
   display_name = local.name
   owners       = local.owners
   sign_in_audience = "AzureADMultipleOrgs"
-  identifier_uris  = ["api://${var.environment_name}-${var.purpose}"]
+  identifier_uris  = ["api://${var.environment_name}-${var.purpose}-${random_string.name.result}"]
   group_membership_claims = ["SecurityGroup", "ApplicationGroup"]
 
   api {

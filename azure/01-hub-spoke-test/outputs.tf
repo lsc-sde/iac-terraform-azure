@@ -5,7 +5,7 @@ output "hub_resource_group" {
 
 output "spoke_resource_group" {
   description = "Name of the spoke resource group"
-  value = module.spoke_vnet.name
+  value = module.spoke_resource_group.name
 }
 
 output "hub_vnet_id" {
@@ -48,6 +48,16 @@ output "our_private_dns_zone_id" {
     value = module.ourPrivateLinkDnsZone.id
 }
 
+output "keyvault_private_dns_zone_id" {
+    description = "The ID of the keyvault private dns zone"
+    value = module.keyvaultPrivateLinkDnsZone.id
+}
+
+output "postgres_private_dns_zone_id" {
+    description = "The ID of the keyvault private dns zone"
+    value = module.postgresPrivateLinkDnsZone.id
+}
+
 output "subscription_id" {
   description = "The id of the subscription where the resources have been deployed"
   value = data.azurerm_subscription.current.subscription_id
@@ -56,4 +66,14 @@ output "subscription_id" {
 output "tenant_id" {
   description = "The id of the tenant where the resources have been deployed"
   value = data.azurerm_subscription.current.tenant_id
+}
+
+output "spoke_subnet_nsg" {
+    description = "The name of the spoke subnet's network security group"
+    value = module.spoke_subnet.security_group_name
+}
+
+output "diagnostics_workspace_id" {
+    description = "Id of the diagnostics workspace"
+    value = module.diagnostics_workspace.id
 }

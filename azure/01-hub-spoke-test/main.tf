@@ -13,6 +13,15 @@ resource "random_string" "name" {
   numeric = true
 }
 
+module "diagnostics_workspace" {
+  source = "../modules/diagnostics-workspace"
+
+  resource_group_name = module.hub_resource_group.name
+  tags = var.tags
+  location = var.location
+  name = random_string.name.result
+}
+
 module "spoke_resource_group" {
   source = "../modules/resource-group"
   prefix = "${var.prefix}-spoke-network"
@@ -48,6 +57,7 @@ module "hub_subnet" {
   address_space = local.hub_subnet
   location = var.location
   tags = var.tags
+  default_service_endpoints = true
 
   depends_on = [ 
     module.spoke_subnet
@@ -162,6 +172,58 @@ module "filePrivateLinkDnsZone" {
   virtual_network_id = module.hub_vnet.id
 }
 
+module "keyvaultPrivateLinkDnsZone" {
+  source = "../modules/private-dns-zone"
+  
+  name = "privatelink.vaultcore.azure.net"
+  resource_group_name = module.hub_resource_group.name
+  tags = var.tags
+  virtual_network_id = module.hub_vnet.id
+}
+
+module "postgresPrivateLinkDnsZone" {
+  source = "../modules/private-dns-zone"
+  
+  name = "privatelink.postgres.database.azure.com"
+  resource_group_name = module.hub_resource_group.name
+  tags = var.tags
+  virtual_network_id = module.hub_vnet.id
+}
+
+
+module "acrPrivateLinkDnsZone" {
+  source = "../modules/private-dns-zone"
+  
+  name = "${var.location}.privatelink.azurecr.io"
+  resource_group_name = module.hub_resource_group.name
+  tags = var.tags
+  virtual_network_id = module.hub_vnet.id
+}
+
+module "localacrPrivateLinkDnsZone" {
+  source = "../modules/private-dns-zone"
+  
+  name = "privatelink.azurecr.io"
+  resource_group_name = module.hub_resource_group.name
+  tags = var.tags
+  virtual_network_id = module.hub_vnet.id
+}
+
+
+
+
+module "localacrPrivateLinkDnsZone2" {
+  source = "../modules/private-dns-zone"
+  
+  name = "privatelink.${var.location}.azmk8s.io"
+  resource_group_name = module.hub_resource_group.name
+  tags = var.tags
+  virtual_network_id = module.hub_vnet.id
+}
+
+
+
+
 module "ourPrivateLinkDnsZone" {
   source = "../modules/private-dns-zone"
   
@@ -171,9 +233,33 @@ module "ourPrivateLinkDnsZone" {
   virtual_network_id = module.hub_vnet.id
 }
 
+
+resource "azurerm_route" "hub_to_spoke" {
+  name                = "hub-to-spoke"
+  resource_group_name = module.hub_resource_group.name
+  route_table_name    = module.hub_subnet.route_table_name
+  address_prefix      = var.spoke_address_space
+  next_hop_type       = "VnetLocal"
+}
+
+resource "azurerm_route" "spoke_to_hub" {
+  name                = "spoke-to-hub"
+  resource_group_name = module.spoke_resource_group.name
+  route_table_name    = module.spoke_subnet.route_table_name
+  address_prefix      = var.hub_address_space
+  next_hop_type       = "VnetLocal"
+}
+
 #module "shareAdminRole"{
 #  source = "../modules/share-administrator-role"
 #
 #  service_principal_id = var.service_principal_id
 #}
 
+
+resource "azurerm_virtual_network_dns_servers" "main" {
+  virtual_network_id = module.spoke_vnet.id
+  dns_servers        = [
+    module.dns_appliance.ip_address
+  ]
+}
