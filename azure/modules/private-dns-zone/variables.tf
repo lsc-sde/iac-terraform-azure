@@ -29,3 +29,17 @@ variable "name" {
   type = string
   description = "Name of the private DNS zone"
 }
+
+
+
+variable "enable_spoke_dns" {
+  type = bool
+  description = "Installs the private zone dns into the spoke network"
+  default = false
+}
+
+variable "spoke_virtual_network_id" {
+  type = string
+  description = "The id of the spoke virtual network"
+  default = ""
+}

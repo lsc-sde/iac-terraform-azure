@@ -278,6 +278,11 @@ resource "azurerm_kubernetes_cluster" "cluster" {
 
   azure_policy_enabled = true
 
+  # TODO:
+  #   Changes MS have made seem to have stopped this working with a message about VNET integration, however
+  #   this should be working and is working internally for other services. I've disabled for now but this 
+  #   should be re-enabled at the earliest opportunity.
+  #
   #key_management_service {
   #  key_vault_network_access = "Private"
   #  key_vault_key_id = azurerm_key_vault_key.cluster.id

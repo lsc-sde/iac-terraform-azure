@@ -30,3 +30,8 @@ variable "address_space" {
   description = "CIDR of the Address space to assign"
 }
 
+variable "dns_servers" {
+  type = list(string)
+  nullable = true
+  default = null
+}

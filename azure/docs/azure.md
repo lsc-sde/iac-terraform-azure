@@ -186,7 +186,43 @@ Once you've got your network and terraform state sorted out you can provision th
 Once again you'll need to prepare an appropriate tfvars file
      
 ```
-
+location = "uksouth"
+prefix = "hitcslscsde"
+tags = {
+    "Environment" = "Sandbox -> Staging",
+    "Application Name" = "Secure Data Environment",
+    "Project Name" = "TRE Environment",
+    "Technical Contact" = "shaun.turner1@nhs.net",
+    "ManagedBy" = "Research Software Design Authority",
+    "Repository" = "https://github.com/lsc-sde/k8s-iac.git",
+    "Budget - Billing Owner" = "healthierlsc.ICBAzureBillingAlerts@nhs.net",
+    "Budget - Shared Resource" = "No",
+    "Budget - Source" = "Revenue",
+    "Budget - Cost Centre" = "TBC"
+}
+subscription_id="8580f07e-e369-4617-89c0-330764bf2118" # The subscription you're deploying to
+cluster_admin_ids = [ "e012f43c-2d6b-4832-8865-f78e907c6be1" ] # Groups that will be given admin rights over the clusters
+network_security_group_name = "test-network-spoke-network-subnet" # Output from 01 called spoke_subnet_nsg
+network_resource_group_name = "test-network-spoke-network-rg" # Output from 01 called spoke_resource_group
+virtual_network_id = "/subscriptions/8580f07e-e369-4617-89c0-330764bf2118/resourceGroups/test-network-spoke-network-rg/providers/Microsoft.Network/virtualNetworks/test-network-spoke-network-vnet" # Output from 01 called spoke_vnet_id
+subnet_id = "/subscriptions/8580f07e-e369-4617-89c0-330764bf2118/resourceGroups/test-network-spoke-network-rg/providers/Microsoft.Network/virtualNetworks/test-network-spoke-network-vnet/subnets/test-network-spoke-network-subnet" # Output from 01 called spoke_subnet_id
+ip_rules = []
+keyvault_allowed_ips = []
+k8s_admin_group = "e012f43c-2d6b-4832-8865-f78e907c6be1" # Group that will be given admin rights over kubernetes
+enable_hub_dns = true # Disable if using your hub/spoke
+hub_subscription_id = "8580f07e-e369-4617-89c0-330764bf2118" # The subscription where the hub network lives
+private_zone_resource_group_name = "test-network-hub-network-rg" # Output from 01 called hub_resource_group
+apply_nsg_rules = false
+keyvault_purge_protection_enabled = true
+defender_log_analytics_workspace_id = "/subscriptions/8580f07e-e369-4617-89c0-330764bf2118/resourceGroups/test-network-hub-network-rg/providers/Microsoft.OperationalInsights/workspaces/36t7p" # Output from 01 called diagnostics_workspace_id
+environment_name = "dev" # short code to differentiate environments
+dns_prefix="dev-" # prefix for dns entries
+dns_zone = "xlscsde.nhs.uk" # the dns zone to apply
+owners = [ "e012f43c-2d6b-4832-8865-f78e907c6be1" ] # Group that will be given admin rights over key vaults etc
+branch_name = "dev" # Which branch to use in fluxcd
+datascience_large_nodepool_vm_size="Standard_B4ms"
+gpu_nodepool_vm_size="Standard_B4ms"
+neulander_spot_nodepool_vm_size="Standard_B4ms"
 ```
 
 Once done you'll want to set the following variables:
@@ -224,8 +260,8 @@ cluster_resource_group = "hitcslscsde-rg"
 This can then be passed into az cli to configure kubectl to work with the cluster:
 
 ```
-az aks get-credentials --resource-group <cluster_resource_group> --name <cluster_name> --overwrite-existing
-kubelogin convert-kubeconfig -l azurecli --admin
+az aks get-credentials --resource-group <cluster_resource_group> --name <cluster_name> --overwrite-existing --admin
+kubelogin convert-kubeconfig -l azurecli
 ```
 
 example:
@@ -241,6 +277,61 @@ You should then be able to query the cluster:
 kubectl get pods -A
 ```
 
-The cluster should also at this point also have fluxcd installed, and should be installing the flux configuration. It should be noted that there are a lot of components and that this can take some time to reconcile all of the components and get everything working. We would recommend leaving for a good hour before troubleshooting any issues.
+The cluster should also at this point also have fluxcd installed, and should be installing the flux configuration. 
+
+### Rate Limits
+It should be noted that there are a lot of components and that this can take some time to reconcile all of the components and get everything working. 
+
+Initially the cluster will need to download a lot of images from the internet and many of these will be from docker io, unfortunately this can be blocked by docker.io rate limits, etc 
+
+We would recommend leaving for a few hours.
+
+TODO: Build in the use of local registries, which can utilise logins so that this is no longer an issue or utilise pull secrets so that it uses logged in credentials.
 
 ### Certificates
+You will need to upload a wildcard certificate for your domain into the keyvault secrets. 
+
+#### Generating a certificate
+Your organisation may choose to purchase a certificate or generate one through their own certificate authority. If you need to generate your own, you can follow the instructions on the following link to do so:
+
+https://learn.microsoft.com/en-us/azure/application-gateway/self-signed-certificates#create-a-root-ca-certificate
+
+Please note that the root certificate should also be installed on any client that will intend to use this in order to avoid certificate errors. Your organisation should be able to distribute the trusted root certificate across their enterprise.
+
+#### Uploading the certificates to keyvault
+The following commands will allow you to upload the certificates.
+
+```bash
+# Upload the public part of the certificate
+az keyvault secret set --vault-name hitcslscsde-kvlt --name "WildcardCertificate" --file xlscsde.nhs.uk.crt
+
+# Upload the private key of the certificate
+az keyvault secret set --vault-name hitcslscsde-kvlt --name "WildcardCertificateKey" --file xlscsde.nhs.uk.key 
+
+# Upload the Trusted Root Certificate Authority public certificate
+az keyvault secret set --vault-name hitcslscsde-kvlt --name CertificateAuthority --file ca.crt
+```
+### Databases
+On your postgres server you will need to create the following databases:
+* ohdsi
+* guacamole
+* keycloak
+
+You will also need to create service accounts and permissions for each of these services with appropriate rights on each database.
+
+### Other Secrets
+The following secrets will need to be set as well:
+
+```bash
+az keyvault secret set --vault-name hitcslscsde-kvlt --name HadesPassword --value "YourP@ssw0rdz"
+az keyvault secret set --vault-name hitcslscsde-kvlt --name OhdsiDbUsername --value "ohdsi"
+az keyvault secret set --vault-name hitcslscsde-kvlt --name OhdsiDbPassword --value "YourP@ssw0rdz"
+az keyvault secret set --vault-name hitcslscsde-kvlt --name GuacDbUsername --value "guac"
+az keyvault secret set --vault-name hitcslscsde-kvlt --name GuacDbPassword --value "YourP@ssw0rdz"
+az keyvault secret set --vault-name hitcslscsde-kvlt --name KeycloakDbUsername --value "keycloak"
+az keyvault secret set --vault-name hitcslscsde-kvlt --name KeycloakDbPassword --value "YourP@ssw0rdz"
+az keyvault secret set --vault-name hitcslscsde-kvlt --name ThanosPersistentStoreSecret --value "Your@S3cr3t"
+az keyvault secret set --vault-name hitcslscsde-kvlt --name ThanosPersistentStoreSecret --value "Your@S3cr3t"
+az keyvault secret set --vault-name hitcslscsde-kvlt --name WorkspaceReposPatUser --value "user"
+az keyvault secret set --vault-name hitcslscsde-kvlt --name WorkspaceReposPatToken --value "Your@Token123"
+```

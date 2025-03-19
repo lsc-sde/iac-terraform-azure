@@ -34,6 +34,7 @@ resource "azurerm_key_vault" "keyVault" {
     bypass = var.public_network_access_enabled ? "AzureServices" : "None"
     default_action = "Allow"
     ip_rules = var.allowed_ips
+    virtual_network_subnet_ids = [ var.subnet_id ]
   }
 
   access_policy {

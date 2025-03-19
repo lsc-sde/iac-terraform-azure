@@ -58,10 +58,6 @@ module "hub_subnet" {
   location = var.location
   tags = var.tags
   default_service_endpoints = true
-
-  depends_on = [ 
-    module.spoke_subnet
-   ]
 }
 
 module "spoke_subnet" {
@@ -112,10 +108,6 @@ module "dns_appliance" {
   vpn_subnet_cidr = module.hub_vpn.vpn_cidr
   virtual_network_id = module.hub_vnet.id
   network_security_group_name = module.hub_subnet.security_group_name
-
-  depends_on = [ 
-      module.hub_vpn
-   ]
 }
 
 module "peering" {
@@ -130,10 +122,6 @@ module "peering" {
   destination_resource_group_name = module.spoke_resource_group.name
   destination_virtual_network_id = module.spoke_vnet.id
   destination_virtual_network_name = module.spoke_vnet.name
-
-  depends_on = [ 
-    module.hub_vpn
-  ]
 }
 
 module "contributorRole" {
@@ -170,6 +158,8 @@ module "filePrivateLinkDnsZone" {
   resource_group_name = module.hub_resource_group.name
   tags = var.tags
   virtual_network_id = module.hub_vnet.id
+  spoke_virtual_network_id = module.spoke_vnet.id
+  enable_spoke_dns = true
 }
 
 module "keyvaultPrivateLinkDnsZone" {
@@ -179,6 +169,8 @@ module "keyvaultPrivateLinkDnsZone" {
   resource_group_name = module.hub_resource_group.name
   tags = var.tags
   virtual_network_id = module.hub_vnet.id
+  spoke_virtual_network_id = module.spoke_vnet.id
+  enable_spoke_dns = true
 }
 
 module "postgresPrivateLinkDnsZone" {
@@ -188,6 +180,8 @@ module "postgresPrivateLinkDnsZone" {
   resource_group_name = module.hub_resource_group.name
   tags = var.tags
   virtual_network_id = module.hub_vnet.id
+  spoke_virtual_network_id = module.spoke_vnet.id
+  enable_spoke_dns = true
 }
 
 
@@ -198,6 +192,8 @@ module "acrPrivateLinkDnsZone" {
   resource_group_name = module.hub_resource_group.name
   tags = var.tags
   virtual_network_id = module.hub_vnet.id
+  spoke_virtual_network_id = module.spoke_vnet.id
+  enable_spoke_dns = true
 }
 
 module "localacrPrivateLinkDnsZone" {
@@ -207,6 +203,8 @@ module "localacrPrivateLinkDnsZone" {
   resource_group_name = module.hub_resource_group.name
   tags = var.tags
   virtual_network_id = module.hub_vnet.id
+  spoke_virtual_network_id = module.spoke_vnet.id
+  enable_spoke_dns = true
 }
 
 
@@ -219,6 +217,8 @@ module "localacrPrivateLinkDnsZone2" {
   resource_group_name = module.hub_resource_group.name
   tags = var.tags
   virtual_network_id = module.hub_vnet.id
+  spoke_virtual_network_id = module.spoke_vnet.id
+  enable_spoke_dns = true
 }
 
 
@@ -231,23 +231,8 @@ module "ourPrivateLinkDnsZone" {
   resource_group_name = module.hub_resource_group.name
   tags = var.tags
   virtual_network_id = module.hub_vnet.id
-}
-
-
-resource "azurerm_route" "hub_to_spoke" {
-  name                = "hub-to-spoke"
-  resource_group_name = module.hub_resource_group.name
-  route_table_name    = module.hub_subnet.route_table_name
-  address_prefix      = var.spoke_address_space
-  next_hop_type       = "VnetLocal"
-}
-
-resource "azurerm_route" "spoke_to_hub" {
-  name                = "spoke-to-hub"
-  resource_group_name = module.spoke_resource_group.name
-  route_table_name    = module.spoke_subnet.route_table_name
-  address_prefix      = var.hub_address_space
-  next_hop_type       = "VnetLocal"
+  spoke_virtual_network_id = module.spoke_vnet.id
+  enable_spoke_dns = true
 }
 
 #module "shareAdminRole"{
@@ -255,11 +240,3 @@ resource "azurerm_route" "spoke_to_hub" {
 #
 #  service_principal_id = var.service_principal_id
 #}
-
-
-resource "azurerm_virtual_network_dns_servers" "main" {
-  virtual_network_id = module.spoke_vnet.id
-  dns_servers        = [
-    module.dns_appliance.ip_address
-  ]
-}

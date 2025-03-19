@@ -5,6 +5,7 @@ resource "azurerm_subnet" "main" {
   resource_group_name = var.resource_group_name
 
   service_endpoints = local.service_endpoints
+  private_endpoint_network_policies = "Enabled"
 }
 
 resource "azurerm_network_security_group" "main" {

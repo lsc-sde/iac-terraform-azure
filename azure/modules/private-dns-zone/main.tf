@@ -25,3 +25,11 @@ resource "azurerm_private_dns_zone_virtual_network_link" "hub" {
   private_dns_zone_name = azurerm_private_dns_zone.main.name
   virtual_network_id = var.hub_virtual_network_id
 }
+
+resource "azurerm_private_dns_zone_virtual_network_link" "spoke" {
+  count = var.enable_spoke_dns ? 1 : 0
+  name = "spoke"
+  resource_group_name = var.resource_group_name
+  private_dns_zone_name = azurerm_private_dns_zone.main.name
+  virtual_network_id = var.spoke_virtual_network_id
+}
